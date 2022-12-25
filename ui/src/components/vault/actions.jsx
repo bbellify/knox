@@ -70,6 +70,7 @@ export function Actions() {
     dialogState.addOpen,
     dialogState.editOpen,
     dialogState.deleteOpen,
+    dialogState.infoOpen,
     settingsState,
   ]);
 

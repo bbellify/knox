@@ -14,7 +14,6 @@ export const defaultState = {
   editUsername: "",
   editPassword: "",
   editId: "",
-  settingsOpen: false,
   generated: "",
 };
 

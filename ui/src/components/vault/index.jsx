@@ -31,10 +31,6 @@ export function Vault() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("dialog state", dialogState);
-  }, [dialogState]);
-
-  useEffect(() => {
     if (!getSecret()) navigate("/apps/knox/login");
   }, []);
 
