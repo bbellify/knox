@@ -4,6 +4,18 @@ export const dialogReducer = (state, action) => {
   if (!action || !action.type) return state;
 
   switch (action.type) {
+    case actionTypes.OPEN_INFO: {
+      return {
+        ...state,
+        infoOpen: true,
+      };
+    }
+    case actionTypes.CLOSE_INFO: {
+      return {
+        ...state,
+        infoOpen: false,
+      };
+    }
     case actionTypes.OPEN_DELETE: {
       return {
         ...state,

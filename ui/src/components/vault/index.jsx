@@ -6,6 +6,7 @@ import { VaultContext } from "../../store/contexts/vaultContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
 import { SettingsContext } from "../../store/contexts/settingsContext";
 import vaultActions from "../../store/actions/vaultActions";
+import dialogActions from "../../store/actions/dialogActions";
 import { getSecret } from "../../utils";
 
 import { VaultTableBody } from "./vaultTableBody";
@@ -22,9 +23,10 @@ export function Vault() {
 
   const [urbitApi] = useContext(UrbitContext);
   const [vaultState, vaultDispatch] = useContext(VaultContext);
-  const [dialogState] = useContext(DialogContext);
+  const [dialogState, dialogDispatch] = useContext(DialogContext);
   const [settingsState] = useContext(SettingsContext);
   const { setVault } = vaultActions;
+  const { openInfoDialog } = dialogActions;
 
   const navigate = useNavigate();
 
@@ -54,7 +56,7 @@ export function Vault() {
 
   return (
     <>
-      <InfoDialog open={showInfo} setOpen={setShowInfo} />
+      {dialogState.infoOpen && <InfoDialog />}
       {dialogState.addOpen && <AddDialog />}
       {dialogState.editOpen && <EditDialog />}
       {dialogState.deleteOpen && <DeleteDialog />}
@@ -65,11 +67,13 @@ export function Vault() {
           dialogState.addOpen ||
           dialogState.deleteOpen ||
           dialogState.editOpen ||
+          dialogState.infoOpen ||
           settingsState.settingsOpen
             ? "opacity-50"
             : ""
         }`}
       >
+        {/* top buttons for generating, adding, opening settings */}
         <Actions />
 
         {/* title and search */}
@@ -77,7 +81,10 @@ export function Vault() {
           <p className="text-xl font-normal text-gray-500 text-gray-400 mt-1 p-0 align-middle flex">
             knox
             <span className="hidden md:inline ml-1">- your password vault</span>
-            <button className="px-2" onClick={() => setShowInfo(true)}>
+            <button
+              className="px-2"
+              onClick={() => dialogDispatch(openInfoDialog())}
+            >
               <ion-icon name="information-circle-outline" />
             </button>
           </p>

@@ -52,7 +52,12 @@ export function Actions() {
 
   // close generated when opening a dialog, add to if necessary
   useEffect(() => {
-    if (dialogState.addOpen || dialogState.editOpen || dialogState.deleteOpen) {
+    if (
+      dialogState.addOpen ||
+      dialogState.editOpen ||
+      dialogState.deleteOpen ||
+      dialogState.infoOpen
+    ) {
       setGenerated("");
       setShowGenerated(false);
     }
@@ -121,6 +126,7 @@ export function Actions() {
               dialogState.addOpen ||
               dialogState.deleteOpen ||
               dialogState.editOpen ||
+              dialogState.infoOpen ||
               settingsState.settingsOpen
             )
               ? "animate-bounce"

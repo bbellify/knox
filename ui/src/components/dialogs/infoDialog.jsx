@@ -1,30 +1,35 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Dialog } from "@headlessui/react";
 
-export const InfoDialog = (props) => {
-  const { open, setOpen } = props;
+import DialogContext from "../../store/contexts/dialogContext";
+import dialogActions from "../../store/actions/dialogActions";
+
+export const InfoDialog = () => {
+  const [dialogState, dialogDispatch] = useContext(DialogContext);
+  const { closeInfoDialog } = dialogActions;
 
   return (
-    <Dialog className="opacity-50" open={open} onClose={() => setOpen(false)}>
-      <div className="flex items-center bg-neutral-700 justify-center min-h-screen">
-        <Dialog.Overlay className="fixed inset-0 bg-neutral-700 border min-h-50" />
-        <div className="relative border bg-black rounded max-w-sm mx-auto p-8">
-          <Dialog.Title className="text-xl">Title of dialog</Dialog.Title>
-          <Dialog.Description>
-            Description of dialog contents.
-          </Dialog.Description>
-          <button
-            className="border-black border-solid border rounded mx-2 mt-8 py-1 px-2"
-            onClick={() => setOpen(false)}
-          >
-            Cancel
-          </button>
-          <button
-            className="border-black border-solid border rounded mx-2 mt-8 py-1 px-2"
-            onClick={() => setOpen(false)}
-          >
-            Confirm
-          </button>
+    <Dialog
+      open={dialogState.infoOpen}
+      onClose={() => dialogDispatch(closeInfoDialog())}
+    >
+      <div className="fixed inset-0 flex flex-col items-center justify-center h-screen">
+        <div className="border border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] sm:h-screen60 sm:max-h-[420px] shadow-lg pb-14">
+          <div className="flex flex-col items-center h-[100%] pt-1">
+            <button
+              onClick={() => dialogDispatch(closeInfoDialog())}
+              className="p-1 mr-2 self-end"
+            >
+              {/* get color right */}
+              <ion-icon name="close" />
+            </button>
+            <Dialog.Title className="text-xl">Knox Info</Dialog.Title>
+
+            <div className="my-12">
+              <h3>Info here</h3>
+              <h3>Info here</h3>
+            </div>
+          </div>
         </div>
       </div>
     </Dialog>

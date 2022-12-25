@@ -1,4 +1,6 @@
 export const actionTypes = {
+  OPEN_INFO: "OPEN_INFO",
+  CLOSE_INFO: "CLOSE_INFO",
   OPEN_DELETE: "OPEN_DELETE",
   CLOSE_DELETE: "CLOSE_DELETE",
   DELETE: "DELETE",
@@ -10,6 +12,14 @@ export const actionTypes = {
 };
 
 export const actions = {
+  openInfoDialog: () => ({
+    type: actionTypes.OPEN_INFO,
+  }),
+
+  closeInfoDialog: () => ({
+    type: actionTypes.CLOSE_INFO,
+  }),
+
   openDeleteDialog: (id) => ({
     type: actionTypes.OPEN_DELETE,
     id: id,
