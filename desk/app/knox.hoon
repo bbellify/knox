@@ -79,6 +79,7 @@
       [%x %enty ~]
     :^  ~  ~  %knox-update
     !>  ^-  update
+    :: TODO: handle the size of the number that is getting passed here with some gate/recursion
     [%enty (~(rad og eny:bowl) (pow 2 32))]
    ==
 ++  on-leave  on-leave:def
