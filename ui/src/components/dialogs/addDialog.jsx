@@ -8,8 +8,7 @@ import { DialogContext } from "../../store/contexts/dialogContext";
 import dialogActions from "../../store/actions/dialogActions";
 import { aesEncrypt, generatePassword, getSecret } from "../../utils";
 
-export const AddDialog = (props) => {
-  const { password: pword } = props;
+export const AddDialog = () => {
   const [urbitApi] = useContext(UrbitContext);
   const [, vaultDispatch] = useContext(VaultContext);
   const [dialogState, dialogDispatch] = useContext(DialogContext);
@@ -17,26 +16,24 @@ export const AddDialog = (props) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-  const [showPass, setShowPass] = useState(true);
-
+  const [showPass, setShowPass] = useState(false);
   const [formState, setFormState] = useState({
     website: "",
     username: "",
-    password: pword ?? "",
+    password: "",
   });
 
   const { closeAddDialog } = dialogActions;
   const { setVault } = vaultActions;
 
-  // reset form state when modal closes
+  // set form password to password from dialog context when password is generated
   useEffect(() => {
-    setSuccess(false);
-    setFormState({
-      website: "",
-      username: "",
-      password: pword ?? "",
-    });
-  }, [dialogState.addOpen]);
+    if (dialogState.generated)
+      setFormState({
+        ...formState,
+        password: dialogState.generated,
+      });
+  }, [dialogState.generated]);
 
   // TODO: validate form - improve this
   useEffect(() => {
@@ -62,11 +59,7 @@ export const AddDialog = (props) => {
   };
 
   const handleGenerate = () => {
-    const pass = generatePassword();
-    setFormState({
-      ...formState,
-      password: pass,
-    });
+    generatePassword(dialogDispatch, urbitApi);
   };
 
   const handleCopy = () => {

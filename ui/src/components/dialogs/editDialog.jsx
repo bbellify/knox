@@ -24,17 +24,21 @@ export const EditDialog = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-  const [formState, setFormState] = useState({});
   const [showPass, setShowPass] = useState(false);
+  const [formState, setFormState] = useState({
+    website: dialogState.editWebsite,
+    username: dialogState.editUsername,
+    password: dialogState.editPassword,
+  });
 
+  // set form password to password from dialog context when password is generated
   useEffect(() => {
-    setSuccess(false);
-    setFormState({
-      website: dialogState.editWebsite,
-      username: dialogState.editUsername,
-      password: dialogState.editPassword,
-    });
-  }, [dialogState.editOpen]);
+    if (dialogState.generated)
+      setFormState({
+        ...formState,
+        password: dialogState.generated,
+      });
+  }, [dialogState.generated]);
 
   // TODO: validate form - improve this
   useEffect(() => {
@@ -57,11 +61,7 @@ export const EditDialog = () => {
   };
 
   const handleGenerate = () => {
-    const pass = generatePassword();
-    setFormState({
-      ...formState,
-      password: pass,
-    });
+    generatePassword(dialogDispatch, urbitApi);
   };
 
   const handleCopy = () => {

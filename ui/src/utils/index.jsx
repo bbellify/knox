@@ -1,6 +1,9 @@
 import React from "react";
 import AES from "crypto-js/aes";
 import CryptoJS from "crypto-js";
+import dialogActions from "../store/actions/dialogActions";
+
+const { setGenerated } = dialogActions;
 
 // for cleaning up provider handling
 export const ComposeComponents = ({ components = [], children = <></> }) => {
@@ -33,8 +36,8 @@ export const aesDecrypt = (string, secret) => {
   return decrypted;
 };
 
-// TODO: this works but is it actually good? I think no
-String.prototype.pick = function (eny, min, max) {
+// TODO: fix this to use enty properly
+String.prototype.pick = function (enty, min, max) {
   let n,
     chars = "";
 
@@ -46,7 +49,7 @@ String.prototype.pick = function (eny, min, max) {
 
   for (let i = 0; i < n; i++) {
     // chars += this.charAt(Math.floor(Math.random() * this.length));
-    chars += this.charAt(Math.floor(parseFloat(eny[i] / 10) * this.length));
+    chars += this.charAt(Math.floor(parseFloat(enty[i] / 10) * this.length));
   }
 
   return chars;
@@ -70,34 +73,55 @@ String.prototype.shuffle = function () {
 };
 
 // for creating a password
-export const generatePassword = (enty) => {
-  let entyArr = [];
-  const stringArr = enty.toString().split("");
+export const generatePassword = (dialogDispatch, urbitApi) => {
+  const makeItAndSetIt = (enty) => {
+    let specials = "!@#$%^&*()_+{}:\"<>?|[];',./`~";
+    let lowercase = "abcdefghijklmnopqrstuvwxyz";
+    let uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let numbers = "0123456789";
 
-  const getNonZero = (arr, i) => {
-    if (parseInt(arr[i]) === undefined) return parseInt(getNonZero(arr, 0));
-    return parseInt(arr[i]) === 0
-      ? parseInt(getNonZero(arr, i + 1))
-      : parseInt(arr[i]);
+    let all = specials + lowercase + uppercase + numbers;
+
+    let password = "";
+    password += specials.pick(enty, 1);
+    password += lowercase.pick(enty, 1);
+    password += uppercase.pick(enty, 1);
+    password += numbers.pick(enty, 1);
+    password += all.pick(enty, 4, 12);
+    password = password.shuffle();
+    dialogDispatch(setGenerated(password));
   };
 
-  stringArr.forEach((enty, i) => {
-    entyArr.push(getNonZero(stringArr, i));
-  });
+  const handleScry = () => {
+    urbitApi
+      .scry({
+        app: "knox",
+        path: "/enty",
+      })
+      .then((res) => {
+        makeItAndSetIt(res.enty);
+      })
+      // TODO: handle this error?
+      .catch((err) => console.log("err", err));
+  };
 
-  let specials = "!@#$%^&*()_+{}:\"<>?|[];',./`~";
-  let lowercase = "abcdefghijklmnopqrstuvwxyz";
-  let uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  let numbers = "0123456789";
+  urbitApi
+    .poke({
+      app: "knox",
+      mark: "knox-action",
+      json: {
+        gen: { enty: parseInt(1) },
+      },
+    })
+    .then(handleScry())
+    // TODO: handle this error
+    .catch((err) => console.log("err", err));
 
-  let all = specials + lowercase + uppercase + numbers;
-
-  let password = "";
-  password += specials.pick(entyArr.join("").shuffle(), 1);
-  password += lowercase.pick(entyArr.join("").shuffle(), 1);
-  password += uppercase.pick(entyArr.join("").shuffle(), 1);
-  password += numbers.pick(entyArr.join("").shuffle(), 1);
-  password += all.pick(entyArr.join(""), 4, 12);
-  password = password.shuffle();
-  return password;
+  // do I need this?
+  // const getNonZero = (arr, i) => {
+  //   if (parseInt(arr[i]) === undefined) return parseInt(getNonZero(arr, 0));
+  //   return parseInt(arr[i]) === 0
+  //     ? parseInt(getNonZero(arr, i + 1))
+  //     : parseInt(arr[i]);
+  // };
 };

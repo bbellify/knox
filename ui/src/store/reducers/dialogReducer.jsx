@@ -28,16 +28,18 @@ export const dialogReducer = (state, action) => {
       return {
         ...state,
         addOpen: false,
+        generated: "",
       };
     }
     case actionTypes.OPEN_EDIT: {
       return {
         ...state,
-        editOpen: true,
+        generated: "",
         editWebsite: action.website,
         editUsername: action.username,
         editPassword: action.password,
         editId: action.id,
+        editOpen: true,
       };
     }
     case actionTypes.CLOSE_EDIT: {
@@ -48,6 +50,13 @@ export const dialogReducer = (state, action) => {
         editUsername: "",
         editPassword: "",
         editId: "",
+        generated: "",
+      };
+    }
+    case actionTypes.SET_GENERATED: {
+      return {
+        ...state,
+        generated: action.pass,
       };
     }
   }

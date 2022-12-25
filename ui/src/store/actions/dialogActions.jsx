@@ -6,6 +6,7 @@ export const actionTypes = {
   CLOSE_ADD: "CLOSE_ADD",
   OPEN_EDIT: "OPEN_EDIT",
   CLOSE_EDIT: "CLOSE_EDIT",
+  SET_GENERATED: "SET_GENERATED",
 };
 
 export const actions = {
@@ -40,6 +41,11 @@ export const actions = {
 
   closeEditDialog: () => ({
     type: actionTypes.CLOSE_EDIT,
+  }),
+
+  setGenerated: (pass) => ({
+    type: actionTypes.SET_GENERATED,
+    pass: pass,
   }),
 };
 
