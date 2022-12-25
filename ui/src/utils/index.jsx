@@ -36,8 +36,9 @@ export const aesDecrypt = (string, secret) => {
   return decrypted;
 };
 
-// TODO: fix this to use enty properly
+// TODO: this is getting close, enty is good
 String.prototype.pick = function (enty, min, max) {
+  console.log("enty in pick", enty);
   let n,
     chars = "";
 
@@ -49,7 +50,7 @@ String.prototype.pick = function (enty, min, max) {
 
   for (let i = 0; i < n; i++) {
     // chars += this.charAt(Math.floor(Math.random() * this.length));
-    chars += this.charAt(Math.floor(parseFloat(enty[i] / 10) * this.length));
+    chars += this.charAt(Math.floor((enty / 10) * this.length));
   }
 
   return chars;
@@ -83,11 +84,11 @@ export const generatePassword = (dialogDispatch, urbitApi) => {
     let all = specials + lowercase + uppercase + numbers;
 
     let password = "";
-    password += specials.pick(enty, 1);
-    password += lowercase.pick(enty, 1);
-    password += uppercase.pick(enty, 1);
-    password += numbers.pick(enty, 1);
-    password += all.pick(enty, 4, 12);
+    password += specials.pick(parseInt(enty.toString()[1]), 1);
+    password += lowercase.pick(parseInt(enty.toString()[2]), 1);
+    password += uppercase.pick(parseInt(enty.toString()[3]), 1);
+    password += numbers.pick(parseInt(enty.toString()[4]), 1);
+    password += all.pick(parseInt(enty.toString()[5]), 4, 12);
     password = password.shuffle();
     dialogDispatch(setGenerated(password));
   };
@@ -98,10 +99,7 @@ export const generatePassword = (dialogDispatch, urbitApi) => {
         app: "knox",
         path: "/enty",
       })
-      .then((res) => {
-        console.log("res in util", res);
-        makeItAndSetIt(res.enty);
-      })
+      .then((res) => makeItAndSetIt(res.enty))
       // TODO: handle this error?
       .catch((err) => console.log("err", err));
   };
