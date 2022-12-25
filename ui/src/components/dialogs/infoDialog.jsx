@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Dialog } from "@headlessui/react";
 
 import DialogContext from "../../store/contexts/dialogContext";

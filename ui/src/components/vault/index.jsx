@@ -19,7 +19,6 @@ import { Actions } from "./actions";
 
 export function Vault() {
   const [searchValue, setSearchValue] = useState("");
-  const [showInfo, setShowInfo] = useState(false);
 
   const [urbitApi] = useContext(UrbitContext);
   const [vaultState, vaultDispatch] = useContext(VaultContext);
