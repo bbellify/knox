@@ -99,6 +99,7 @@ export const generatePassword = (dialogDispatch, urbitApi) => {
         path: "/enty",
       })
       .then((res) => {
+        console.log("res in util", res);
         makeItAndSetIt(res.enty);
       })
       // TODO: handle this error?

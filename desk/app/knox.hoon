@@ -1,5 +1,5 @@
 /-  *knox
-/+  default-agent, dbug, agentio
+/+  default-agent, dbug, agentio, knox
 |%
 +$  versioned-state
   $%  state-0
@@ -77,10 +77,10 @@
     !>  ^-  update
     [%settings settings]
       [%x %enty ~]
+    =/  numb  (get-numb:knox eny:bowl)
     :^  ~  ~  %knox-update
     !>  ^-  update
-    :: TODO: handle the size of the number that is getting passed here with some gate/recursion
-    [%enty (~(rad og eny:bowl) (pow 2 32))]
+    [%enty outp.numb]
    ==
 ++  on-leave  on-leave:def
 ++  on-agent  on-agent:def
