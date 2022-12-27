@@ -81,7 +81,7 @@ export const Settings = () => {
       onClose={() => settingsDispatch(closeSettings())}
     >
       <div className="fixed inset-0 flex flex-col items-center justify-center h-screen">
-        <div className="border border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] sm:h-screen60 sm:max-h-[420px] shadow-lg pb-14">
+        <div className="border border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] shadow-lg">
           <div className="flex flex-col items-center h-[100%] pt-1">
             <button
               onClick={() => settingsDispatch(closeSettings())}
@@ -164,8 +164,15 @@ export const Settings = () => {
               </button>
             )}
             <button
-              onClick={() => console.log("reset")}
+              onClick={() => settingsDispatch(closeSettings())}
               className="mt-1 w-[75%] border border-black p-1 rounded"
+            >
+              Done
+            </button>
+            <button
+              // TODO: wire up the reset all, need new knox action for this I think
+              onClick={() => setError(!error)}
+              className="mt-1 mb-12 w-[75%] border border-black p-1 rounded"
             >
               Reset All
             </button>

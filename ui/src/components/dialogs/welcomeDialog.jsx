@@ -143,7 +143,8 @@ export const WelcomeDialog = () => {
           <Tab.Panel>
             For now, none of your raw information (including your secret cipher)
             is actually saved to your urbit - Knox entries are encrypted and
-            decrypted client side with a secret set to session storage.
+            decrypted client side, and your secret is only ever saved to session
+            storage.
             <br />
             <br />
             This means Knox cannot tell if you've successfully "logged in" -
