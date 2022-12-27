@@ -36,9 +36,8 @@ export const aesDecrypt = (string, secret) => {
   return decrypted;
 };
 
-// TODO: this is getting close, enty is good
+// TODO: this works alright but shuffle still relies on .random, how good is this really?
 String.prototype.pick = function (enty, min, max) {
-  console.log("enty in pick", enty);
   let n,
     chars = "";
 
@@ -50,7 +49,9 @@ String.prototype.pick = function (enty, min, max) {
 
   for (let i = 0; i < n; i++) {
     // chars += this.charAt(Math.floor(Math.random() * this.length));
-    chars += this.charAt(Math.floor((enty / 10) * this.length));
+    chars += this.charAt(
+      Math.floor(parseFloat(`0.${enty.shuffle()}`) * this.length)
+    );
   }
 
   return chars;
@@ -84,11 +85,11 @@ export const generatePassword = (dialogDispatch, urbitApi) => {
     let all = specials + lowercase + uppercase + numbers;
 
     let password = "";
-    password += specials.pick(parseInt(enty.toString()[1]), 1);
-    password += lowercase.pick(parseInt(enty.toString()[2]), 1);
-    password += uppercase.pick(parseInt(enty.toString()[3]), 1);
-    password += numbers.pick(parseInt(enty.toString()[4]), 1);
-    password += all.pick(parseInt(enty.toString()[5]), 4, 12);
+    password += specials.pick(enty.toString(), 1);
+    password += lowercase.pick(enty.toString(), 1);
+    password += uppercase.pick(enty.toString(), 1);
+    password += numbers.pick(enty.toString(), 1);
+    password += all.pick(enty.toString(), 8, 10);
     password = password.shuffle();
     dialogDispatch(setGenerated(password));
   };
@@ -115,12 +116,4 @@ export const generatePassword = (dialogDispatch, urbitApi) => {
     .then(handleScry())
     // TODO: handle this error
     .catch((err) => console.log("err", err));
-
-  // do I need this?
-  // const getNonZero = (arr, i) => {
-  //   if (parseInt(arr[i]) === undefined) return parseInt(getNonZero(arr, 0));
-  //   return parseInt(arr[i]) === 0
-  //     ? parseInt(getNonZero(arr, i + 1))
-  //     : parseInt(arr[i]);
-  // };
 };

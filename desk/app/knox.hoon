@@ -80,7 +80,7 @@
     =/  numb  (get-numb:knox eny:bowl)
     :^  ~  ~  %knox-update
     !>  ^-  update
-    [%enty outp.numb]
+    [%enty numb]
    ==
 ++  on-leave  on-leave:def
 ++  on-agent  on-agent:def

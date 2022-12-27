@@ -62,8 +62,7 @@
   ++  get-numb
     |=  enty=@
     =/  outp  (~(rad og enty) (pow 2 64))
-    :: |^
-    |.
+    |-
     ?:  (gth outp 99.999.999)
       `@ud`outp
     $(outp (~(rad og enty) (pow 2 64)))
