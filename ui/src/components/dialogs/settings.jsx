@@ -1,12 +1,79 @@
-import React, { useContext, useState } from "react";
-import { Dialog } from "@headlessui/react";
+import React, { useContext, useEffect, useState } from "react";
+import { Dialog, Switch } from "@headlessui/react";
 
+import { UrbitContext } from "../../store/contexts/urbitContext";
 import { SettingsContext } from "../../store/contexts/settingsContext";
 import settingsActions from "../../store/actions/settingsActions";
 
 export const Settings = () => {
+  const [urbitApi] = useContext(UrbitContext);
   const [settingsState, settingsDispatch] = useContext(SettingsContext);
-  const { closeSettings } = settingsActions;
+  const [setsForm, setSetsForm] = useState(settingsState);
+  const [loading, setLoading] = useState({});
+  const [error, setError] = useState(false);
+  const { closeSettings, setSettings } = settingsActions;
+
+  useEffect(() => {
+    handleScry();
+  }, []);
+
+  useEffect(() => {
+    setSetsForm(settingsState);
+  }, [settingsState]);
+
+  const handleScry = (setting) => {
+    if (setting)
+      setLoading({
+        ...loading,
+        [setting]: true,
+      });
+
+    urbitApi
+      .scry({
+        app: "knox",
+        path: "/settings",
+      })
+      .then((res) => {
+        setLoading({ ...loading, [setting]: false });
+        settingsDispatch(setSettings(res.settings));
+      })
+      .catch(() => handleError());
+  };
+
+  const handleChange = (setting) => {
+    setLoading({
+      ...loading,
+      [setting]: true,
+    });
+
+    // TODO: will need to add to this to handle non-boolean values (themes?)
+    const getValue = () => {
+      if (setsForm[setting]) return !setsForm[setting];
+      else return true;
+    };
+
+    urbitApi
+      .poke({
+        app: "knox",
+        mark: "knox-action",
+        json: {
+          sett: {
+            "setting-key": setting,
+            "setting-val": `${getValue()}`,
+          },
+        },
+      })
+      .then(() => handleScry(setting))
+      .catch(() => handleError(setting));
+  };
+
+  const handleError = (setting) => {
+    setLoading({
+      ...loading,
+      [setting]: false,
+    });
+    setError(true);
+  };
 
   return (
     <Dialog
@@ -20,27 +87,87 @@ export const Settings = () => {
               onClick={() => settingsDispatch(closeSettings())}
               className="p-1 mr-2 self-end"
             >
-              {/* get color right */}
+              {/* TODO: get color right */}
               <ion-icon name="close" />
             </button>
             <Dialog.Title className="text-xl">Knox settings</Dialog.Title>
 
-            <div className="my-12">
-              <h3>Settings here</h3>
-              <h3>Settings here</h3>
+            <div className="my-12 w-[85%]">
+              <div className="flex my-4 justify-between">
+                <p>Show welcome screen</p>
+                {!loading.showWelcome ? (
+                  <Switch
+                    checked={setsForm.showWelcome}
+                    onChange={() => handleChange("showWelcome")}
+                    className={`${
+                      // TODO: get this blue to match theme
+                      setsForm.showWelcome ? "bg-blue-600" : "bg-gray-200"
+                    } relative inline-flex h-6 w-11 items-center rounded-full mx-2`}
+                  >
+                    <span
+                      className={`${
+                        setsForm.showWelcome ? "translate-x-6" : "translate-x-1"
+                      } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                    />
+                  </Switch>
+                ) : (
+                  <div className="animate-spin mr-6">~</div>
+                )}
+              </div>
+              <div className="flex mt-4 justify-between">
+                <p>Click to copy hidden passwords</p>
+                {!loading.copyHidden ? (
+                  <Switch
+                    checked={setsForm.copyHidden}
+                    onChange={() => handleChange("copyHidden")}
+                    className={`${
+                      // TODO: get this blue to match theme
+                      setsForm.copyHidden ? "bg-blue-600" : "bg-gray-200"
+                    } relative inline-flex h-6 w-11 items-center rounded-full mx-2`}
+                  >
+                    <span
+                      className={`${
+                        setsForm.copyHidden ? "translate-x-6" : "translate-x-1"
+                      } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                    />
+                  </Switch>
+                ) : (
+                  <div className="animate-spin mr-6">~</div>
+                )}
+              </div>
+              <div className="flex my-4 justify-between">
+                <p>One-click delete (skip delete warning)</p>
+                <Switch
+                  checked={setsForm.skipDeleteWarn}
+                  onChange={() => {
+                    handleChange("skipDeleteWarn");
+                  }}
+                  className={`${
+                    // TODO: get this blue to match theme
+                    setsForm.skipDeleteWarn ? "bg-blue-600" : "bg-gray-200"
+                  } relative inline-flex h-6 w-11 items-center rounded-full mx-2`}
+                >
+                  <span
+                    className={`${
+                      setsForm.skipDeleteWarn
+                        ? "translate-x-6"
+                        : "translate-x-1"
+                    } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                  />
+                </Switch>
+              </div>
             </div>
 
+            {error && (
+              <button className="my-1 w-[75%] border border-black p-1 rounded bg-red-400">
+                Something went wrong. Try again.
+              </button>
+            )}
             <button
-              onClick={() => console.log("save")}
+              onClick={() => console.log("reset")}
               className="mt-1 w-[75%] border border-black p-1 rounded"
             >
-              Save
-            </button>
-            <button
-              onClick={() => settingsDispatch(closeSettings())}
-              className="mt-1 mb-6 w-[75%] border border-black p-1 rounded"
-            >
-              Cancel
+              Reset All
             </button>
           </div>
         </div>

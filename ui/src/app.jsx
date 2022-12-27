@@ -9,11 +9,11 @@ import { WelcomeDialog } from "./components/dialogs/welcomeDialog";
 import { Login } from "./components/dialogs/login";
 import { Vault } from "./components/vault";
 
-export function App() {
+export const App = () => {
   const navigate = useNavigate();
 
   const [urbitApi] = useContext(UrbitContext);
-  const [settingsState, settingsDispatch] = useContext(SettingsContext);
+  const [, settingsDispatch] = useContext(SettingsContext);
   const { setSettings } = settingsActions;
 
   const getSettings = () => {
@@ -48,8 +48,8 @@ export function App() {
 
   const handleEvent = (upd) => {
     if (upd.init) {
-      if (!upd.init.settings.length) getSettings();
       console.log("init", upd);
+      if (!upd.init.settings.length) getSettings();
       const showWelcome = upd.init.settings.find((set) => {
         return Object.keys(set).includes("showWelcome");
       });
@@ -72,4 +72,4 @@ export function App() {
       </Routes>
     </main>
   );
-}
+};

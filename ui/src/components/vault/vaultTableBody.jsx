@@ -2,7 +2,7 @@ import React from "react";
 
 import { VaultTableRow } from "./vaultTableRow";
 
-export function VaultTableBody(props) {
+export const VaultTableBody = (props) => {
   const { vault, searchValue } = props;
 
   return (
@@ -20,4 +20,4 @@ export function VaultTableBody(props) {
           })}
     </tbody>
   );
-}
+};

@@ -7,6 +7,7 @@ import { DialogContext } from "../../store/contexts/dialogContext";
 import { SettingsContext } from "../../store/contexts/settingsContext";
 import vaultActions from "../../store/actions/vaultActions";
 import dialogActions from "../../store/actions/dialogActions";
+import settingsActions from "../../store/actions/settingsActions";
 import { getSecret } from "../../utils";
 
 import { VaultTableBody } from "./vaultTableBody";
@@ -17,20 +18,34 @@ import { DeleteDialog } from "../dialogs/deleteDialog";
 import { EditDialog } from "../dialogs/editDialog";
 import { Actions } from "./actions";
 
-export function Vault() {
+export const Vault = () => {
   const [searchValue, setSearchValue] = useState("");
 
   const [urbitApi] = useContext(UrbitContext);
   const [vaultState, vaultDispatch] = useContext(VaultContext);
   const [dialogState, dialogDispatch] = useContext(DialogContext);
-  const [settingsState] = useContext(SettingsContext);
+  const [settingsState, settingsDispatch] = useContext(SettingsContext);
   const { setVault } = vaultActions;
   const { openInfoDialog } = dialogActions;
+  const { setSettings } = settingsActions;
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!getSecret()) navigate("/apps/knox/login");
+  }, []);
+
+  useEffect(() => {
+    urbitApi
+      .scry({
+        app: "knox",
+        path: "/settings",
+      })
+      .then((res) => {
+        settingsDispatch(setSettings(res.settings));
+      })
+      // TODO: handle this error?
+      .catch((err) => console.log("err", err));
   }, []);
 
   useEffect(() => {
@@ -162,4 +177,4 @@ export function Vault() {
       </div>
     </>
   );
-}
+};

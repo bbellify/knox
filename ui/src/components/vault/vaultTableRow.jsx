@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 
+import { SettingsContext } from "../../store/contexts/settingsContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
 import dialogActions from "../../store/actions/dialogActions";
 import { password } from "./password";
 
 // TODO: need to get settings from settings context, change what happens with delete button accordingly
 // show warning ? modal : just delete
-export function VaultTableRow(props) {
+export const VaultTableRow = (props) => {
   const { entry } = props;
+  const [settingsState] = useContext(SettingsContext);
   const [, dialogDispatch] = useContext(DialogContext);
   const { openDeleteDialog, openEditDialog } = dialogActions;
 
@@ -35,12 +37,34 @@ export function VaultTableRow(props) {
 
   // TODO: this doesn't work on iOS, revisit
   const handleCopy = (e) => {
-    if (e.target.value) {
-      navigator.clipboard.writeText(e.target.value);
-      setCopied({
-        ...copied,
-        [e.target.name]: true,
-      });
+    if (e.target.name !== "pass") {
+      if (e.target.value) {
+        navigator.clipboard.writeText(e.target.value);
+        setCopied({
+          ...copied,
+          [e.target.name]: true,
+        });
+      }
+    } else {
+      if (settingsState.copyHidden) {
+        if (e.target.value) {
+          navigator.clipboard.writeText(e.target.value);
+          setCopied({
+            ...copied,
+            [e.target.name]: true,
+          });
+        }
+      } else {
+        if (!passHidden) {
+          if (e.target.value) {
+            navigator.clipboard.writeText(e.target.value);
+            setCopied({
+              ...copied,
+              [e.target.name]: true,
+            });
+          }
+        }
+      }
     }
   };
 
@@ -119,4 +143,4 @@ export function VaultTableRow(props) {
       </tr>
     </>
   );
-}
+};

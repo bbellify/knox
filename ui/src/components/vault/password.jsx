@@ -1,6 +1,6 @@
 import React from "react";
 
-export function password() {
+export const password = () => {
   return (
     <>
       <ion-icon name="ellipse"></ion-icon>
@@ -13,4 +13,4 @@ export function password() {
       <ion-icon name="ellipse"></ion-icon>
     </>
   );
-}
+};

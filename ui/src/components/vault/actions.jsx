@@ -8,7 +8,7 @@ import dialogActions from "../../store/actions/dialogActions";
 import settingsActions from "../../store/actions/settingsActions";
 import { generatePassword } from "../../utils";
 
-export function Actions() {
+export const Actions = () => {
   const [generated, setGenerated] = useState("");
   const [showGenerated, setShowGenerated] = useState(false);
   const [generatedCopied, setGeneratedCopied] = useState(false);
@@ -146,4 +146,4 @@ export function Actions() {
       </div>
     </div>
   );
-}
+};
