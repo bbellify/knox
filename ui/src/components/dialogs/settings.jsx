@@ -83,7 +83,6 @@ export const Settings = () => {
               onClick={() => settingsDispatch(closeSettings())}
               className="p-1 mr-2 self-end"
             >
-              {/* TODO: get color right */}
               <ion-icon name="close" />
             </button>
             <Dialog.Title className="text-xl">Knox settings</Dialog.Title>
@@ -137,7 +136,6 @@ export const Settings = () => {
                     handleChange("skipDeleteWarn");
                   }}
                   className={`${
-                    // TODO: get this blue to match theme
                     setsForm.skipDeleteWarn ? "bg-blueMain" : "bg-gray-200"
                   } relative inline-flex h-6 w-11 items-center rounded-full mx-2`}
                 >
