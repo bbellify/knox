@@ -48,6 +48,7 @@ export const WelcomeDialog = () => {
     setSecret("");
   };
 
+  // TODO: handle the height of this so it doesn't change
   return (
     <div className="flex flex-col justify-center w-[95%] lg:max-w-[40%]">
       <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
@@ -58,7 +59,7 @@ export const WelcomeDialog = () => {
                 className={
                   selected
                     ? "rounded-t-md bg-white text-white border-t-4 border-l-2 border-r border-black focus:outline-none"
-                    : "bg-black text-black border-l border-r border-black"
+                    : "bg-black text-black border-l border-r border-black "
                 }
               >
                 ...

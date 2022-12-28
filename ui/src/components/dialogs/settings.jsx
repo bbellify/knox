@@ -14,10 +14,6 @@ export const Settings = () => {
   const { closeSettings, setSettings } = settingsActions;
 
   useEffect(() => {
-    handleScry();
-  }, []);
-
-  useEffect(() => {
     setSetsForm(settingsState);
   }, [settingsState]);
 

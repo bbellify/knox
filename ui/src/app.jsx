@@ -16,49 +16,54 @@ export const App = () => {
   const [, settingsDispatch] = useContext(SettingsContext);
   const { setSettings } = settingsActions;
 
+  useEffect(() => {
+    getSettings();
+  }, []);
+
   const getSettings = () => {
     urbitApi
       .scry({
         app: "knox",
         path: "/settings",
       })
-      .then((res) => handleSettings(res.settings))
-      // TODO: handle this error?
-      .catch((err) => console.log("err", err));
-  };
-
-  const handleSettings = (settings) => {
-    const showWelcome = settings.find((set) => {
-      return Object.keys(set).includes("showWelcome");
-    });
-    settingsDispatch(setSettings(settings));
-    if (showWelcome.showWelcome === "true") navigate("/apps/knox/welcome");
-  };
-
-  useEffect(() => {
-    urbitApi
-      .subscribe({
-        app: "knox",
-        path: "/updates",
-        event: handleEvent,
-      })
+      .then((res) => handleScry(res))
       // TODO: use this to set an error?
       .catch((err) => console.log("err", err));
-  }, []);
+  };
 
-  const handleEvent = (upd) => {
-    if (upd.init) {
-      console.log("init", upd);
-      if (!upd.init.settings.length) getSettings();
-      const showWelcome = upd.init.settings.find((set) => {
-        return Object.keys(set).includes("showWelcome");
+  const handleScry = (res) => {
+    if (res.settings) {
+      const showWelcome = res.settings.find((set) => {
+        if (set["showWelcome"]) return set["showWelcome"];
       });
-      if (showWelcome && showWelcome.showWelcome === "true")
+      if (
+        !res.settings.length ||
+        (showWelcome && Object.values(showWelcome).includes("true"))
+      ) {
+        if (!res.settings.length) setWelcome();
+        settingsDispatch(setSettings(res.settings));
         navigate("/apps/knox/welcome");
-      // TODO: handle other events here?
+      } else {
+        settingsDispatch(setSettings(res.settings));
+      }
     }
   };
 
+  const setWelcome = () => {
+    urbitApi
+      .poke({
+        app: "knox",
+        mark: "knox-action",
+        json: {
+          sett: {
+            "setting-key": "showWelcome",
+            "setting-val": "true",
+          },
+        },
+      })
+      // TODO: handle this error?
+      .catch(() => console.log("err", err));
+  };
   return (
     <main className="flex justify-center h-screen">
       <Routes>

@@ -58,9 +58,7 @@
   ^-  (quip card _this)
   ?>  ?=([%updates ~] path)
   :_  
-    ?:  (~(has by settings) `@tas`'showWelcome')
-      this
-    this(settings (~(put by settings) `setting-key`'showWelcome' [`setting-val`'true']))
+    this
   [%give %fact ~ %knox-update !>(`update`[%init vault settings])]~
 ::
 ++  on-peek
