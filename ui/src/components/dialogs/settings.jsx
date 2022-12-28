@@ -96,8 +96,7 @@ export const Settings = () => {
                     checked={setsForm.showWelcome}
                     onChange={() => handleChange("showWelcome")}
                     className={`${
-                      // TODO: get this blue to match theme
-                      setsForm.showWelcome ? "bg-blue-600" : "bg-gray-200"
+                      setsForm.showWelcome ? "bg-blueMain" : "bg-gray-200"
                     } relative inline-flex h-6 w-11 items-center rounded-full mx-2`}
                   >
                     <span
@@ -117,8 +116,7 @@ export const Settings = () => {
                     checked={setsForm.copyHidden}
                     onChange={() => handleChange("copyHidden")}
                     className={`${
-                      // TODO: get this blue to match theme
-                      setsForm.copyHidden ? "bg-blue-600" : "bg-gray-200"
+                      setsForm.copyHidden ? "bg-blueMain" : "bg-gray-200"
                     } relative inline-flex h-6 w-11 items-center rounded-full mx-2`}
                   >
                     <span
@@ -140,7 +138,7 @@ export const Settings = () => {
                   }}
                   className={`${
                     // TODO: get this blue to match theme
-                    setsForm.skipDeleteWarn ? "bg-blue-600" : "bg-gray-200"
+                    setsForm.skipDeleteWarn ? "bg-blueMain" : "bg-gray-200"
                   } relative inline-flex h-6 w-11 items-center rounded-full mx-2`}
                 >
                   <span

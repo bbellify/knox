@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 
+import { UrbitContext } from "../../store/contexts/urbitContext";
+import { VaultContext } from "../../store/contexts/vaultContext";
+import vaultActions from "../../store/actions/vaultActions";
 import { SettingsContext } from "../../store/contexts/settingsContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
 import dialogActions from "../../store/actions/dialogActions";
@@ -9,6 +12,9 @@ import { password } from "./password";
 // show warning ? modal : just delete
 export const VaultTableRow = (props) => {
   const { entry } = props;
+  const [urbitApi] = useContext(UrbitContext);
+  const [, vaultDispatch] = useContext(VaultContext);
+  const { setVault } = vaultActions;
   const [settingsState] = useContext(SettingsContext);
   const [, dialogDispatch] = useContext(DialogContext);
   const { openDeleteDialog, openEditDialog } = dialogActions;
@@ -66,6 +72,33 @@ export const VaultTableRow = (props) => {
         }
       }
     }
+  };
+
+  const handleDelete = (id) => {
+    urbitApi
+      .poke({
+        app: "knox",
+        mark: "knox-action",
+        json: {
+          del: {
+            id: id,
+          },
+        },
+      })
+      .then(() => handleScry())
+      // TODO: handle this error?
+      .catch((err) => handleError(err));
+  };
+
+  const handleScry = () => {
+    urbitApi
+      .scry({
+        app: "knox",
+        path: "/vault",
+      })
+      .then((res) => vaultDispatch(setVault(res.vault)))
+      // TODO: handle this error?
+      .catch((err) => console.log("err", err));
   };
 
   return (
@@ -133,7 +166,11 @@ export const VaultTableRow = (props) => {
               <ion-icon name="pencil" />
             </button>
             <button
-              onClick={() => dialogDispatch(openDeleteDialog(entry.id))}
+              onClick={
+                settingsState.skipDeleteWarn
+                  ? () => handleDelete(entry.id)
+                  : () => dialogDispatch(openDeleteDialog(entry.id))
+              }
               className="pl-1 md:px-2"
             >
               <ion-icon name="trash" />

@@ -42,14 +42,10 @@ export const AddDialog = () => {
     else setDisabled(true);
   }, [formState]);
 
-  // clear error after 7 seconds/close on success after 5 seconds
+  // clear error after 7 seconds
   useEffect(() => {
-    if (success)
-      setTimeout(() => {
-        dialogDispatch(closeAddDialog());
-      }, 5000);
     if (error) setTimeout(() => setError(false), 7000);
-  }, [success, error]);
+  }, [error]);
 
   const handleChange = (e) => {
     setFormState({
