@@ -9,6 +9,8 @@ export const actionTypes = {
   OPEN_EDIT: "OPEN_EDIT",
   CLOSE_EDIT: "CLOSE_EDIT",
   SET_GENERATED: "SET_GENERATED",
+  OPEN_SETTINGS: "OPEN_SETTINGS",
+  CLOSE_SETTINGS: "CLOSE_SETTINGS",
 };
 
 export const actions = {
@@ -56,6 +58,14 @@ export const actions = {
   setGenerated: (pass) => ({
     type: actionTypes.SET_GENERATED,
     pass: pass,
+  }),
+
+  openSettings: () => ({
+    type: actionTypes.OPEN_SETTINGS,
+  }),
+
+  closeSettings: () => ({
+    type: actionTypes.CLOSE_SETTINGS,
   }),
 };
 

@@ -10,6 +10,7 @@
       [%edit (ot ~[id+ni website+so username+so password+so])]
       [%del (ot ~[id+ni])]
       [%sett (ot ~[setting-key+so setting-val+so])]
+      [%reset-set (ot ~[num+ni])]
       [%gen (ot ~[enty+ni])]
   ==
 ++  enjs-update
@@ -20,6 +21,7 @@
   ?-  -.upd
            %gen  !!
            %sett  !!
+           %reset-set  !!
            %add  
         %+  frond  'add'
         %-  pairs

@@ -15,6 +15,7 @@
       [%del =id]
       [%gen =enty]
       [%sett =setting-key =setting-val]
+      [%reset-set num=@]
   ==
 +$  update
   $%  [%init =vault =settings]

@@ -46,6 +46,8 @@
     `this(vault (~(put by vault) id.act `entry`[website.act username.act password.act now:bowl]))
       %sett
     `this(settings (~(put by settings) setting-key.act [setting-val.act]))
+      %reset-set
+    `this(settings `(map setting-key setting-val)`(malt ~[[`setting-key`'showWelcome' `setting-val`'true']]))
     :: below is an example of sending an update with :_
       %gen
     :_

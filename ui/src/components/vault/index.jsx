@@ -24,7 +24,7 @@ export const Vault = () => {
   const [urbitApi] = useContext(UrbitContext);
   const [vaultState, vaultDispatch] = useContext(VaultContext);
   const [dialogState, dialogDispatch] = useContext(DialogContext);
-  const [settingsState, settingsDispatch] = useContext(SettingsContext);
+  const [, settingsDispatch] = useContext(SettingsContext);
   const { setVault } = vaultActions;
   const { openInfoDialog } = dialogActions;
   const { setSettings } = settingsActions;
@@ -70,7 +70,7 @@ export const Vault = () => {
       {dialogState.addOpen && <AddDialog />}
       {dialogState.editOpen && <EditDialog />}
       {dialogState.deleteOpen && <DeleteDialog />}
-      {settingsState.settingsOpen && <Settings />}
+      {dialogState.settingsOpen && <Settings />}
 
       <div
         className={`flex flex-col min-w-[60%] lg:max-w-[60%] xl:max-w-[40%] mt-2 sm:mt-8 mx-2 ${
@@ -78,7 +78,7 @@ export const Vault = () => {
           dialogState.deleteOpen ||
           dialogState.editOpen ||
           dialogState.infoOpen ||
-          settingsState.settingsOpen
+          dialogState.settingsOpen
             ? "opacity-50"
             : ""
         }`}

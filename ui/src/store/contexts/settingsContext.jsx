@@ -4,9 +4,7 @@ import { settingsReducer } from "../reducers/settingsReducer";
 export const SettingsContext = createContext({});
 const { Provider } = SettingsContext;
 
-export const defaultState = {
-  settingsOpen: false,
-};
+export const defaultState = {};
 
 export const SettingsProvider = ({ children }) => {
   const [state, reducer] = useReducer(settingsReducer, defaultState);

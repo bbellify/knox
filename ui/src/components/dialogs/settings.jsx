@@ -3,15 +3,19 @@ import { Dialog, Switch } from "@headlessui/react";
 
 import { UrbitContext } from "../../store/contexts/urbitContext";
 import { SettingsContext } from "../../store/contexts/settingsContext";
+import { DialogContext } from "../../store/contexts/dialogContext";
 import settingsActions from "../../store/actions/settingsActions";
+import dialogActions from "../../store/actions/dialogActions";
 
 export const Settings = () => {
   const [urbitApi] = useContext(UrbitContext);
   const [settingsState, settingsDispatch] = useContext(SettingsContext);
+  const [dialogState, dialogDispatch] = useContext(DialogContext);
   const [setsForm, setSetsForm] = useState(settingsState);
   const [loading, setLoading] = useState({});
   const [error, setError] = useState(false);
-  const { closeSettings, setSettings } = settingsActions;
+  const { setSettings } = settingsActions;
+  const { closeSettings } = dialogActions;
 
   useEffect(() => {
     setSetsForm(settingsState);
@@ -30,7 +34,12 @@ export const Settings = () => {
         path: "/settings",
       })
       .then((res) => {
-        setLoading({ ...loading, [setting]: false });
+        // TODO: need a better way to handle loading for all (for reset), here and in handleReset
+        setLoading(
+          setting
+            ? { ...loading, [setting]: false }
+            : { showWelcome: false, copyHidden: false, skipDeleteWarn: false }
+        );
         settingsDispatch(setSettings(res.settings));
       })
       .catch(() => handleError());
@@ -71,16 +80,36 @@ export const Settings = () => {
     setError(true);
   };
 
+  const handleReset = () => {
+    setLoading({
+      showWelcome: true,
+      copyHidden: true,
+      skipDeleteWarn: true,
+    });
+    urbitApi
+      .poke({
+        app: "knox",
+        mark: "knox-action",
+        json: {
+          "reset-set": {
+            num: parseInt(1),
+          },
+        },
+      })
+      .then(() => handleScry())
+      .catch(() => handleError());
+  };
+
   return (
     <Dialog
-      open={settingsState.settingsOpen}
-      onClose={() => settingsDispatch(closeSettings())}
+      open={dialogState.settingsOpen}
+      onClose={() => dialogDispatch(closeSettings())}
     >
       <div className="fixed inset-0 flex flex-col items-center justify-center h-screen">
         <div className="border border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] shadow-lg">
           <div className="flex flex-col items-center h-[100%] pt-1">
             <button
-              onClick={() => settingsDispatch(closeSettings())}
+              onClick={() => dialogDispatch(closeSettings())}
               className="p-1 mr-2 self-end"
             >
               <ion-icon name="close" />
@@ -92,7 +121,7 @@ export const Settings = () => {
                 <p>Show welcome screen</p>
                 {!loading.showWelcome ? (
                   <Switch
-                    checked={setsForm.showWelcome}
+                    checked={setsForm.showWelcome ?? null}
                     onChange={() => handleChange("showWelcome")}
                     className={`${
                       setsForm.showWelcome ? "bg-blueMain" : "bg-gray-200"
@@ -112,7 +141,7 @@ export const Settings = () => {
                 <p>Click to copy hidden passwords</p>
                 {!loading.copyHidden ? (
                   <Switch
-                    checked={setsForm.copyHidden}
+                    checked={setsForm.copyHidden ?? null}
                     onChange={() => handleChange("copyHidden")}
                     className={`${
                       setsForm.copyHidden ? "bg-blueMain" : "bg-gray-200"
@@ -130,23 +159,27 @@ export const Settings = () => {
               </div>
               <div className="flex my-4 justify-between">
                 <p>One-click delete (skip delete warning)</p>
-                <Switch
-                  checked={setsForm.skipDeleteWarn}
-                  onChange={() => {
-                    handleChange("skipDeleteWarn");
-                  }}
-                  className={`${
-                    setsForm.skipDeleteWarn ? "bg-blueMain" : "bg-gray-200"
-                  } relative inline-flex h-6 w-11 items-center rounded-full mx-2`}
-                >
-                  <span
+                {!loading.skipDeleteWarn ? (
+                  <Switch
+                    checked={setsForm.skipDeleteWarn ?? null}
+                    onChange={() => {
+                      handleChange("skipDeleteWarn");
+                    }}
                     className={`${
-                      setsForm.skipDeleteWarn
-                        ? "translate-x-6"
-                        : "translate-x-1"
-                    } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-                  />
-                </Switch>
+                      setsForm.skipDeleteWarn ? "bg-blueMain" : "bg-gray-200"
+                    } relative inline-flex h-6 w-11 items-center rounded-full mx-2`}
+                  >
+                    <span
+                      className={`${
+                        setsForm.skipDeleteWarn
+                          ? "translate-x-6"
+                          : "translate-x-1"
+                      } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                    />
+                  </Switch>
+                ) : (
+                  <div className="animate-spin mr-6">~</div>
+                )}
               </div>
             </div>
 
@@ -156,14 +189,13 @@ export const Settings = () => {
               </button>
             )}
             <button
-              onClick={() => settingsDispatch(closeSettings())}
+              onClick={() => dialogDispatch(closeSettings())}
               className="mt-1 w-[75%] border border-black p-1 rounded"
             >
               Done
             </button>
             <button
-              // TODO: wire up the reset all, need new knox action for this I think
-              onClick={() => setError(!error)}
+              onClick={handleReset}
               className="mt-1 mb-12 w-[75%] border border-black p-1 rounded"
             >
               Reset All

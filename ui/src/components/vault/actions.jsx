@@ -5,7 +5,6 @@ import { VaultContext } from "../../store/contexts/vaultContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
 import { SettingsContext } from "../../store/contexts/settingsContext";
 import dialogActions from "../../store/actions/dialogActions";
-import settingsActions from "../../store/actions/settingsActions";
 import { generatePassword } from "../../utils";
 
 export const Actions = () => {
@@ -16,9 +15,12 @@ export const Actions = () => {
   const [urbitApi] = useContext(UrbitContext);
   const [vaultState] = useContext(VaultContext);
   const [dialogState, dialogDispatch] = useContext(DialogContext);
-  const [settingsState, settingsDispatch] = useContext(SettingsContext);
-  const { openAddDialog, setGenerated: setGenDialog } = dialogActions;
-  const { openSettings } = settingsActions;
+  const [settingsState] = useContext(SettingsContext);
+  const {
+    openAddDialog,
+    setGenerated: setGenDialog,
+    openSettings,
+  } = dialogActions;
 
   // set form password to password from dialog context when password is generated
   useEffect(() => {
@@ -139,7 +141,7 @@ export const Actions = () => {
         </button>
         <button
           className="text-xl font-bold px-2 hover:scale-120 my-1"
-          onClick={() => settingsDispatch(openSettings())}
+          onClick={() => dialogDispatch(openSettings())}
         >
           <ion-icon name="settings-sharp" id="settings-icon" />
         </button>
