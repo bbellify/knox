@@ -110,7 +110,7 @@ export const Settings = () => {
           <div className="flex flex-col items-center h-[100%] pt-1">
             <button
               onClick={() => dialogDispatch(closeSettings())}
-              className="p-1 mr-2 self-end hover:scale-150"
+              className="p-1 mr-2 self-end hover:scale-150 focus:outline-none focus:ring focus:ring-gray-500 rounded"
             >
               <ion-icon name="close" />
             </button>
@@ -125,7 +125,7 @@ export const Settings = () => {
                     onChange={() => handleChange("showWelcome")}
                     className={`${
                       setsForm.showWelcome ? "bg-blueMain" : "bg-gray-200"
-                    } relative inline-flex h-6 w-11 items-center rounded-full mx-2`}
+                    } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
                   >
                     <span
                       className={`${
@@ -145,7 +145,7 @@ export const Settings = () => {
                     onChange={() => handleChange("copyHidden")}
                     className={`${
                       setsForm.copyHidden ? "bg-blueMain" : "bg-gray-200"
-                    } relative inline-flex h-6 w-11 items-center rounded-full mx-2`}
+                    } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
                   >
                     <span
                       className={`${
@@ -167,7 +167,7 @@ export const Settings = () => {
                     }}
                     className={`${
                       setsForm.skipDeleteWarn ? "bg-blueMain" : "bg-gray-200"
-                    } relative inline-flex h-6 w-11 items-center rounded-full mx-2`}
+                    } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
                   >
                     <span
                       className={`${
@@ -184,19 +184,22 @@ export const Settings = () => {
             </div>
 
             {error && (
-              <button className="my-1 w-[75%] border border-black p-1 rounded bg-red-400 pointer-events-none">
+              <button
+                disabled
+                className="my-1 w-[75%] border border-black p-1 rounded bg-red-400 pointer-events-none"
+              >
                 Something went wrong. Try again.
               </button>
             )}
             <button
               onClick={() => dialogDispatch(closeSettings())}
-              className="mt-1 w-[75%] border border-black p-1 rounded hover:bg-gray-200"
+              className="mt-1 w-[75%] border border-black p-1 rounded hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
             >
               Done
             </button>
             <button
               onClick={handleReset}
-              className="mt-1 mb-12 w-[75%] border border-black p-1 rounded hover:bg-gray-200"
+              className="mt-1 mb-12 w-[75%] border border-black p-1 rounded hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
             >
               Reset All
             </button>

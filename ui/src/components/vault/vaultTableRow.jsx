@@ -108,7 +108,7 @@ export const VaultTableRow = (props) => {
           <div className="flex justify-center items-center">
             <button
               onClick={handleCopy}
-              className="py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto"
+              className="py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500 rounded"
               value={entry.website}
               name="site"
             >
@@ -122,7 +122,7 @@ export const VaultTableRow = (props) => {
           <div className="flex justify-center items-center">
             <button
               onClick={handleCopy}
-              className="py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto"
+              className="py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500 rounded"
               value={entry.username}
               name="user"
             >
@@ -140,7 +140,7 @@ export const VaultTableRow = (props) => {
           <div className="flex justify-center items-center">
             <button
               onClick={handleCopy}
-              className="py-2 px-2 hover:bg-gray-200 z-0 max-w-full overflow-x-auto whitespace-nowrap"
+              className="py-2 px-2 hover:bg-gray-200 z-0 max-w-full overflow-x-auto whitespace-nowrap focus:outline-none focus:ring focus:ring-gray-500 rounded"
               value={entry.password}
               name="pass"
             >
@@ -150,8 +150,11 @@ export const VaultTableRow = (props) => {
           </div>
         </td>
 
-        <td className="text-center hover:scale-125">
-          <button onClick={handleShowPass}>
+        <td className="text-center">
+          <button
+            onClick={handleShowPass}
+            className="hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+          >
             {passHidden ? <ion-icon name="eye" /> : <ion-icon name="eye-off" />}
           </button>
         </td>
@@ -161,7 +164,7 @@ export const VaultTableRow = (props) => {
           <div className="whitespace-nowrap">
             <button
               onClick={() => dialogDispatch(openEditDialog(entry))}
-              className="pr-1 md:px-2 hover:scale-125"
+              className="pr-1 md:px-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
             >
               <ion-icon name="pencil" />
             </button>
@@ -171,7 +174,7 @@ export const VaultTableRow = (props) => {
                   ? () => handleDelete(entry.id)
                   : () => dialogDispatch(openDeleteDialog(entry.id))
               }
-              className="pl-1 md:px-2 hover:scale-125"
+              className="pl-1 md:px-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
             >
               <ion-icon name="trash" />
             </button>

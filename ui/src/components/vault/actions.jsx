@@ -91,7 +91,7 @@ export const Actions = () => {
         <div className="w-[70%] sm:max-w-[50%] flex">
           <button
             onClick={handleCopy}
-            className="border border-black rounded-md shadow py-1 px-2 bg-white hover:bg-gray-200 w-[80%] overflow-x-auto"
+            className="border border-black rounded-md shadow py-1 px-2 bg-white hover:bg-gray-200 w-[80%] overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500"
             value={generated}
           >
             {generated}
@@ -106,14 +106,14 @@ export const Actions = () => {
             )}
             {/* TODO: have a save password flow, but could be improved */}
             <button
-              className="text-xl font-bold pl-2 hover:scale-125"
+              className="text-xl font-bold pl-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
               onClick={() => dialogDispatch(openAddDialog())}
             >
               <ion-icon name="add" />
             </button>
             <button
               onClick={handleClose}
-              className="text-xl pl-2 hover:scale-125"
+              className="text-xl pl-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
             >
               <ion-icon name="close" />
             </button>
@@ -123,13 +123,13 @@ export const Actions = () => {
       {/* action buttons */}
       <div className="">
         <button
-          className="text-xl font-bold px-2 hover:scale-125"
+          className="text-xl font-bold px-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
           onClick={handleDice}
         >
           <ion-icon name="dice-outline" />
         </button>
         <button
-          className={`text-xl font-bold px-2 hover:scale-125 my-1 ${
+          className={`text-xl font-bold px-2 hover:scale-125 my-1 focus:outline-none focus:ring focus:ring-gray-500 rounded ${
             !vaultState.length &
             !(
               dialogState.addOpen ||
@@ -146,7 +146,7 @@ export const Actions = () => {
           <ion-icon name="add" />
         </button>
         <button
-          className="text-xl font-bold px-2 hover:scale-125 my-1"
+          className="text-xl font-bold px-2 hover:scale-125 my-1 focus:outline-none focus:ring focus:ring-gray-500 rounded"
           onClick={() => dialogDispatch(openSettings())}
         >
           <ion-icon name="settings-sharp" id="settings-icon" />

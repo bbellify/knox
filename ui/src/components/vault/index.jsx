@@ -87,12 +87,12 @@ export const Vault = () => {
         <Actions />
 
         {/* title and search */}
-        <div className="flex p-2 sm:p-4 justify-between border-l border-r border-black border-t-4 bg-white sm:rounded-t-lg">
-          <p className="text-xl font-normal text-gray-500 text-gray-400 mt-1 p-0 align-middle flex">
+        <div className="flex py-2 sm:py-4 pl-2 pr-1 sm:px-2 justify-between border-l border-r border-black border-t-4 bg-white sm:rounded-t-lg">
+          <p className="text-xl text-gray-500 mt-1 p-0 align-middle flex font-semibold ml-1">
             knox
             <span className="hidden md:inline ml-1">- your password vault</span>
             <button
-              className="px-2 hover:scale-125"
+              className="px-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
               onClick={() => dialogDispatch(openInfoDialog())}
             >
               <ion-icon name="information-circle-outline" />
@@ -102,7 +102,7 @@ export const Vault = () => {
             <div className="relative">
               <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                 <svg
-                  className="w-5 h-5 text-gray-500 text-gray-400"
+                  className="w-5 h-5 text-gray-500"
                   aria-hidden="true"
                   fill="currentColor"
                   viewBox="0 0 20 20"
@@ -115,10 +115,10 @@ export const Vault = () => {
                   ></path>
                 </svg>
               </div>
+              {/* search input */}
               <input
                 type="text"
-                id="table-search"
-                className="p-2 pl-10 w-32 text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-gray-500 focus:border-gray-500"
+                className="p-2 pl-10 w-32 text-sm rounded-lg bg-gray-200 text-gray-500 focus:outline-none focus:ring focus:ring-gray-500"
                 placeholder="search"
                 onChange={handleSearch}
                 value={searchValue}
@@ -127,7 +127,11 @@ export const Vault = () => {
           </div>
         </div>
         {/* beginning of table */}
-        <div className="overflow-x-auto bg-white border h-screen70 2xl:h-screen60 border-black shadow-lg sm:rounded-b-lg sm:p-0">
+        <div
+          className={`overflow-x-auto bg-white h-screen70 2xl:h-screen60 border-black border-b border-l border-r shadow-lg sm:rounded-b-lg sm:p-0 ${
+            !vaultState.length ? "border-t" : ""
+          }`}
+        >
           <table
             className={`w-full text-gray-400 table-fixed w-full ${
               !vaultState.length ? "h-full" : ""

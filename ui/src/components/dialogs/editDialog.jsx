@@ -126,7 +126,7 @@ export const EditDialog = () => {
           <div className="flex flex-col items-center h-[100%] pt-1">
             <button
               onClick={() => dialogDispatch(closeEditDialog())}
-              className="p-1 mr-2 self-end hover:scale-150"
+              className="p-1 mr-2 self-end hover:scale-150 focus:outline-none focus:ring focus:ring-gray-500 rounded"
             >
               <ion-icon name="close" />
             </button>
@@ -135,14 +135,14 @@ export const EditDialog = () => {
               Edit this entry
             </Dialog.Title>
             <input
-              className="my-1 w-[75%] border border-black p-1"
+              className="my-1 w-[75%] border border-black p-1 focus:outline-none focus:ring focus:ring-gray-500"
               placeholder="website"
               name="website"
               value={formState.website}
               onChange={handleChange}
             />
             <input
-              className="my-1 w-[75%] border border-black p-1"
+              className="my-1 w-[75%] border border-black p-1 focus:outline-none focus:ring focus:ring-gray-500"
               placeholder="username"
               name="username"
               value={formState.username}
@@ -150,7 +150,7 @@ export const EditDialog = () => {
             />
             <div className="w-3/4 flex justify-between items-center">
               <input
-                className="my-1 border border-black p-1 w-full"
+                className="my-1 border border-black p-1 w-full focus:outline-none focus:ring focus:ring-gray-500"
                 placeholder="password"
                 name="password"
                 value={formState.password}
@@ -158,13 +158,16 @@ export const EditDialog = () => {
                 type={!showPass ? "password" : ""}
               />
               {copied && <ion-icon id="dialog-copy" name="copy-outline" />}
-              <button onClick={() => setShowPass(!showPass)} className="pl-1">
+              <button
+                onClick={() => setShowPass(!showPass)}
+                className="pl-1 focus:outline-none focus:ring focus:ring-gray-500"
+              >
                 {!showPass ? "show" : "hide"}
               </button>
             </div>
             <button
               onClick={handleGenerate}
-              className="mt-1 mb-6 w-[75%] border border-black p-1 rounded hover:bg-gray-200"
+              className="mt-1 mb-6 w-[75%] border border-black p-1 rounded hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
             >
               Generate
             </button>
@@ -176,7 +179,7 @@ export const EditDialog = () => {
              */}
             {!success ? (
               <button
-                className={`my-1 w-[75%] border border-black p-1 rounded flex justify-center hover:bg-gray-200 ${
+                className={`my-1 w-[75%] border border-black p-1 rounded flex justify-center hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500 ${
                   !loading && "disabled:opacity-25 disabled:pointer-events-none"
                 }`}
                 onClick={handleEdit}
@@ -185,19 +188,25 @@ export const EditDialog = () => {
                 {!loading ? "Save" : <div className="animate-spin">~</div>}
               </button>
             ) : (
-              <button className="my-1 w-[75%] border border-black p-1 rounded bg-green-400 pointer-events-none">
+              <button
+                disabled
+                className="my-1 w-[75%] border border-black p-1 rounded bg-green-400 pointer-events-none"
+              >
                 Success
               </button>
             )}
             {error && (
-              <button className="my-1 w-[75%] border border-black p-1 rounded bg-red-400 pointer-events-none">
+              <button
+                disabled
+                className="my-1 w-[75%] border border-black p-1 rounded bg-red-400 pointer-events-none"
+              >
                 Something went wrong. Try again.
               </button>
             )}
             {!error && Boolean(formState?.password?.length) && (
               <button
                 onClick={handleCopy}
-                className="mt-1 mb-6 w-[75%] border border-black p-1 rounded hover:bg-gray-200"
+                className="mt-1 mb-6 w-[75%] border border-black p-1 rounded hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500 rounded"
               >
                 Copy password
               </button>

@@ -53,20 +53,20 @@ export const WelcomeDialog = () => {
     <div className="flex flex-col justify-center w-[95%] lg:max-w-[40%]">
       <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
         <Tab.List>
-          <Tab className="w-1/4">
+          <Tab className="w-1/4 focus:outline-none focus:ring focus:ring-gray-500 rounded">
             {({ selected }) => (
               <div
                 className={
                   selected
                     ? "rounded-t-md bg-white text-white border-t-4 border-l-2 border-r border-black focus:outline-none"
-                    : "bg-black text-black border-l border-r border-black "
+                    : "bg-black text-black border-l border-r border-black"
                 }
               >
                 ...
               </div>
             )}
           </Tab>
-          <Tab className="w-1/4">
+          <Tab className="w-1/4 focus:outline-none focus:ring focus:ring-gray-500 rounded">
             {({ selected }) => (
               <div
                 className={
@@ -79,7 +79,7 @@ export const WelcomeDialog = () => {
               </div>
             )}
           </Tab>
-          <Tab className="w-1/4">
+          <Tab className="w-1/4 focus:outline-none focus:ring focus:ring-gray-500 rounded">
             {({ selected }) => (
               <div
                 className={
@@ -92,7 +92,7 @@ export const WelcomeDialog = () => {
               </div>
             )}
           </Tab>
-          <Tab className="w-1/4">
+          <Tab className="w-1/4 focus:outline-none focus:ring focus:ring-gray-500 rounded">
             {({ selected }) => (
               <div
                 className={
@@ -107,7 +107,7 @@ export const WelcomeDialog = () => {
           </Tab>
         </Tab.List>
         <Tab.Panels className="border-l-2 border-r-2 border-b-2 border-black bg-white md:min-h-[25%] px-8 pt-6 pb-4 flex flex-col justify-between">
-          <Tab.Panel>
+          <Tab.Panel className="focus:outline-none focus:ring focus:ring-gray-500 rounded">
             Welcome to <span className="font-bold">Knox</span>, a vault for your
             web2 passwords. <br />
             <br />
@@ -115,7 +115,7 @@ export const WelcomeDialog = () => {
             <a
               href="https://twitter.com/pcmonk/status/1563634078779592709"
               target="_blank"
-              className="underline"
+              className="underline focus:outline-none focus:ring focus:ring-gray-500"
             >
               your urbit is not really secure yet.
             </a>{" "}
@@ -127,7 +127,7 @@ export const WelcomeDialog = () => {
             <a
               href="https://roadmap.urbit.org/project/userspace-permissioning"
               target="_blank"
-              className="underline"
+              className="underline focus:outline-none focus:ring focus:ring-gray-500"
             >
               userspace permissioning
             </a>
@@ -141,7 +141,7 @@ export const WelcomeDialog = () => {
             <br />
             <br />
           </Tab.Panel>
-          <Tab.Panel>
+          <Tab.Panel className="focus:outline-none focus:ring focus:ring-gray-500 rounded">
             For now, none of your raw information (including your secret cipher)
             is actually saved to your urbit - Knox entries are encrypted and
             decrypted client side, and your secret is only ever saved to session
@@ -160,13 +160,13 @@ export const WelcomeDialog = () => {
             <br />
             <br />
           </Tab.Panel>
-          <Tab.Panel>
+          <Tab.Panel className="focus:outline-none focus:ring focus:ring-gray-500 rounded">
             <br />
             Set your secret here:
             <br />
             <div className="mt-1 mb-4">
               <input
-                className="border border-black p-1 w-[60%]"
+                className="border border-black p-1 w-[60%] focus:outline-none focus:ring focus:ring-gray-500"
                 placeholder="secret"
                 onChange={handleSecret}
                 value={secret}
@@ -174,13 +174,13 @@ export const WelcomeDialog = () => {
               />
               <div className="inline ml-2">
                 <button
-                  className="border border-black p-1 px-2"
+                  className="border border-black p-1 px-2 focus:outline-none focus:ring focus:ring-gray-500"
                   onClick={() => setShowSecret(!showSecret)}
                 >
                   {showSecret ? "hide" : "show"}
                 </button>
                 <button
-                  className="border border-black p-1 px-2 ml-2"
+                  className="border border-black p-1 px-2 ml-2 focus:outline-none focus:ring focus:ring-gray-500"
                   onClick={() => handleSetSecret(secret)}
                 >
                   set
@@ -197,9 +197,14 @@ export const WelcomeDialog = () => {
             <div>
               <button
                 onClick={() => setShowSecretThatYouSet(!showSecretThatYouSet)}
-                className="border border-black p-1 px-2 mt-3"
+                className="border border-black p-1 px-2 mt-3 focus:outline-none focus:ring focus:ring-gray-500"
               >
-                Show me my secret
+                {showSecretThatYouSet ? (
+                  <span>Hide</span>
+                ) : (
+                  <span>Show me</span>
+                )}{" "}
+                my secret
               </button>
               {showSecretThatYouSet && (
                 <p className="pt-2">
@@ -210,7 +215,7 @@ export const WelcomeDialog = () => {
             </div>
             <br />
           </Tab.Panel>
-          <Tab.Panel>
+          <Tab.Panel className="focus:outline-none focus:ring focus:ring-gray-500 rounded">
             Get Started
             {/* TODO: input align is a little off on mobile  */}
             <div className="flex mt-4">
@@ -218,14 +223,20 @@ export const WelcomeDialog = () => {
                 type="checkbox"
                 checked={dontShow}
                 onChange={() => setDontShow(!dontShow)}
-                className="mr-2"
+                className="mr-2 focus:outline-none focus:ring focus:ring-gray-500"
               />
-              <button onClick={() => setDontShow(!dontShow)}>
+              <button
+                onClick={() => setDontShow(!dontShow)}
+                className="focus:outline-none focus:ring focus:ring-gray-500 rounded"
+              >
                 Don't show this welcome again
               </button>
             </div>
             {error && (
-              <button className="mt-3 px-2 border border-black p-1 rounded bg-red-400 text-left">
+              <button
+                disabled
+                className="mt-3 px-2 border border-black p-1 rounded bg-red-400 text-left"
+              >
                 Something went wrong saving settings. <br /> Unselect or try
                 again.
               </button>
@@ -234,12 +245,17 @@ export const WelcomeDialog = () => {
           <div className="flex justify-end mb-4 mr-2">
             <button
               disabled={selectedIndex === 0}
-              className={`mx-2 ${selectedIndex === 0 ? `text-gray-300` : ""}`}
+              className={`mx-2 ${
+                selectedIndex === 0 ? `text-gray-300` : ""
+              } focus:outline-none focus:ring focus:ring-gray-500 rounded`}
               onClick={() => setSelectedIndex(selectedIndex - 1)}
             >
               back
             </button>
-            <button className="mx-2" onClick={handleNext}>
+            <button
+              className="mx-2 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+              onClick={handleNext}
+            >
               next
             </button>
           </div>

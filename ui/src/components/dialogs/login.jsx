@@ -42,7 +42,7 @@ export const Login = () => {
               <button
                 type="button"
                 onClick={handleShowPassword}
-                className="self-end"
+                className="self-end focus:outline-none focus:ring focus:ring-gray-500"
               >
                 {showPassword ? "hide" : "show"}
               </button>
@@ -52,13 +52,13 @@ export const Login = () => {
                 value={secret}
                 placeholder="set your secret"
                 onChange={handleChange}
-                className="text-black border border-black p-1"
+                className="text-black border border-black p-1 focus:outline-none focus:ring focus:ring-gray-500"
               ></input>
             </div>
 
             <button
               disabled={!secret}
-              className="border-black border-solid border rounded m-2"
+              className="border-black border-solid border rounded m-2 focus:outline-none focus:ring focus:ring-gray-500"
               type="submit"
             >
               set secret

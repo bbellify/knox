@@ -18,7 +18,7 @@ export const InfoDialog = () => {
           <div className="flex flex-col items-center h-[100%] pt-1">
             <button
               onClick={() => dialogDispatch(closeInfoDialog())}
-              className="p-1 mr-2 self-end hover:scale-150"
+              className="p-1 mr-2 self-end hover:scale-150 focus:outline-none focus:ring focus:ring-gray-500 rounded"
             >
               <ion-icon name="close" />
             </button>
