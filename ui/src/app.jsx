@@ -40,9 +40,13 @@ export const App = () => {
         !res.settings.length ||
         (showWelcome && Object.values(showWelcome).includes("true"))
       ) {
-        if (!res.settings.length) setWelcome();
-        settingsDispatch(setSettings(res.settings));
-        navigate("/apps/knox/welcome");
+        if (!res.settings.length) {
+          setWelcome();
+          navigate("/apps/knox/welcome");
+        } else {
+          settingsDispatch(setSettings(res.settings));
+          navigate("/apps/knox/welcome");
+        }
       } else {
         settingsDispatch(setSettings(res.settings));
       }
