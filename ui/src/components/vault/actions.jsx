@@ -48,7 +48,7 @@ export const Actions = () => {
     if (generatedCopied) {
       setTimeout(() => {
         setGeneratedCopied(false);
-      }, "3500");
+      }, 3500);
     }
   }, [generatedCopied]);
 
@@ -106,12 +106,15 @@ export const Actions = () => {
             )}
             {/* TODO: have a save password flow, but could be improved */}
             <button
-              className="text-xl font-bold pl-2"
+              className="text-xl font-bold pl-2 hover:scale-125"
               onClick={() => dialogDispatch(openAddDialog())}
             >
               <ion-icon name="add" />
             </button>
-            <button onClick={handleClose} className="text-xl pl-2">
+            <button
+              onClick={handleClose}
+              className="text-xl pl-2 hover:scale-125"
+            >
               <ion-icon name="close" />
             </button>
           </div>
@@ -119,11 +122,14 @@ export const Actions = () => {
       )}
       {/* action buttons */}
       <div className="">
-        <button className="text-xl font-bold px-2" onClick={handleDice}>
+        <button
+          className="text-xl font-bold px-2 hover:scale-125"
+          onClick={handleDice}
+        >
           <ion-icon name="dice-outline" />
         </button>
         <button
-          className={`text-xl font-bold px-2 hover:scale-120 my-1 ${
+          className={`text-xl font-bold px-2 hover:scale-125 my-1 ${
             !vaultState.length &
             !(
               dialogState.addOpen ||
@@ -140,7 +146,7 @@ export const Actions = () => {
           <ion-icon name="add" />
         </button>
         <button
-          className="text-xl font-bold px-2 hover:scale-120 my-1"
+          className="text-xl font-bold px-2 hover:scale-125 my-1"
           onClick={() => dialogDispatch(openSettings())}
         >
           <ion-icon name="settings-sharp" id="settings-icon" />

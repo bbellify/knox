@@ -92,7 +92,7 @@ export const Vault = () => {
             knox
             <span className="hidden md:inline ml-1">- your password vault</span>
             <button
-              className="px-2"
+              className="px-2 hover:scale-125"
               onClick={() => dialogDispatch(openInfoDialog())}
             >
               <ion-icon name="information-circle-outline" />
@@ -147,7 +147,7 @@ export const Vault = () => {
                     <span className="inline-flex align-bottom pb-1">
                       <ion-icon name="dice-outline" />
                     </span>{" "}
-                    button to generate a password
+                    button above to generate a password
                   </td>
                 </tr>
               </thead>

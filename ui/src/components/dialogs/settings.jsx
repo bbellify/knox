@@ -110,7 +110,7 @@ export const Settings = () => {
           <div className="flex flex-col items-center h-[100%] pt-1">
             <button
               onClick={() => dialogDispatch(closeSettings())}
-              className="p-1 mr-2 self-end"
+              className="p-1 mr-2 self-end hover:scale-150"
             >
               <ion-icon name="close" />
             </button>
@@ -184,19 +184,19 @@ export const Settings = () => {
             </div>
 
             {error && (
-              <button className="my-1 w-[75%] border border-black p-1 rounded bg-red-400">
+              <button className="my-1 w-[75%] border border-black p-1 rounded bg-red-400 pointer-events-none">
                 Something went wrong. Try again.
               </button>
             )}
             <button
               onClick={() => dialogDispatch(closeSettings())}
-              className="mt-1 w-[75%] border border-black p-1 rounded"
+              className="mt-1 w-[75%] border border-black p-1 rounded hover:bg-gray-200"
             >
               Done
             </button>
             <button
               onClick={handleReset}
-              className="mt-1 mb-12 w-[75%] border border-black p-1 rounded"
+              className="mt-1 mb-12 w-[75%] border border-black p-1 rounded hover:bg-gray-200"
             >
               Reset All
             </button>

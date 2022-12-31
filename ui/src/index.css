@@ -23,6 +23,12 @@ ion-icon {
     font-size: 1.3em;
 }
 
+#dialog-copy {
+    margin-left: 1%;
+    padding: 0 1%;
+    font-size: 1.3em;
+}
+
 #generated-copy-icon {
     color: #337CA0;
     margin-left: 10%;

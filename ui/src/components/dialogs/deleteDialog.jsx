@@ -73,7 +73,7 @@ export const DeleteDialog = () => {
           <div className="flex flex-col items-center h-[100%] pt-1">
             <button
               onClick={() => dialogDispatch(closeDeleteDialog())}
-              className="p-1 mr-2 self-end"
+              className="p-1 mr-2 self-end hover:scale-150"
             >
               {/* TODO: get color right */}
               <ion-icon name="close" />
@@ -86,17 +86,17 @@ export const DeleteDialog = () => {
               <button
                 onClick={handleDelete}
                 disabled={loading}
-                className="my-1 w-[75%] border border-black p-1 rounded flex justify-center"
+                className="my-1 w-[75%] border border-black p-1 rounded flex justify-center hover:bg-gray-200"
               >
                 {!loading ? "Delete" : <div className="animate-spin">~</div>}
               </button>
             ) : (
-              <button className="my-1 w-[75%] border border-black p-1 rounded bg-green-400">
+              <button className="my-1 w-[75%] border border-black p-1 rounded bg-green-400 pointer-events-none">
                 Success
               </button>
             )}
             {error && (
-              <button className="my-1 w-3/4 px-2 border border-black p-1 rounded bg-red-400">
+              <button className="my-1 w-3/4 px-2 border border-black p-1 rounded bg-red-400 pointer-events-none">
                 Something went wrong. Try again.
               </button>
             )}

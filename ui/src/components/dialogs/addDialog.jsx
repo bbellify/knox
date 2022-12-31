@@ -17,6 +17,7 @@ export const AddDialog = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [showPass, setShowPass] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [formState, setFormState] = useState({
     website: "",
     username: "",
@@ -47,6 +48,11 @@ export const AddDialog = () => {
     if (error) setTimeout(() => setError(false), 7000);
   }, [error]);
 
+  // clear copied icon
+  useEffect(() => {
+    if (copied) setTimeout(() => setCopied(false), 3500);
+  }, [copied]);
+
   const handleChange = (e) => {
     setFormState({
       ...formState,
@@ -60,6 +66,7 @@ export const AddDialog = () => {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(formState.password);
+    setCopied(true);
   };
 
   const handleSuccess = (res) => {
@@ -113,9 +120,8 @@ export const AddDialog = () => {
           <div className="flex flex-col items-center h-[100%] pt-1">
             <button
               onClick={() => dialogDispatch(closeAddDialog())}
-              className="p-1 mr-2 self-end"
+              className="p-1 mr-2 self-end hover:scale-150"
             >
-              {/* get color right */}
               <ion-icon name="close" />
             </button>
 
@@ -136,7 +142,7 @@ export const AddDialog = () => {
               onChange={handleChange}
               placeholder="username"
             />
-            <div className="w-3/4 flex justify-between">
+            <div className="w-3/4 flex justify-between items-center">
               <input
                 className="my-1 border border-black p-1 w-full"
                 name="password"
@@ -145,20 +151,21 @@ export const AddDialog = () => {
                 placeholder="password"
                 type={!showPass ? "password" : ""}
               />
+              {copied && <ion-icon id="dialog-copy" name="copy-outline" />}
               <button onClick={() => setShowPass(!showPass)} className="pl-1">
                 {!showPass ? "show" : "hide"}
               </button>
             </div>
             <button
               onClick={handleGenerate}
-              className="mt-1 mb-6 w-[75%] border border-black p-1 rounded"
+              className="mt-1 mb-6 w-[75%] border border-black p-1 rounded hover:bg-gray-200"
             >
               Generate
             </button>
 
             {!success ? (
               <button
-                className={`my-1 w-[75%] border border-black p-1 rounded flex justify-center ${
+                className={`my-1 w-[75%] border border-black p-1 rounded flex justify-center hover:bg-gray-200 ${
                   !loading && "disabled:opacity-25 disabled:pointer-events-none"
                 }`}
                 onClick={handleAdd}
@@ -167,19 +174,19 @@ export const AddDialog = () => {
                 {!loading ? "Save" : <div className="animate-spin">~</div>}
               </button>
             ) : (
-              <button className="my-1 w-[75%] border border-black p-1 rounded bg-green-400">
+              <button className="my-1 w-[75%] border border-black p-1 rounded bg-green-400 pointer-events-none">
                 Success
               </button>
             )}
             {error && (
-              <button className="my-1 w-[75%] border border-black p-1 rounded bg-red-400">
+              <button className="my-1 w-[75%] border border-black p-1 rounded bg-red-400 pointer-events-none">
                 Something went wrong. Try again.
               </button>
             )}
             {!error && Boolean(formState?.password?.length) && (
               <button
                 onClick={handleCopy}
-                className="mt-1 mb-6 w-[75%] border border-black p-1 rounded"
+                className="mt-1 mb-6 w-[75%] border border-black p-1 rounded hover:bg-gray-200"
               >
                 Copy password
               </button>

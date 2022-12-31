@@ -3,12 +3,12 @@
 +$  username  @t
 +$  password  @t
 +$  updated   @da
-+$  id        @ud  :: change this to dif type
++$  id        @ud  :: TODO: change this to dif type
 +$  entry  [=website =username =password =updated]
 +$  enty  @ud
 +$  setting-key  @tas
 +$  setting-val  @t
-:: poke actions
+:: poke action types
 +$  action
   $%  [%add =website =username =password]
       [%edit =id =website =username =password]
@@ -17,6 +17,7 @@
       [%sett =setting-key =setting-val]
       [%reset-set num=@]
   ==
+:: update for json types
 +$  update
   $%  [%init =vault =settings]
       [%vault =vault]

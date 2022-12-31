@@ -37,7 +37,7 @@ export const VaultTableRow = (props) => {
     if (Object.values(copied).some((val) => val === true)) {
       setTimeout(() => {
         setCopied(defaultCopied);
-      }, "3500");
+      }, 3500);
     }
   }, [copied]);
 
@@ -150,7 +150,7 @@ export const VaultTableRow = (props) => {
           </div>
         </td>
 
-        <td className="text-center">
+        <td className="text-center hover:scale-125">
           <button onClick={handleShowPass}>
             {passHidden ? <ion-icon name="eye" /> : <ion-icon name="eye-off" />}
           </button>
@@ -161,7 +161,7 @@ export const VaultTableRow = (props) => {
           <div className="whitespace-nowrap">
             <button
               onClick={() => dialogDispatch(openEditDialog(entry))}
-              className="pr-1 md:px-2"
+              className="pr-1 md:px-2 hover:scale-125"
             >
               <ion-icon name="pencil" />
             </button>
@@ -171,7 +171,7 @@ export const VaultTableRow = (props) => {
                   ? () => handleDelete(entry.id)
                   : () => dialogDispatch(openDeleteDialog(entry.id))
               }
-              className="pl-1 md:px-2"
+              className="pl-1 md:px-2 hover:scale-125"
             >
               <ion-icon name="trash" />
             </button>
