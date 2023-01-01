@@ -8,6 +8,12 @@ import { DialogContext } from "../../store/contexts/dialogContext";
 import dialogActions from "../../store/actions/dialogActions";
 import { aesEncrypt, generatePassword, getSecret } from "../../utils";
 
+const defaultFormState = {
+  website: "",
+  username: "",
+  password: "",
+};
+
 export const AddDialog = () => {
   const [urbitApi] = useContext(UrbitContext);
   const [, vaultDispatch] = useContext(VaultContext);
@@ -18,11 +24,7 @@ export const AddDialog = () => {
   const [error, setError] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [formState, setFormState] = useState({
-    website: "",
-    username: "",
-    password: "",
-  });
+  const [formState, setFormState] = useState(defaultFormState);
 
   const { closeAddDialog } = dialogActions;
   const { setVault } = vaultActions;
@@ -43,10 +45,18 @@ export const AddDialog = () => {
     else setDisabled(true);
   }, [formState]);
 
-  // clear error after 7 seconds
+  // TODO: do I really want to clear form, or should I just close and prevent closing if I open new add dialog
+  // clear error after 7 seconds, clear form on success after 5 seconds
   useEffect(() => {
+    if (success)
+      setTimeout(() => {
+        setSuccess(false);
+        setDisabled(true);
+        setLoading(false);
+        setFormState(defaultFormState);
+      }, 4000);
     if (error) setTimeout(() => setError(false), 7000);
-  }, [error]);
+  }, [success, error]);
 
   // clear copied icon
   useEffect(() => {
@@ -69,14 +79,14 @@ export const AddDialog = () => {
     setCopied(true);
   };
 
-  const handleSuccess = (res) => {
+  const handleSuccess = () => {
     setSuccess(true);
     setDisabled(true);
     setLoading(false);
     handleScry();
   };
 
-  const handleError = (err) => {
+  const handleError = () => {
     setLoading(false);
     setError(true);
   };

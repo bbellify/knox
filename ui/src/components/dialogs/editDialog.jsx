@@ -13,6 +13,7 @@ import { aesEncrypt, getSecret, generatePassword } from "../../utils";
  * but this might require some extra UI considerations.. how to handle
  * success/errors - snack? etc
  */
+
 export const EditDialog = () => {
   const [urbitApi] = useContext(UrbitContext);
   const [, vaultDispatch] = useContext(VaultContext);
@@ -20,17 +21,19 @@ export const EditDialog = () => {
   const { closeEditDialog } = dialogActions;
   const { setVault } = vaultActions;
 
+  const defaultFormState = {
+    website: dialogState.editWebsite,
+    username: dialogState.editUsername,
+    password: dialogState.editPassword,
+  };
+
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [showPass, setShowPass] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [formState, setFormState] = useState({
-    website: dialogState.editWebsite,
-    username: dialogState.editUsername,
-    password: dialogState.editPassword,
-  });
+  const [formState, setFormState] = useState(defaultFormState);
 
   // set form password to password from dialog context when password is generated
   useEffect(() => {
@@ -48,6 +51,7 @@ export const EditDialog = () => {
     else setDisabled(true);
   }, [formState]);
 
+  // TODO: close on success, but prevent closing happening on entering new dialog
   // clear error after 7 seconds
   useEffect(() => {
     if (error) setTimeout(() => setError(false), 7000);

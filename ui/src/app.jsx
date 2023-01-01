@@ -54,6 +54,7 @@ export const App = () => {
   };
 
   const setWelcome = () => {
+    // TODO: set copy password on hidden default
     urbitApi
       .poke({
         app: "knox",
