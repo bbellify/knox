@@ -45,16 +45,12 @@ export const AddDialog = () => {
     else setDisabled(true);
   }, [formState]);
 
-  // TODO: do I really want to clear form, or should I just close and prevent closing if I open new add dialog
-  // clear error after 7 seconds, clear form on success after 5 seconds
+  // clear error after 7 seconds, clear form on success after 4 seconds
   useEffect(() => {
-    if (success)
-      setTimeout(() => {
-        setSuccess(false);
-        setDisabled(true);
-        setLoading(false);
-        setFormState(defaultFormState);
-      }, 4000);
+    if (success) {
+      const timer = setTimeout(() => dialogDispatch(closeAddDialog()), 4000);
+      return () => clearTimeout(timer);
+    }
     if (error) setTimeout(() => setError(false), 7000);
   }, [success, error]);
 

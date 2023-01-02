@@ -51,11 +51,14 @@ export const EditDialog = () => {
     else setDisabled(true);
   }, [formState]);
 
-  // TODO: close on success, but prevent closing happening on entering new dialog
-  // clear error after 7 seconds
+  // clear error after 7 seconds, close dialog on success after 4 seconds
   useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => dialogDispatch(closeEditDialog()), 4000);
+      return () => clearTimeout(timer);
+    }
     if (error) setTimeout(() => setError(false), 7000);
-  }, [error]);
+  }, [success, error]);
 
   // clear copied icon
   useEffect(() => {
