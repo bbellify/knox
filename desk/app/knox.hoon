@@ -15,7 +15,9 @@
 +*  this  .
     def   ~(. (default-agent this %|) bowl)
     io    ~(. agentio bowl)
-++  on-init  on-init:def
+++  on-init
+:: set default settings on init
+  `this(settings `(map setting-key setting-val)`(malt ~[[`setting-key`'showWelcome' `setting-val`'true'] [`setting-key`'copyHidden' `setting-val`'true'] [`setting-key`'skipDeleteWarn' `setting-val`'false']]))
 ::
 ++  on-save
   ^-  vase
@@ -47,7 +49,7 @@
       %sett
     `this(settings (~(put by settings) setting-key.act [setting-val.act]))
       %reset-set
-    `this(settings `(map setting-key setting-val)`(malt ~[[`setting-key`'showWelcome' `setting-val`'true']]))
+    `this(settings `(map setting-key setting-val)`(malt ~[[`setting-key`'showWelcome' `setting-val`'true'] [`setting-key`'copyHidden' `setting-val`'true'] [`setting-key`'skipDeleteWarn' `setting-val`'false']]))
     :: below is an example of sending an update with :_
       %gen
     :_

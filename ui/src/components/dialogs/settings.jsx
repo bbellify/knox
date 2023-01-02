@@ -13,6 +13,7 @@ export const Settings = () => {
   const [dialogState, dialogDispatch] = useContext(DialogContext);
   const [setsForm, setSetsForm] = useState(settingsState);
   const [loading, setLoading] = useState({});
+  const [allLoading, setAllLoading] = useState(false);
   const [error, setError] = useState(false);
   const { setSettings } = settingsActions;
   const { closeSettings } = dialogActions;
@@ -22,12 +23,6 @@ export const Settings = () => {
   }, [settingsState]);
 
   const handleScry = (setting) => {
-    if (setting)
-      setLoading({
-        ...loading,
-        [setting]: true,
-      });
-
     urbitApi
       .scry({
         app: "knox",
@@ -35,11 +30,9 @@ export const Settings = () => {
       })
       .then((res) => {
         // TODO: need a better way to handle loading for all (for reset), here and in handleReset
-        setLoading(
-          setting
-            ? { ...loading, [setting]: false }
-            : { showWelcome: false, copyHidden: false, skipDeleteWarn: false }
-        );
+        setting
+          ? setLoading({ ...loading, [setting]: false })
+          : setAllLoading(false);
         settingsDispatch(setSettings(res.settings));
       })
       .catch(() => handleError());
@@ -51,12 +44,6 @@ export const Settings = () => {
       [setting]: true,
     });
 
-    // TODO: will need to add to this to handle non-boolean values (themes?)
-    const getValue = () => {
-      if (setsForm[setting]) return !setsForm[setting];
-      else return true;
-    };
-
     urbitApi
       .poke({
         app: "knox",
@@ -64,7 +51,7 @@ export const Settings = () => {
         json: {
           sett: {
             "setting-key": setting,
-            "setting-val": `${getValue()}`,
+            "setting-val": `${!setsForm[setting]}`,
           },
         },
       })
@@ -73,19 +60,17 @@ export const Settings = () => {
   };
 
   const handleError = (setting) => {
-    setLoading({
-      ...loading,
-      [setting]: false,
-    });
+    setting
+      ? setLoading({
+          ...loading,
+          [setting]: false,
+        })
+      : setAllLoading(false);
     setError(true);
   };
 
   const handleReset = () => {
-    setLoading({
-      showWelcome: true,
-      copyHidden: true,
-      skipDeleteWarn: true,
-    });
+    setAllLoading(true);
     urbitApi
       .poke({
         app: "knox",
@@ -119,9 +104,11 @@ export const Settings = () => {
             <div className="my-12 w-[85%]">
               <div className="flex my-4 justify-between">
                 <p>Show welcome screen</p>
-                {!loading.showWelcome ? (
+                {loading.showWelcome || allLoading ? (
+                  <div className="animate-spin mr-6">~</div>
+                ) : (
                   <Switch
-                    checked={setsForm.showWelcome ?? null}
+                    checked={setsForm.showWelcome}
                     onChange={() => handleChange("showWelcome")}
                     className={`${
                       setsForm.showWelcome ? "bg-blueMain" : "bg-gray-200"
@@ -133,15 +120,15 @@ export const Settings = () => {
                       } inline-block h-4 w-4 transform rounded-full bg-white transition`}
                     />
                   </Switch>
-                ) : (
-                  <div className="animate-spin mr-6">~</div>
                 )}
               </div>
               <div className="flex mt-4 justify-between">
                 <p>Click to copy hidden passwords</p>
-                {!loading.copyHidden ? (
+                {loading.copyHidden || allLoading ? (
+                  <div className="animate-spin mr-6">~</div>
+                ) : (
                   <Switch
-                    checked={setsForm.copyHidden ?? null}
+                    checked={setsForm.copyHidden}
                     onChange={() => handleChange("copyHidden")}
                     className={`${
                       setsForm.copyHidden ? "bg-blueMain" : "bg-gray-200"
@@ -153,15 +140,15 @@ export const Settings = () => {
                       } inline-block h-4 w-4 transform rounded-full bg-white transition`}
                     />
                   </Switch>
-                ) : (
-                  <div className="animate-spin mr-6">~</div>
                 )}
               </div>
               <div className="flex my-4 justify-between">
                 <p>One-click delete (skip delete warning)</p>
-                {!loading.skipDeleteWarn ? (
+                {loading.skipDeleteWarn || allLoading ? (
+                  <div className="animate-spin mr-6">~</div>
+                ) : (
                   <Switch
-                    checked={setsForm.skipDeleteWarn ?? null}
+                    checked={setsForm.skipDeleteWarn}
                     onChange={() => {
                       handleChange("skipDeleteWarn");
                     }}
@@ -177,8 +164,6 @@ export const Settings = () => {
                       } inline-block h-4 w-4 transform rounded-full bg-white transition`}
                     />
                   </Switch>
-                ) : (
-                  <div className="animate-spin mr-6">~</div>
                 )}
               </div>
             </div>

@@ -35,6 +35,7 @@ export const Vault = () => {
     if (!getSecret()) navigate("/apps/knox/login");
   }, []);
 
+  // get settings and set to context
   useEffect(() => {
     urbitApi
       .scry({
@@ -48,6 +49,7 @@ export const Vault = () => {
       .catch((err) => console.log("err", err));
   }, []);
 
+  // get vault and set to context
   useEffect(() => {
     urbitApi
       .scry({
