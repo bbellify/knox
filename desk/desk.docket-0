@@ -1,4 +1,4 @@
-:~  title+'knox'
+:~  title+'Knox'
     info+'a vault for your web2 passwords'
     color+0x2e.4347
     glob-http+['https://bootstrap.urbit.org/glob-0v5.hurm4.ejod5.ngg9h.iub9i.n1j7o.glob' 0v5.hurm4.ejod5.ngg9h.iub9i.n1j7o]
