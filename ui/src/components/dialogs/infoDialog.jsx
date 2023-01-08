@@ -25,8 +25,8 @@ export const InfoDialog = () => {
             <Dialog.Title className="text-xl">Knox Info</Dialog.Title>
 
             <div className="my-12">
-              <h3>Info here</h3>
-              <h3>Info here</h3>
+              <h3>Version: 0.1.0</h3>
+              <h3>Created by ~wordel-sitnec and ~radbus-tactyl</h3>
             </div>
           </div>
         </div>
