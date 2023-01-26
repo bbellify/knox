@@ -13,7 +13,8 @@ module.exports = {
         screen80: "80vh",
       },
       colors: {
-        blueMain: "#337CA0",
+        // blueMain: "#337CA0",
+        blueMain: "#222F44",
       },
     },
   },
