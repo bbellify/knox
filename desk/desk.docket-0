@@ -1,0 +1,10 @@
+:~  title+'Knox'
+    info+'a vault for your web2 passwords'
+    color+0x33.7ca0
+    base+'knox'
+    version+[0 1 0]
+    website+'https://github.com/bbellify/knox'
+    license+'MIT'
+    image+'https://mbs.sfo3.digitaloceanspaces.com/knox/knox-img.png'
+    glob-ames+[~dister-dister-wordel-sitnec 0v0]
+==
