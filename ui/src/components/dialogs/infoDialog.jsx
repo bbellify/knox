@@ -27,6 +27,8 @@ export const InfoDialog = () => {
             <div className="my-12">
               <h3>Version: 0.1.0</h3>
               <h3>Created by ~wordel-sitnec</h3>
+              {/* TODO */}
+              <h3>Add link to extension HERE</h3>
             </div>
           </div>
         </div>
