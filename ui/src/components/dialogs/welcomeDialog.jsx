@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import * as bcrypt from "bcryptjs";
 import { Tab } from "@headlessui/react";
 
 import { UrbitContext } from "../../store/contexts/urbitContext";
@@ -10,11 +11,28 @@ export const WelcomeDialog = () => {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [secret, setSecret] = useState("");
+  const [secret2, setSecret2] = useState("");
   const [showSecret, setShowSecret] = useState(false);
+  const [showSecret2, setShowSecret2] = useState(false);
   const [showSecretThatYouSet, setShowSecretThatYouSet] = useState(false);
+  const [secretValidation, setSecretValidation] = useState(false);
+  const [saveSecretEnabled, setSaveSecretEnabled] = useState(false);
+  const [secretSuccess, setSecretSuccess] = useState(null);
+  const [secretError, setSecretError] = useState(false);
   const [dontShow, setDontShow] = useState(false);
-  const [error, setError] = useState(false);
+  const [settingsError, setSettingsError] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (secret === secret2) return setSecretValidation(true);
+    else return setSecretValidation(false);
+  }, [secret, secret2]);
+
+  useEffect(() => {
+    if (secretValidation) {
+      if (secret.length && secret2.length) return setSaveSecretEnabled(true);
+    } else return setSaveSecretEnabled(false);
+  }, [secretValidation]);
 
   const handleSaveSettings = () => {
     urbitApi
@@ -29,7 +47,7 @@ export const WelcomeDialog = () => {
         },
       })
       .then(() => navigate("/apps/knox/login"))
-      .catch(() => setError(true));
+      .catch(() => setSettingsError(true));
   };
 
   const handleNext = () => {
@@ -43,9 +61,32 @@ export const WelcomeDialog = () => {
     setSecret(e.target.value);
   };
 
-  const handleSetSecret = (secret) => {
-    storeSecret(secret);
-    setSecret("");
+  const handleSecret2 = (e) => {
+    setSecret2(e.target.value);
+  };
+
+  const handleSaveSecret = (secret) => {
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(secret, salt);
+
+    urbitApi
+      .poke({
+        app: "knox",
+        mark: "knox-action",
+        json: {
+          sett: {
+            "setting-key": "secretHash",
+            "setting-val": hash,
+          },
+        },
+      })
+      .then(() => {
+        setSecret("");
+        setSecret2("");
+        setSecretSuccess(true);
+        storeSecret(secret);
+      })
+      .catch(() => setSecretError(true));
   };
 
   // TODO: handle the height of this so it doesn't change
@@ -144,26 +185,23 @@ export const WelcomeDialog = () => {
           <Tab.Panel className="focus:outline-none focus:ring focus:ring-gray-500 rounded">
             For now, none of your raw information (including your secret cipher)
             is actually saved to your urbit - Knox entries are encrypted and
-            decrypted client side, and your secret is only ever saved to session
-            storage.
-            <br />
-            <br />
-            This means Knox cannot tell if you've successfully "logged in" -
-            this will only become apparent when Knox is unable to decipher your
-            entries.
-            <br />
-            <br />
-            This also means that any entries saved using the wrong secret will
-            be undecipherable later with the correct secret, messing up your
-            vault. This will all get sorted out in due time, but for now{" "}
-            <span className="font-bold">be careful.</span>
-            <br />
+            decrypted client side, and your raw secret is only ever saved to
+            session storage.
             <br />
           </Tab.Panel>
           <Tab.Panel className="focus:outline-none focus:ring focus:ring-gray-500 rounded">
             <br />
-            Set your secret here:
+            Here you will set the secret used to encrypt all your saved entries.
             <br />
+            <br />
+            Do not forget this, write it down or something.
+            <br />
+            <br />
+            The ability to change your secret, along with more advanced uses
+            like cycling all your saved passwords, is coming post alpha.
+            <br />
+            <br />
+            Set your secret here:
             <div className="mt-1 mb-4">
               <input
                 className="border border-black p-1 w-[60%] focus:outline-none focus:ring focus:ring-gray-500"
@@ -179,25 +217,60 @@ export const WelcomeDialog = () => {
                 >
                   {showSecret ? "hide" : "show"}
                 </button>
+              </div>
+              <input
+                className="border border-black p-1 w-[60%] mt-2 focus:outline-none focus:ring focus:ring-gray-500"
+                placeholder="confirm your secret"
+                onChange={handleSecret2}
+                value={secret2}
+                type={!showSecret2 ? "password" : null}
+              />
+              <div className="inline ml-2">
                 <button
-                  className="border border-black p-1 px-2 ml-2 focus:outline-none focus:ring focus:ring-gray-500"
-                  onClick={() => handleSetSecret(secret)}
+                  className="border border-black p-1 px-2 focus:outline-none focus:ring focus:ring-gray-500"
+                  onClick={() => setShowSecret2(!showSecret2)}
                 >
-                  set
+                  {showSecret2 ? "hide" : "show"}
+                </button>
+                <button
+                  disabled={!saveSecretEnabled}
+                  className={`border border-black p-1 px-2 ml-2 focus:outline-none focus:ring focus:ring-gray-500 ${
+                    saveSecretEnabled ? null : "text-gray-400"
+                  }`}
+                  onClick={() => handleSaveSecret(secret)}
+                >
+                  save
                 </button>
               </div>
+              {!secretValidation && (
+                <button
+                  disabled
+                  className="mt-3 px-2 border border-black p-1 rounded bg-red-400 text-left block"
+                >
+                  secrets don't match
+                </button>
+              )}
+              {secretError && (
+                <button
+                  disabled
+                  className="mt-3 px-2 border border-black p-1 rounded bg-red-400 text-left"
+                >
+                  Something went wrong saving your secret. Try again
+                </button>
+              )}
+              {secretSuccess && (
+                <button
+                  disabled
+                  className="mt-2 border border-black p-1 rounded bg-green-400 pointer-events-none block px-4"
+                >
+                  secret saved
+                </button>
+              )}
             </div>
-            Do not forget this, write it down or something.
-            <br />
-            <br />
-            You can change your secret here (just use the form above again), but
-            once you save an entry using a secret you probably shouldn't change
-            it. The ability to change your secret, along with the re-encrypting
-            of all the data that entails, is coming post alpha.
             <div>
               <button
                 onClick={() => setShowSecretThatYouSet(!showSecretThatYouSet)}
-                className="border border-black p-1 px-2 mt-3 focus:outline-none focus:ring focus:ring-gray-500"
+                className="border border-black p-1 px-2 mt-1 focus:outline-none focus:ring focus:ring-gray-500"
               >
                 {showSecretThatYouSet ? (
                   <span>Hide</span>
@@ -207,7 +280,7 @@ export const WelcomeDialog = () => {
                 my secret
               </button>
               {showSecretThatYouSet && (
-                <p className="pt-2">
+                <p className="pt-2 inline ml-4">
                   Your secret is{" "}
                   <span className="font-bold">{getSecret()}</span>
                 </p>
@@ -232,7 +305,7 @@ export const WelcomeDialog = () => {
                 Don't show this welcome again
               </button>
             </div>
-            {error && (
+            {settingsError && (
               <button
                 disabled
                 className="mt-3 px-2 border border-black p-1 rounded bg-red-400 text-left"

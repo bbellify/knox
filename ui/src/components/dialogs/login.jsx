@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dialog } from "@headlessui/react";
+import * as bcrypt from "bcryptjs";
 import { getSecret, storeSecret } from "../../utils";
 
+import { UrbitContext } from "../../store/contexts/urbitContext";
+
 export const Login = () => {
+  const [urbitApi] = useContext(UrbitContext);
   const [open, setOpen] = useState(true);
   const [secret, setSecret] = useState("");
+  const [wrongSecret, setWrongSecret] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
@@ -24,8 +29,25 @@ export const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    storeSecret(secret);
-    navigate("/apps/knox/");
+    urbitApi
+      .scry({
+        app: "knox",
+        path: "/settings",
+      })
+      .then((res) => {
+        const { secretHash } = res.settings.find((set) => set["secretHash"]);
+        if (bcrypt.compareSync(secret, secretHash)) {
+          storeSecret(secret);
+          navigate("/apps/knox/");
+        } else {
+          setWrongSecret(true);
+          setTimeout(() => {
+            setWrongSecret(false);
+          }, 3000);
+        }
+      })
+      // TODO: use this to set an error?
+      .catch((err) => console.log("err", err));
   };
 
   return (
@@ -55,7 +77,14 @@ export const Login = () => {
                 className="text-black border border-black p-1 focus:outline-none focus:ring focus:ring-gray-500"
               ></input>
             </div>
-
+            {wrongSecret && (
+              <button
+                disabled
+                className="border border-black rounded bg-red-400"
+              >
+                invalid secret
+              </button>
+            )}
             <button
               disabled={!secret}
               className="border-black border-solid border rounded m-2 focus:outline-none focus:ring focus:ring-gray-500"

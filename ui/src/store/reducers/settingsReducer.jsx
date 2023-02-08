@@ -8,6 +8,7 @@ export const settingsReducer = (state, action) => {
       // TODO: finish this setting to entries business
       let setsObj = {};
       action.settings.forEach((set) => {
+        if (set.secretHash) return;
         let val = Object.values(set)[0];
         switch (val) {
           case "true":
