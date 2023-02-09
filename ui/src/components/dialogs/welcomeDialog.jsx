@@ -74,9 +74,8 @@ export const WelcomeDialog = () => {
         app: "knox",
         mark: "knox-action",
         json: {
-          sett: {
-            "setting-key": "secretHash",
-            "setting-val": hash,
+          secret: {
+            "secret-hash": hash,
           },
         },
       })

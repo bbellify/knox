@@ -9,6 +9,7 @@
   :~  [%add (ot ~[website+so username+so password+so])]
       [%edit (ot ~[id+ni website+so username+so password+so])]
       [%del (ot ~[id+ni])]
+      [%secret (ot ~[secret-hash+so])]
       [%sett (ot ~[setting-key+so setting-val+so])]
       [%reset-set (ot ~[num+ni])]
       [%gen (ot ~[enty+ni])]
@@ -22,6 +23,7 @@
            %gen  !!
            %sett  !!
            %reset-set  !!
+           %secret  (frond 'secret' s+secret-hash.upd)
            %add  
         %+  frond  'add'
         %-  pairs

@@ -4,7 +4,7 @@
 +$  versioned-state
   $%  state-0
   ==
-+$  state-0  [%0 =vault =settings]
++$  state-0  [%0 =vault =settings =secret-hash]
 +$  card  card:agent:gall
 --
 %-  agent:dbug
@@ -46,6 +46,8 @@
       ::
       %edit
     `this(vault (~(put by vault) id.act `entry`[website.act username.act password.act now:bowl]))
+      %secret
+    `this(secret-hash secret-hash.act)
       %sett
     `this(settings (~(put by settings) setting-key.act [setting-val.act]))
       %reset-set
@@ -83,6 +85,10 @@
     :^  ~  ~  %knox-update
     !>  ^-  update
     [%enty numb]
+      [%x %secret ~]
+    :^  ~  ~  %knox-update
+    !>  ^-  update
+    [%secret secret-hash]
    ==
 ++  on-leave  on-leave:def
 ++  on-agent  on-agent:def

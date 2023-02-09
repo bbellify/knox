@@ -1,9 +1,10 @@
 |%
-+$  website   @t
-+$  username  @t
-+$  password  @t
-+$  updated   @da
-+$  id        @ud  :: TODO: change this to dif type
++$  website     @t
++$  username    @t
++$  password    @t
++$  updated     @da
++$  id          @ud  :: TODO: change this to dif type
++$  secret-hash  @t
 +$  entry  [=website =username =password =updated]
 +$  enty  @ud
 +$  setting-key  @tas
@@ -16,6 +17,7 @@
       [%gen =enty]
       [%sett =setting-key =setting-val]
       [%reset-set num=@]
+      [%secret =secret-hash]
   ==
 :: update for json types
 +$  update

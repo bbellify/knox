@@ -32,10 +32,10 @@ export const Login = () => {
     urbitApi
       .scry({
         app: "knox",
-        path: "/settings",
+        path: "/secret",
       })
       .then((res) => {
-        const { secretHash } = res.settings.find((set) => set["secretHash"]);
+        const secretHash = res.secret;
         if (bcrypt.compareSync(secret, secretHash)) {
           storeSecret(secret);
           navigate("/apps/knox/");
