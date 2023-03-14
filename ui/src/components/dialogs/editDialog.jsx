@@ -179,11 +179,6 @@ export const EditDialog = () => {
               Generate
             </button>
 
-            {/*
-             * TODO: slight bug with this button,
-             * sometimes gets stuck if you click too many times,
-             * same with add dialog
-             */}
             {!success ? (
               <button
                 className={`my-1 w-[75%] border border-black p-1 rounded flex justify-center hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500 ${

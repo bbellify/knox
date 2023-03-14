@@ -3,11 +3,13 @@
 @tailwind utilities;
 
 html {
-    background-color: #D9D6D4;
+    /* background-color: #F5F1E0; */
+    background-image: linear-gradient(to bottom, #f5f1e0, #f6f3e4, #f8f4e8, #f9f6ec, #faf8f0);
 }
 
 main {
-    background-color: #D9D6D4;
+    /* background-color: #F5F1E0; */
+    background-image: linear-gradient(to bottom, #f5f1e0, #f6f3e4, #f8f4e8, #f9f6ec, #faf8f0);
 }
 
 ion-icon {

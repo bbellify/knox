@@ -75,7 +75,6 @@ export const DeleteDialog = () => {
               onClick={() => dialogDispatch(closeDeleteDialog())}
               className="p-1 mr-2 self-end hover:scale-150 focus:outline-none focus:ring focus:ring-gray-500 rounded"
             >
-              {/* TODO: get color right */}
               <ion-icon name="close" />
             </button>
             <Dialog.Title className="text-xl mb-6 text-center">

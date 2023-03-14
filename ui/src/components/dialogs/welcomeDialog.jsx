@@ -88,7 +88,6 @@ export const WelcomeDialog = () => {
       .catch(() => setSecretError(true));
   };
 
-  // TODO: handle the height of this so it doesn't change
   return (
     <div className="flex flex-col justify-center w-[95%] lg:max-w-[40%]">
       <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
@@ -146,6 +145,7 @@ export const WelcomeDialog = () => {
             )}
           </Tab>
         </Tab.List>
+        {/* // TODO: handle the height of this so it doesn't change */}
         <Tab.Panels className="border-l-2 border-r-2 border-b-2 border-black bg-white md:min-h-[25%] px-8 pt-6 pb-4 flex flex-col justify-between">
           <Tab.Panel className="focus:outline-none focus:ring focus:ring-gray-500 rounded">
             Welcome to <span className="font-bold">Knox</span>, a vault for your

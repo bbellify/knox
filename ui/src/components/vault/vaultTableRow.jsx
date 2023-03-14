@@ -8,8 +8,6 @@ import { DialogContext } from "../../store/contexts/dialogContext";
 import dialogActions from "../../store/actions/dialogActions";
 import { password } from "./password";
 
-// TODO: need to get settings from settings context, change what happens with delete button accordingly
-// show warning ? modal : just delete
 export const VaultTableRow = (props) => {
   const { entry } = props;
   const [urbitApi] = useContext(UrbitContext);
@@ -132,10 +130,6 @@ export const VaultTableRow = (props) => {
           </div>
         </td>
 
-        {/*
-         * TODO: right now can copy password even if hidden
-         * might be a nice thing to add to settings
-         */}
         <td className="py-2">
           <div className="flex justify-center items-center">
             <button
