@@ -12,8 +12,6 @@ export const Settings = () => {
   const [settingsState, settingsDispatch] = useContext(SettingsContext);
   const [dialogState, dialogDispatch] = useContext(DialogContext);
   const [setsForm, setSetsForm] = useState(settingsState);
-  const [loading, setLoading] = useState({});
-  const [allLoading, setAllLoading] = useState(false);
   const [error, setError] = useState(false);
   const { setSettings } = settingsActions;
   const { closeSettings } = dialogActions;
@@ -22,28 +20,19 @@ export const Settings = () => {
     setSetsForm(settingsState);
   }, [settingsState]);
 
-  const handleScry = (setting) => {
+  const handleScry = () => {
     urbitApi
       .scry({
         app: "knox",
         path: "/settings",
       })
       .then((res) => {
-        // TODO: need a better way to handle loading for all (for reset), here and in handleReset
-        setting
-          ? setLoading({ ...loading, [setting]: false })
-          : setAllLoading(false);
         settingsDispatch(setSettings(res.settings));
       })
       .catch(() => handleError());
   };
 
   const handleChange = (setting) => {
-    setLoading({
-      ...loading,
-      [setting]: true,
-    });
-
     urbitApi
       .poke({
         app: "knox",
@@ -55,18 +44,8 @@ export const Settings = () => {
           },
         },
       })
-      .then(() => handleScry(setting))
-      .catch(() => handleError(setting));
-  };
-
-  const handleError = (setting) => {
-    setting
-      ? setLoading({
-          ...loading,
-          [setting]: false,
-        })
-      : setAllLoading(false);
-    setError(true);
+      .then(() => handleScry())
+      .catch(() => setError(true));
   };
 
   const handleReset = () => {
@@ -82,7 +61,7 @@ export const Settings = () => {
         },
       })
       .then(() => handleScry())
-      .catch(() => handleError());
+      .catch(() => setError(true));
   };
 
   return (
@@ -104,67 +83,55 @@ export const Settings = () => {
             <div className="my-12 w-[85%]">
               <div className="flex my-4 justify-between">
                 <p>Show welcome screen</p>
-                {loading.showWelcome || allLoading ? (
-                  <div className="animate-spin mr-6">~</div>
-                ) : (
-                  <Switch
-                    checked={setsForm.showWelcome}
-                    onChange={() => handleChange("showWelcome")}
+                <Switch
+                  checked={setsForm.showWelcome}
+                  onChange={() => handleChange("showWelcome")}
+                  className={`${
+                    setsForm.showWelcome ? "bg-blueMain" : "bg-gray-200"
+                  } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
+                >
+                  <span
                     className={`${
-                      setsForm.showWelcome ? "bg-blueMain" : "bg-gray-200"
-                    } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
-                  >
-                    <span
-                      className={`${
-                        setsForm.showWelcome ? "translate-x-6" : "translate-x-1"
-                      } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-                    />
-                  </Switch>
-                )}
+                      setsForm.showWelcome ? "translate-x-6" : "translate-x-1"
+                    } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                  />
+                </Switch>
               </div>
               <div className="flex mt-4 justify-between">
                 <p>Click to copy hidden passwords</p>
-                {loading.copyHidden || allLoading ? (
-                  <div className="animate-spin mr-6">~</div>
-                ) : (
-                  <Switch
-                    checked={setsForm.copyHidden}
-                    onChange={() => handleChange("copyHidden")}
+                <Switch
+                  checked={setsForm.copyHidden}
+                  onChange={() => handleChange("copyHidden")}
+                  className={`${
+                    setsForm.copyHidden ? "bg-blueMain" : "bg-gray-200"
+                  } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
+                >
+                  <span
                     className={`${
-                      setsForm.copyHidden ? "bg-blueMain" : "bg-gray-200"
-                    } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
-                  >
-                    <span
-                      className={`${
-                        setsForm.copyHidden ? "translate-x-6" : "translate-x-1"
-                      } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-                    />
-                  </Switch>
-                )}
+                      setsForm.copyHidden ? "translate-x-6" : "translate-x-1"
+                    } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                  />
+                </Switch>
               </div>
               <div className="flex my-4 justify-between">
                 <p>One-click delete (skip delete warning)</p>
-                {loading.skipDeleteWarn || allLoading ? (
-                  <div className="animate-spin mr-6">~</div>
-                ) : (
-                  <Switch
-                    checked={setsForm.skipDeleteWarn}
-                    onChange={() => {
-                      handleChange("skipDeleteWarn");
-                    }}
+                <Switch
+                  checked={setsForm.skipDeleteWarn}
+                  onChange={() => {
+                    handleChange("skipDeleteWarn");
+                  }}
+                  className={`${
+                    setsForm.skipDeleteWarn ? "bg-blueMain" : "bg-gray-200"
+                  } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
+                >
+                  <span
                     className={`${
-                      setsForm.skipDeleteWarn ? "bg-blueMain" : "bg-gray-200"
-                    } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
-                  >
-                    <span
-                      className={`${
-                        setsForm.skipDeleteWarn
-                          ? "translate-x-6"
-                          : "translate-x-1"
-                      } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-                    />
-                  </Switch>
-                )}
+                      setsForm.skipDeleteWarn
+                        ? "translate-x-6"
+                        : "translate-x-1"
+                    } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+                  />
+                </Switch>
               </div>
             </div>
 
