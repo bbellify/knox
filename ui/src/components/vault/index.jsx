@@ -75,7 +75,7 @@ export const Vault = () => {
       {dialogState.settingsOpen && <Settings />}
 
       <div
-        className={`flex flex-col min-w-[60%] lg:max-w-[60%] xl:max-w-[40%] mt-2 sm:mt-0 mx-2 h-full bg-white shadow-lg py-5 ${
+        className={`flex flex-col min-w-[60%] lg:max-w-[60%] xl:max-w-[40%] mt-2 sm:mt-0 mx-2 h-full bg-timberwolf shadow-lg py-4 ${
           dialogState.addOpen ||
           dialogState.deleteOpen ||
           dialogState.editOpen ||
@@ -89,7 +89,7 @@ export const Vault = () => {
         <Actions />
 
         {/* title and search */}
-        <div className="flex py-2 sm:py-4 pl-2 pr-1 sm:px-2 justify-between bg-white sm:rounded-t-lg">
+        <div className="flex pt-1 pb-3 pl-2 pr-1 justify-between">
           <p className="text-xl text-font mt-1 p-0 align-middle flex font-semibold ml-1">
             knox
             <span className="hidden md:inline ml-1">- your password vault</span>
@@ -120,7 +120,7 @@ export const Vault = () => {
               {/* search input */}
               <input
                 type="text"
-                className="p-2 pl-10 w-32 text-sm rounded-lg bg-cambridge placeholder-font text-font focus:outline-none focus:ring focus:ring-gray-500"
+                className="p-2 pl-10 w-32 text-sm rounded-lg bg-blueMain placeholder-font text-font focus:outline-none focus:ring focus:ring-gray-500"
                 placeholder="search"
                 onChange={handleSearch}
                 value={searchValue}
@@ -130,7 +130,7 @@ export const Vault = () => {
         </div>
         {/* beginning of table */}
         <div
-          className={`overflow-x-auto bg-white h-screen70 2xl:h-screen60 sm:rounded-b-lg sm:p-0 ${
+          className={`overflow-x-auto h-full 2xl:h-screen60 sm:p-0 ${
             !vaultState.length ? "border-t" : ""
           }`}
         >
@@ -166,7 +166,7 @@ export const Vault = () => {
                   <col className="w-[8%]" />
                   <col className="w-[12%]" />
                 </colgroup>
-                <thead className="sticky top-0 bg-white z-10">
+                <thead className="sticky top-0 z-10">
                   <tr className="text-left bg-blueMain text-center shadow">
                     <th className="text-font font-medium">site</th>
                     <th className="text-font font-medium">username</th>

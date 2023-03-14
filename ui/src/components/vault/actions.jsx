@@ -82,7 +82,7 @@ export const Actions = () => {
      * isn't taken up by action buttons, search, etc
      */
     <div
-      className={`flex pr-2 py-1 mb-1 ${
+      className={`flex pr-1 ${
         showGenerated ? "justify-between" : "justify-end"
       }`}
     >
@@ -121,7 +121,7 @@ export const Actions = () => {
         </div>
       )}
       {/* action buttons */}
-      <div className="">
+      <div className="flex w-32 justify-around">
         <button
           className="text-xl font-bold px-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
           onClick={handleDice}

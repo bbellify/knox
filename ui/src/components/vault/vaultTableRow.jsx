@@ -101,7 +101,7 @@ export const VaultTableRow = (props) => {
 
   return (
     <>
-      <tr className="bg-whiteSmoke hover:bg-timberwolf border-b">
+      <tr className="bg-timberwolf hover:bg-whiteSmoke border-b">
         <td className="p-2">
           <div className="flex justify-center items-center">
             <button

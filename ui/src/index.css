@@ -4,15 +4,15 @@
 
 html {
     /* TODO: figure out this background color */
-    background-color: #FFFFF3;
+    background-color: #222F44;
 }
 
 main {
-    background-color: #FFFFF3;
+    background-color: #222F44;
 }
 
 ion-icon {
-    color: #337CA0;
+    color: #222F44;
     pointer-events: none;
 }
 

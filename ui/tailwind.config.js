@@ -16,7 +16,7 @@ module.exports = {
         blueMain: "#5296BC",
         // blueMain: "#222F44",
         sage: "#BBC7A4",
-        timberwolf: "#D6DBD2",
+        timberwolf: "#eaebed",
         ivory: "#F2F5EA",
         wine: "#773344",
         font: "#122313",
