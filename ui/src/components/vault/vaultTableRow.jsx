@@ -101,12 +101,12 @@ export const VaultTableRow = (props) => {
 
   return (
     <>
-      <tr className="bg-white hover:bg-gray-100 border-b">
+      <tr className="bg-whiteSmoke hover:bg-timberwolf border-b">
         <td className="p-2">
           <div className="flex justify-center items-center">
             <button
               onClick={handleCopy}
-              className="py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500 rounded"
+              className="text-font py-2 sm:px-4 hover:bg-sage max-w-full overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500 rounded"
               value={entry.website}
               name="site"
             >
@@ -120,7 +120,7 @@ export const VaultTableRow = (props) => {
           <div className="flex justify-center items-center">
             <button
               onClick={handleCopy}
-              className="py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500 rounded"
+              className="text-blueMain font-semibold py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500 rounded"
               value={entry.username}
               name="user"
             >

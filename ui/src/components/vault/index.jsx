@@ -75,7 +75,7 @@ export const Vault = () => {
       {dialogState.settingsOpen && <Settings />}
 
       <div
-        className={`flex flex-col min-w-[60%] lg:max-w-[60%] xl:max-w-[40%] mt-2 sm:mt-8 mx-2 ${
+        className={`flex flex-col min-w-[60%] lg:max-w-[60%] xl:max-w-[40%] mt-2 sm:mt-0 mx-2 h-full bg-white shadow-lg py-5 ${
           dialogState.addOpen ||
           dialogState.deleteOpen ||
           dialogState.editOpen ||
@@ -89,8 +89,8 @@ export const Vault = () => {
         <Actions />
 
         {/* title and search */}
-        <div className="flex py-2 sm:py-4 pl-2 pr-1 sm:px-2 justify-between border-l border-r border-black border-t-4 bg-white sm:rounded-t-lg">
-          <p className="text-xl text-gray-500 mt-1 p-0 align-middle flex font-semibold ml-1">
+        <div className="flex py-2 sm:py-4 pl-2 pr-1 sm:px-2 justify-between bg-white sm:rounded-t-lg">
+          <p className="text-xl text-font mt-1 p-0 align-middle flex font-semibold ml-1">
             knox
             <span className="hidden md:inline ml-1">- your password vault</span>
             <button
@@ -104,7 +104,7 @@ export const Vault = () => {
             <div className="relative">
               <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                 <svg
-                  className="w-5 h-5 text-gray-500"
+                  className="w-5 h-5 text-font"
                   aria-hidden="true"
                   fill="currentColor"
                   viewBox="0 0 20 20"
@@ -120,7 +120,7 @@ export const Vault = () => {
               {/* search input */}
               <input
                 type="text"
-                className="p-2 pl-10 w-32 text-sm rounded-lg bg-gray-200 text-gray-500 focus:outline-none focus:ring focus:ring-gray-500"
+                className="p-2 pl-10 w-32 text-sm rounded-lg bg-cambridge placeholder-font text-font focus:outline-none focus:ring focus:ring-gray-500"
                 placeholder="search"
                 onChange={handleSearch}
                 value={searchValue}
@@ -130,7 +130,7 @@ export const Vault = () => {
         </div>
         {/* beginning of table */}
         <div
-          className={`overflow-x-auto bg-white h-screen70 2xl:h-screen60 border-black border-b border-l border-r shadow-lg sm:rounded-b-lg sm:p-0 ${
+          className={`overflow-x-auto bg-white h-screen70 2xl:h-screen60 sm:rounded-b-lg sm:p-0 ${
             !vaultState.length ? "border-t" : ""
           }`}
         >
@@ -167,12 +167,12 @@ export const Vault = () => {
                   <col className="w-[12%]" />
                 </colgroup>
                 <thead className="sticky top-0 bg-white z-10">
-                  <tr className="text-left bg-gray-200 text-center">
-                    <th className="">site</th>
-                    <th className="">username</th>
-                    <th className="">password</th>
-                    <th className="">view</th>
-                    <th className="">edit</th>
+                  <tr className="text-left bg-blueMain text-center shadow">
+                    <th className="text-font font-medium">site</th>
+                    <th className="text-font font-medium">username</th>
+                    <th className="text-font font-medium">password</th>
+                    <th className="text-font font-medium">view</th>
+                    <th className="text-font font-medium">edit</th>
                   </tr>
                 </thead>
                 <VaultTableBody searchValue={searchValue} vault={vaultState} />
