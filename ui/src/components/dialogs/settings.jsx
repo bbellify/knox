@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Dialog, Switch } from "@headlessui/react";
+import { Switch } from "@headlessui/react";
 
 import { UrbitContext } from "../../store/contexts/urbitContext";
 import { SettingsContext } from "../../store/contexts/settingsContext";
@@ -86,111 +86,103 @@ export const Settings = () => {
   };
 
   return (
-    <Dialog
-      open={dialogState.settingsOpen}
-      onClose={() => dialogDispatch(closeSettings())}
-    >
-      <div className="fixed inset-0 flex flex-col items-center justify-center h-screen">
-        <div className="border border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] shadow-lg">
-          <div className="flex flex-col items-center h-[100%] pt-1">
-            <button
-              onClick={() => dialogDispatch(closeSettings())}
-              className="p-1 mr-2 self-end hover:scale-150 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+    <div className="bg-timberwolf mx-1 h-full w-1/2">
+      <div className="">
+        <p className="text-xl">Settings</p>
+        <div className="flex my-4 justify-between">
+          <p>Show welcome screen</p>
+          {loading.showWelcome || allLoading ? (
+            <div className="animate-spin mr-6">~</div>
+          ) : (
+            <Switch
+              checked={setsForm.showWelcome}
+              onChange={() => handleChange("showWelcome")}
+              className={`${
+                setsForm.showWelcome ? "bg-blueMain" : "bg-gray-200"
+              } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
             >
-              <ion-icon name="close" />
-            </button>
-            <Dialog.Title className="text-xl">Knox settings</Dialog.Title>
-
-            <div className="my-12 w-[85%]">
-              <div className="flex my-4 justify-between">
-                <p>Show welcome screen</p>
-                {loading.showWelcome || allLoading ? (
-                  <div className="animate-spin mr-6">~</div>
-                ) : (
-                  <Switch
-                    checked={setsForm.showWelcome}
-                    onChange={() => handleChange("showWelcome")}
-                    className={`${
-                      setsForm.showWelcome ? "bg-blueMain" : "bg-gray-200"
-                    } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
-                  >
-                    <span
-                      className={`${
-                        setsForm.showWelcome ? "translate-x-6" : "translate-x-1"
-                      } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-                    />
-                  </Switch>
-                )}
-              </div>
-              <div className="flex mt-4 justify-between">
-                <p>Click to copy hidden passwords</p>
-                {loading.copyHidden || allLoading ? (
-                  <div className="animate-spin mr-6">~</div>
-                ) : (
-                  <Switch
-                    checked={setsForm.copyHidden}
-                    onChange={() => handleChange("copyHidden")}
-                    className={`${
-                      setsForm.copyHidden ? "bg-blueMain" : "bg-gray-200"
-                    } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
-                  >
-                    <span
-                      className={`${
-                        setsForm.copyHidden ? "translate-x-6" : "translate-x-1"
-                      } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-                    />
-                  </Switch>
-                )}
-              </div>
-              <div className="flex my-4 justify-between">
-                <p>One-click delete (skip delete warning)</p>
-                {loading.skipDeleteWarn || allLoading ? (
-                  <div className="animate-spin mr-6">~</div>
-                ) : (
-                  <Switch
-                    checked={setsForm.skipDeleteWarn}
-                    onChange={() => {
-                      handleChange("skipDeleteWarn");
-                    }}
-                    className={`${
-                      setsForm.skipDeleteWarn ? "bg-blueMain" : "bg-gray-200"
-                    } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
-                  >
-                    <span
-                      className={`${
-                        setsForm.skipDeleteWarn
-                          ? "translate-x-6"
-                          : "translate-x-1"
-                      } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-                    />
-                  </Switch>
-                )}
-              </div>
-            </div>
-
-            {error && (
-              <button
-                disabled
-                className="my-1 w-[75%] border border-black p-1 rounded bg-red-400 pointer-events-none"
-              >
-                Something went wrong. Try again.
-              </button>
-            )}
-            <button
-              onClick={() => dialogDispatch(closeSettings())}
-              className="mt-1 w-[75%] border border-black p-1 rounded hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
+              <span
+                className={`${
+                  setsForm.showWelcome ? "translate-x-6" : "translate-x-1"
+                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+              />
+            </Switch>
+          )}
+        </div>
+        <div className="flex mt-4 justify-between">
+          <p>Click to copy hidden passwords</p>
+          {loading.copyHidden || allLoading ? (
+            <div className="animate-spin mr-6">~</div>
+          ) : (
+            <Switch
+              checked={setsForm.copyHidden}
+              onChange={() => handleChange("copyHidden")}
+              className={`${
+                setsForm.copyHidden ? "bg-blueMain" : "bg-gray-200"
+              } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
             >
-              Done
-            </button>
-            <button
-              onClick={handleReset}
-              className="mt-1 mb-12 w-[75%] border border-black p-1 rounded hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
+              <span
+                className={`${
+                  setsForm.copyHidden ? "translate-x-6" : "translate-x-1"
+                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+              />
+            </Switch>
+          )}
+        </div>
+        <div className="flex my-4 justify-between">
+          <p>One-click delete (skip delete warning)</p>
+          {loading.skipDeleteWarn || allLoading ? (
+            <div className="animate-spin mr-6">~</div>
+          ) : (
+            <Switch
+              checked={setsForm.skipDeleteWarn}
+              onChange={() => {
+                handleChange("skipDeleteWarn");
+              }}
+              className={`${
+                setsForm.skipDeleteWarn ? "bg-blueMain" : "bg-gray-200"
+              } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
             >
-              Reset All
-            </button>
-          </div>
+              <span
+                className={`${
+                  setsForm.skipDeleteWarn ? "translate-x-6" : "translate-x-1"
+                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+              />
+            </Switch>
+          )}
         </div>
       </div>
-    </Dialog>
+
+      {error && (
+        <button
+          disabled
+          className="my-1 w-[75%] border border-black p-1 rounded bg-red-400 pointer-events-none"
+        >
+          Something went wrong. Try again.
+        </button>
+      )}
+
+      <button
+        onClick={handleReset}
+        className="w-full text-left p-1 hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
+      >
+        Restore Default Settings
+      </button>
+
+      {/* Below are tools - should probably open a third screen like the add/edit flows */}
+      <button
+        // onClick={handleReset}
+        className="w-full text-left p-1 hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
+      >
+        Export Vault
+      </button>
+
+      <button
+        // onClick={handleReset}
+        className="w-full text-left p-1 hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
+      >
+        Cycle passwords
+      </button>
+    </div>
   );
 };

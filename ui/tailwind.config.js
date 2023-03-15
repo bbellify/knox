@@ -11,6 +11,7 @@ module.exports = {
         screen70: "70vh",
         screen75: "75vh",
         screen80: "80vh",
+        screen95: "95vh",
       },
       colors: {
         blueMain: "#5296BC",

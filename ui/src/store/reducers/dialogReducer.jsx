@@ -8,6 +8,7 @@ export const dialogReducer = (state, action) => {
       return {
         ...state,
         settingsOpen: true,
+        vaultOpen: false,
       };
     }
     case actionTypes.CLOSE_SETTINGS: {
@@ -81,6 +82,19 @@ export const dialogReducer = (state, action) => {
       return {
         ...state,
         generated: action.pass,
+      };
+    }
+    case actionTypes.OPEN_VAULT: {
+      return {
+        ...state,
+        vaultOpen: true,
+        settingsOpen: false,
+      };
+    }
+    case actionTypes.CLOSE_VAULT: {
+      return {
+        ...state,
+        vaultOpen: false,
       };
     }
   }

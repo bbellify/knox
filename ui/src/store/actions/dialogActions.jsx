@@ -11,6 +11,8 @@ export const actionTypes = {
   SET_GENERATED: "SET_GENERATED",
   OPEN_SETTINGS: "OPEN_SETTINGS",
   CLOSE_SETTINGS: "CLOSE_SETTINGS",
+  OPEN_VAULT: "OPEN_VAULT",
+  CLOSE_VAULT: "CLOSE_VAULT",
 };
 
 export const actions = {
@@ -66,6 +68,14 @@ export const actions = {
 
   closeSettings: () => ({
     type: actionTypes.CLOSE_SETTINGS,
+  }),
+
+  openVault: () => ({
+    type: actionTypes.OPEN_VAULT,
+  }),
+
+  closeVault: () => ({
+    type: actionTypes.CLOSE_VAULT,
   }),
 };
 

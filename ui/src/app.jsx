@@ -7,7 +7,7 @@ import settingsActions from "./store/actions/settingsActions";
 
 import { WelcomeDialog } from "./components/dialogs/welcomeDialog";
 import { Login } from "./components/dialogs/login";
-import { Vault } from "./components/vault";
+import { Home } from "./components/vault";
 
 export const App = () => {
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ export const App = () => {
   };
 
   return (
-    <main className="flex justify-center h-screen">
+    <main className="h-screen p-2">
       <Routes>
         <Route
           path="/apps/knox/welcome"
@@ -49,7 +49,7 @@ export const App = () => {
           element={<WelcomeDialog />}
         />
         <Route path="/apps/knox/login" exact={true} element={<Login />} />
-        <Route path={"/apps/knox/"} exact={true} element={<Vault />} />
+        <Route path={"/apps/knox/"} exact={true} element={<Home />} />
       </Routes>
     </main>
   );
