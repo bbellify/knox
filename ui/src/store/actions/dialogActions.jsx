@@ -47,10 +47,7 @@ export const actions = {
 
   openEditDialog: (entry) => ({
     type: actionTypes.OPEN_EDIT,
-    website: entry.website,
-    username: entry.username,
-    password: entry.password,
-    id: entry.id,
+    entry: entry,
   }),
 
   closeEditDialog: () => ({

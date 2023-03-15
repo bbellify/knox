@@ -60,10 +60,7 @@ export const dialogReducer = (state, action) => {
       return {
         ...state,
         generated: "",
-        editWebsite: action.website,
-        editUsername: action.username,
-        editPassword: action.password,
-        editId: action.id,
+        editEntry: action.entry,
         editOpen: true,
       };
     }
@@ -71,10 +68,7 @@ export const dialogReducer = (state, action) => {
       return {
         ...state,
         editOpen: false,
-        editWebsite: "",
-        editUsername: "",
-        editPassword: "",
-        editId: "",
+        editEntry: {},
         generated: "",
       };
     }

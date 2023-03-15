@@ -44,7 +44,7 @@ export const Home = () => {
     <div className="flex border border-red-500 h-screen95">
       {dialogState.infoOpen && <InfoDialog />}
       {dialogState.addOpen && <AddDialog />}
-      {dialogState.editOpen && <EditDialog />}
+      {/* {dialogState.editOpen && <EditDialog />} */}
       {dialogState.deleteOpen && <DeleteDialog />}
       {/* {dialogState.settingsOpen && <Settings />} */}
 

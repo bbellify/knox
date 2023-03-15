@@ -117,98 +117,91 @@ export const AddDialog = () => {
   };
 
   return (
-    <Dialog
-      open={dialogState.addOpen}
-      onClose={() => dialogDispatch(closeAddDialog())}
-    >
-      <div className="fixed inset-0 flex flex-col items-center justify-center h-screen">
-        <div className="border border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] sm:h-screen60 sm:max-h-[420px] shadow-lg pb-14">
-          <div className="flex flex-col items-center h-[100%] pt-1">
-            <button
-              onClick={() => dialogDispatch(closeAddDialog())}
-              className="p-1 mr-2 self-end hover:scale-150 focus:outline-none focus:ring focus:ring-gray-500 rounded"
-            >
-              <ion-icon name="close" />
-            </button>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <div className="border border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] sm:h-screen60 sm:max-h-[420px] shadow-lg pb-14">
+        <div className="flex flex-col items-center h-[100%] pt-1">
+          <button
+            onClick={() => dialogDispatch(closeAddDialog())}
+            className="p-1 mr-2 self-end hover:scale-150 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+          >
+            <ion-icon name="close" />
+          </button>
 
-            <Dialog.Title className="text-xl mb-6">
-              Save a new entry
-            </Dialog.Title>
+          <p className="text-xl mb-6">Save a new entry</p>
+          <input
+            className="my-1 w-[75%] border border-black p-1 focus:outline-none focus:ring focus:ring-gray-500"
+            name="website"
+            value={formState.website}
+            onChange={handleChange}
+            placeholder="website"
+          />
+          <input
+            className="my-1 w-[75%] border border-black p-1 focus:outline-none focus:ring focus:ring-gray-500"
+            name="username"
+            value={formState.username}
+            onChange={handleChange}
+            placeholder="username"
+          />
+          <div className="w-3/4 flex justify-between items-center">
             <input
-              className="my-1 w-[75%] border border-black p-1 focus:outline-none focus:ring focus:ring-gray-500"
-              name="website"
-              value={formState.website}
+              className="my-1 border border-black p-1 w-full focus:outline-none focus:ring focus:ring-gray-500"
+              name="password"
+              value={formState.password}
               onChange={handleChange}
-              placeholder="website"
+              placeholder="password"
+              type={!showPass ? "password" : ""}
             />
-            <input
-              className="my-1 w-[75%] border border-black p-1 focus:outline-none focus:ring focus:ring-gray-500"
-              name="username"
-              value={formState.username}
-              onChange={handleChange}
-              placeholder="username"
-            />
-            <div className="w-3/4 flex justify-between items-center">
-              <input
-                className="my-1 border border-black p-1 w-full focus:outline-none focus:ring focus:ring-gray-500"
-                name="password"
-                value={formState.password}
-                onChange={handleChange}
-                placeholder="password"
-                type={!showPass ? "password" : ""}
-              />
-              {copied && <ion-icon id="dialog-copy" name="copy-outline" />}
-              <button
-                onClick={() => setShowPass(!showPass)}
-                className="pl-1 focus:outline-none focus:ring focus:ring-gray-500"
-              >
-                {!showPass ? "show" : "hide"}
-              </button>
-            </div>
+            {copied && <ion-icon id="dialog-copy" name="copy-outline" />}
             <button
-              onClick={handleGenerate}
+              onClick={() => setShowPass(!showPass)}
+              className="pl-1 focus:outline-none focus:ring focus:ring-gray-500"
+            >
+              {!showPass ? "show" : "hide"}
+            </button>
+          </div>
+          <button
+            onClick={handleGenerate}
+            className="mt-1 mb-6 w-[75%] border border-black p-1 rounded hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
+          >
+            Generate
+          </button>
+
+          {!success ? (
+            <button
+              className={`my-1 w-[75%] border border-black p-1 rounded flex justify-center hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500 ${
+                !loading && "disabled:opacity-25 disabled:pointer-events-none"
+              }`}
+              onClick={handleAdd}
+              disabled={disabled}
+            >
+              {!loading ? "Save" : <div className="animate-spin">~</div>}
+            </button>
+          ) : (
+            <button
+              disabled
+              className="my-1 w-[75%] border border-black p-1 rounded bg-green-400 pointer-events-none"
+            >
+              Success
+            </button>
+          )}
+          {error && (
+            <button
+              disabled
+              className="my-1 w-[75%] border border-black p-1 rounded bg-red-400 pointer-events-none"
+            >
+              Something went wrong. Try again.
+            </button>
+          )}
+          {!error && Boolean(formState?.password?.length) && (
+            <button
+              onClick={handleCopy}
               className="mt-1 mb-6 w-[75%] border border-black p-1 rounded hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
             >
-              Generate
+              Copy password
             </button>
-
-            {!success ? (
-              <button
-                className={`my-1 w-[75%] border border-black p-1 rounded flex justify-center hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500 ${
-                  !loading && "disabled:opacity-25 disabled:pointer-events-none"
-                }`}
-                onClick={handleAdd}
-                disabled={disabled}
-              >
-                {!loading ? "Save" : <div className="animate-spin">~</div>}
-              </button>
-            ) : (
-              <button
-                disabled
-                className="my-1 w-[75%] border border-black p-1 rounded bg-green-400 pointer-events-none"
-              >
-                Success
-              </button>
-            )}
-            {error && (
-              <button
-                disabled
-                className="my-1 w-[75%] border border-black p-1 rounded bg-red-400 pointer-events-none"
-              >
-                Something went wrong. Try again.
-              </button>
-            )}
-            {!error && Boolean(formState?.password?.length) && (
-              <button
-                onClick={handleCopy}
-                className="mt-1 mb-6 w-[75%] border border-black p-1 rounded hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
-              >
-                Copy password
-              </button>
-            )}
-          </div>
+          )}
         </div>
       </div>
-    </Dialog>
+    </div>
   );
 };
