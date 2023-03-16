@@ -134,7 +134,7 @@ export const VaultTableRow = (props) => {
           <div className="flex justify-center items-center">
             <button
               onClick={handleCopy}
-              className="py-2 px-2 hover:bg-gray-200 z-0 max-w-full overflow-x-auto whitespace-nowrap focus:outline-none focus:ring focus:ring-gray-500 rounded"
+              className="py-2 px-2 hover:bg-gray-200 z-0 max-w-full overflow-x-auto whitespace-nowrap rounded"
               value={entry.password}
               name="pass"
             >

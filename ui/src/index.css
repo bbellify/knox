@@ -39,3 +39,20 @@ ion-icon {
 #settings-icon {
     font-size: 1.2rem;
 }
+
+.shakeX {
+    animation: shakeX 300ms;
+}
+
+@keyframes shakeX {
+    25% {
+      transform: translateX(4px);
+    }
+    50% {
+      transform: translateX(-4px);
+    }
+    75% {
+      transform: translateX(4px)
+    }
+}
+

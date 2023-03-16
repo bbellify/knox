@@ -11,7 +11,7 @@ export const defaultState = {
   deleteOpen: false,
   deleteId: "",
   addOpen: false,
-  editOpen: true,
+  editOpen: false,
   editEntry: {},
   generated: "",
 };

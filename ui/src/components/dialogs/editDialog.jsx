@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Dialog } from "@headlessui/react";
 
 import { VaultContext } from "../../store/contexts/vaultContext";
 import vaultActions from "../../store/actions/vaultActions";
@@ -134,8 +133,8 @@ export const EditDialog = () => {
   return (
     <div className="flex flex-col h-full w-2/3">
       <div className="bg-timberwolf h-1/2">
-        <div className="flex flex-col items-center h-[100%] pt-1">
-          <div className="flex w-full justify-between px-3 my-3">
+        <div className="flex flex-col items-center h-[100%]">
+          <div className="flex w-full justify-between items-center px-2 h-12">
             <p className="text-l">Edit this entry</p>
             <button
               onClick={() => dialogDispatch(closeEditDialog())}
@@ -144,79 +143,80 @@ export const EditDialog = () => {
               <ion-icon name="close" />
             </button>
           </div>
-
-          <input
-            className="my-1 w-[75%] border border-black p-1 focus:outline-none focus:ring focus:ring-gray-500"
-            placeholder="website"
-            name="website"
-            value={formState.website}
-            onChange={handleChange}
-          />
-          <input
-            className="my-1 w-[75%] border border-black p-1 focus:outline-none focus:ring focus:ring-gray-500"
-            placeholder="username"
-            name="username"
-            value={formState.username}
-            onChange={handleChange}
-          />
-          <div className="w-3/4 flex justify-between items-center">
+          <div className="border-t border-black w-full pt-2 flex flex-col items-center">
             <input
-              className="my-1 border border-black p-1 w-full focus:outline-none focus:ring focus:ring-gray-500"
-              placeholder="password"
-              name="password"
-              value={formState.password}
+              className="my-1 w-[75%] border border-black p-1 focus:outline-none focus:ring focus:ring-gray-500"
+              placeholder="website"
+              name="website"
+              value={formState.website}
               onChange={handleChange}
-              type={!showPass ? "password" : ""}
             />
-            {copied && <ion-icon id="dialog-copy" name="copy-outline" />}
+            <input
+              className="my-1 w-[75%] border border-black p-1 focus:outline-none focus:ring focus:ring-gray-500"
+              placeholder="username"
+              name="username"
+              value={formState.username}
+              onChange={handleChange}
+            />
+            <div className="w-3/4 flex justify-between items-center">
+              <input
+                className="my-1 border border-black p-1 w-full focus:outline-none focus:ring focus:ring-gray-500"
+                placeholder="password"
+                name="password"
+                value={formState.password}
+                onChange={handleChange}
+                type={!showPass ? "password" : ""}
+              />
+              {copied && <ion-icon id="dialog-copy" name="copy-outline" />}
+              <button
+                onClick={() => setShowPass(!showPass)}
+                className="pl-1 focus:outline-none focus:ring focus:ring-gray-500"
+              >
+                {!showPass ? "show" : "hide"}
+              </button>
+            </div>
             <button
-              onClick={() => setShowPass(!showPass)}
-              className="pl-1 focus:outline-none focus:ring focus:ring-gray-500"
+              onClick={handleGenerate}
+              className="mt-1 mb-6 w-[75%] border border-black p-1 rounded hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
             >
-              {!showPass ? "show" : "hide"}
+              Generate
             </button>
-          </div>
-          <button
-            onClick={handleGenerate}
-            className="mt-1 mb-6 w-[75%] border border-black p-1 rounded hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
-          >
-            Generate
-          </button>
 
-          {!success ? (
-            <button
-              className={`my-1 w-[75%] border border-black p-1 rounded flex justify-center hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500 ${
-                !loading && "disabled:opacity-25 disabled:pointer-events-none"
-              }`}
-              onClick={handleEdit}
-              disabled={loading || disabled}
-            >
-              {!loading ? "Save" : <div className="animate-spin">~</div>}
-            </button>
-          ) : (
-            <button
-              disabled
-              className="my-1 w-[75%] border border-black p-1 rounded bg-green-400 pointer-events-none"
-            >
-              Success
-            </button>
-          )}
-          {error && (
-            <button
-              disabled
-              className="my-1 w-[75%] border border-black p-1 rounded bg-red-400 pointer-events-none"
-            >
-              Something went wrong. Try again.
-            </button>
-          )}
-          {!error && Boolean(formState?.password?.length) && (
-            <button
-              onClick={handleCopy}
-              className="mt-1 mb-6 w-[75%] border border-black p-1 rounded hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500 rounded"
-            >
-              Copy password
-            </button>
-          )}
+            {!success ? (
+              <button
+                className={`my-1 w-[75%] border border-black p-1 rounded flex justify-center hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500 ${
+                  !loading && "disabled:opacity-25 disabled:pointer-events-none"
+                }`}
+                onClick={handleEdit}
+                disabled={loading || disabled}
+              >
+                {!loading ? "Save" : <div className="animate-spin">~</div>}
+              </button>
+            ) : (
+              <button
+                disabled
+                className="my-1 w-[75%] border border-black p-1 rounded bg-green-400 pointer-events-none"
+              >
+                Success
+              </button>
+            )}
+            {error && (
+              <button
+                disabled
+                className="my-1 w-[75%] border border-black p-1 rounded bg-red-400 pointer-events-none"
+              >
+                Something went wrong. Try again.
+              </button>
+            )}
+            {!error && Boolean(formState?.password?.length) && (
+              <button
+                onClick={handleCopy}
+                className="mt-1 mb-6 w-[75%] border border-black p-1 rounded hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+              >
+                Copy password
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

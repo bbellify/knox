@@ -10,6 +10,7 @@ import { generatePassword } from "../../utils";
 export const Actions = () => {
   const [generated, setGenerated] = useState("");
   const [showGenerated, setShowGenerated] = useState(false);
+  const [generateShake, setGenerateShake] = useState(false);
   const [generatedCopied, setGeneratedCopied] = useState(false);
 
   const [urbitApi] = useContext(UrbitContext);
@@ -36,6 +37,10 @@ export const Actions = () => {
 
   const handleDice = () => {
     if (!showGenerated) setShowGenerated(true);
+    setGenerateShake(true);
+    setTimeout(() => {
+      setGenerateShake(false);
+    }, 300);
     generatePassword(dialogDispatch, urbitApi);
   };
 
@@ -81,55 +86,19 @@ export const Actions = () => {
      * TODO: should refactor the small screen view so so much space
      * isn't taken up by action buttons, search, etc
      */
-    <div
-      className={`flex pr-1 ${
-        showGenerated ? "justify-between" : "justify-end"
-      }`}
-    >
-      {/* TODO: generated stuff - will probably change */}
-      {showGenerated && (
-        <div className="w-[70%] sm:max-w-[50%] flex">
-          <button
-            onClick={handleCopy}
-            className="border border-black rounded-md shadow py-1 px-2 bg-white hover:bg-gray-200 w-[80%] overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500"
-            value={generated}
-          >
-            {generated}
-          </button>
-          <div className="flex items-center">
-            {generatedCopied && (
-              <ion-icon
-                id="generated-copy-icon"
-                name="copy-outline"
-                className="pl-2"
-              />
-            )}
-            {/* TODO: have a save password flow, but could be improved */}
-            <button
-              className="text-xl font-bold pl-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
-              onClick={() => dialogDispatch(openAddDialog())}
-            >
-              <ion-icon name="add" />
-            </button>
-            <button
-              onClick={handleClose}
-              className="text-xl pl-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
-            >
-              <ion-icon name="close" />
-            </button>
-          </div>
-        </div>
-      )}
+    <div className="flex w-full">
       {/* action buttons */}
-      <div className="flex w-32 justify-around">
+      <div className="flex">
         <button
-          className="text-xl font-bold px-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+          className={`text-xl font-bold px-2 hover:scale-125 ${
+            generateShake ? "shakeX" : null
+          }`}
           onClick={handleDice}
         >
           <ion-icon name="dice-outline" />
         </button>
         <button
-          className={`text-xl font-bold px-2 hover:scale-125 my-1 focus:outline-none focus:ring focus:ring-gray-500 rounded ${
+          className={`text-xl font-bold px-2 hover:scale-125 ${
             !vaultState.length &
             !(
               dialogState.addOpen ||
@@ -145,13 +114,40 @@ export const Actions = () => {
         >
           <ion-icon name="add" />
         </button>
-        <button
-          className="text-xl font-bold px-2 hover:scale-125 my-1 focus:outline-none focus:ring focus:ring-gray-500 rounded"
-          onClick={() => dialogDispatch(openSettings())}
-        >
-          <ion-icon name="settings-sharp" id="settings-icon" />
-        </button>
       </div>
+      {showGenerated && (
+        <div className="flex w-full justify-center py-2">
+          <button
+            onClick={handleCopy}
+            className="border border-black shadow px-3 bg-white hover:bg-gray-200 overflow-x-auto rounded"
+            value={generated}
+          >
+            {generated}
+          </button>
+          <div className="flex items-center">
+            {generatedCopied && (
+              <ion-icon
+                id="generated-copy-icon"
+                name="copy-outline"
+                className="pl-2"
+              />
+            )}
+            {/* TODO: have a save password flow, but could be improved */}
+            <button
+              className="text-xl font-bold pl-2 hover:scale-125"
+              onClick={() => dialogDispatch(openAddDialog())}
+            >
+              <ion-icon name="add" />
+            </button>
+            <button
+              onClick={handleClose}
+              className="text-xl pl-2 hover:scale-125"
+            >
+              <ion-icon name="close" />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

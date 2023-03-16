@@ -34,6 +34,8 @@ export const dialogReducer = (state, action) => {
         ...state,
         deleteOpen: true,
         deleteId: action.id,
+        editOpen: false,
+        addOpen: false,
       };
     }
     case actionTypes.CLOSE_DELETE: {
@@ -47,6 +49,8 @@ export const dialogReducer = (state, action) => {
       return {
         ...state,
         addOpen: true,
+        deleteOpen: false,
+        editOpen: false,
       };
     }
     case actionTypes.CLOSE_ADD: {
@@ -62,6 +66,8 @@ export const dialogReducer = (state, action) => {
         generated: "",
         editEntry: action.entry,
         editOpen: true,
+        addOpen: false,
+        deleteOpen: false,
       };
     }
     case actionTypes.CLOSE_EDIT: {

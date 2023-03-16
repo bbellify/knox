@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Dialog } from "@headlessui/react";
 
 import VaultContext from "../../store/contexts/vaultContext";
 import vaultActions from "../../store/actions/vaultActions";
@@ -117,17 +116,18 @@ export const AddDialog = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="border border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] sm:h-screen60 sm:max-h-[420px] shadow-lg pb-14">
+    <div className="flex flex-col h-full w-2/3">
+      <div className="bg-timberwolf h-1/2">
         <div className="flex flex-col items-center h-[100%] pt-1">
-          <button
-            onClick={() => dialogDispatch(closeAddDialog())}
-            className="p-1 mr-2 self-end hover:scale-150 focus:outline-none focus:ring focus:ring-gray-500 rounded"
-          >
-            <ion-icon name="close" />
-          </button>
-
-          <p className="text-xl mb-6">Save a new entry</p>
+          <div className="flex w-full justify-between px-3 my-3">
+            <p className="text-l">Save a new entry</p>
+            <button
+              onClick={() => dialogDispatch(closeAddDialog())}
+              className="flex items-center mr-2 hover:scale-150"
+            >
+              <ion-icon name="close" />
+            </button>
+          </div>
           <input
             className="my-1 w-[75%] border border-black p-1 focus:outline-none focus:ring focus:ring-gray-500"
             name="website"

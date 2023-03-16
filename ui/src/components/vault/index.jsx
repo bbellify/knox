@@ -41,27 +41,27 @@ export const Home = () => {
   }, []);
 
   return (
-    <div className="flex border border-red-500 h-screen95">
+    <div className="flex h-screen95">
       {dialogState.infoOpen && <InfoDialog />}
-      {dialogState.addOpen && <AddDialog />}
+      {/* {dialogState.addOpen && <AddDialog />} */}
       {/* {dialogState.editOpen && <EditDialog />} */}
-      {dialogState.deleteOpen && <DeleteDialog />}
+      {/* {dialogState.deleteOpen && <DeleteDialog />} */}
       {/* {dialogState.settingsOpen && <Settings />} */}
 
-      <div className="flex flex-col bg-timberwolf w-1/5">
-        <div className="py-2 border-b border-black">
-          <p className="text-xl text-font mt-1 p-0 align-middle flex font-semibold ml-1">
+      <div className="flex flex-col bg-timberwolf w-1/5 md:min-w-[300px]">
+        <div className="flex h-12 items-center px-1">
+          <p className="text-xl text-font align-middle flex font-semibold">
             knox
             <span className="hidden md:inline ml-1">- your password vault</span>
             <button
-              className="px-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+              className="px-2 flex items-center hover:scale-125"
               onClick={() => dialogDispatch(openInfoDialog())}
             >
               <ion-icon name="information-circle-outline" />
             </button>
           </p>
         </div>
-        <div className="flex flex-col py-1">
+        <div className="flex flex-col py-1 border-t border-black ">
           <button
             className="text-left p-1 hover:bg-whiteSmoke"
             onClick={() =>
@@ -83,7 +83,7 @@ export const Home = () => {
         </div>
       </div>
       {/* </div> */}
-      <div className="w-4/5 flex flex-col h-full border border-green-400">
+      <div className="w-4/5 min-w-[600px] flex flex-col h-full">
         {dialogState.vaultOpen && <Vault />}
         {dialogState.settingsOpen && <Settings />}
       </div>

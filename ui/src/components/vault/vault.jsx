@@ -11,8 +11,6 @@ import settingsActions from "../../store/actions/settingsActions";
 import { getSecret } from "../../utils";
 
 import { VaultTableBody } from "./vaultTableBody";
-import { InfoDialog } from "../dialogs/infoDialog";
-import { Settings } from "../dialogs/settings";
 import { AddDialog } from "../dialogs/addDialog";
 import { DeleteDialog } from "../dialogs/deleteDialog";
 import { EditDialog } from "../dialogs/editDialog";
@@ -70,13 +68,12 @@ export const Vault = () => {
     <div className="flex h-full w-full">
       {/* top buttons for generating, adding, opening settings */}
       <div className="w-1/2 bg-timberwolf h-full mx-1">
-        {/* title and search */}
-        <div className="flex pt-1 pb-3 pl-2 pr-1 justify-end">
-          {/* do I need Actions here? */}
-          {/* <Actions /> */}
-          <div className="flex">
+        {/* actions and search */}
+        <div className="flex justify-between h-12 pr-1">
+          <Actions />
+          <div className="flex items-center">
             <div className="relative">
-              <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+              <div className="flex absolute inset-y-0 left-0 items-center pl-2 pointer-events-none">
                 <svg
                   className="w-5 h-5 text-font"
                   aria-hidden="true"
@@ -94,7 +91,7 @@ export const Vault = () => {
               {/* search input */}
               <input
                 type="text"
-                className="p-2 pl-10 w-32 text-sm rounded-lg bg-blueMain placeholder-font text-font focus:outline-none focus:ring focus:ring-gray-500"
+                className="py-2 pl-8 pr-2 w-24 text-sm rounded-lg bg-blueMain placeholder-font text-font focus:outline-none focus:ring focus:ring-gray-500"
                 placeholder="search"
                 onChange={handleSearch}
                 value={searchValue}
