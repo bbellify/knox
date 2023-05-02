@@ -7,7 +7,7 @@ import settingsActions from "./store/actions/settingsActions";
 
 import { WelcomeDialog } from "./components/dialogs/welcomeDialog";
 import { Login } from "./components/dialogs/login";
-import { Home } from "./components/vault";
+import { Home } from "./components/home";
 
 export const App = () => {
   const navigate = useNavigate();

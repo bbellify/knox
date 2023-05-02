@@ -1,18 +1,15 @@
 import React, { useContext, useState, useEffect } from "react";
 
-import { UrbitContext } from "../../store/contexts/urbitContext";
-import { DialogContext } from "../../store/contexts/dialogContext";
-import { SettingsContext } from "../../store/contexts/settingsContext";
-import dialogActions from "../../store/actions/dialogActions";
-import settingsActions from "../../store/actions/settingsActions";
-import { getSecret } from "../../utils";
+import { UrbitContext } from "../store/contexts/urbitContext";
+import { DialogContext } from "../store/contexts/dialogContext";
+import { SettingsContext } from "../store/contexts/settingsContext";
+import dialogActions from "../store/actions/dialogActions";
+import settingsActions from "../store/actions/settingsActions";
+import { getSecret } from "../utils";
 
-import { InfoDialog } from "../dialogs/infoDialog";
-import { Settings } from "../dialogs/settings";
-import { AddDialog } from "../dialogs/addDialog";
-import { DeleteDialog } from "../dialogs/deleteDialog";
-import { EditDialog } from "../dialogs/editDialog";
-import { Vault } from "../vault/vault";
+import { InfoDialog } from "./dialogs/infoDialog";
+import { Settings } from "./dialogs/settings";
+import { Vault } from "./vault/vault";
 
 export const Home = () => {
   const [urbitApi] = useContext(UrbitContext);
@@ -40,8 +37,10 @@ export const Home = () => {
       .catch((err) => console.log("err", err));
   }, []);
 
+  const blur = dialogState.infoOpen;
+
   return (
-    <div className="flex h-screen95">
+    <div className={`${blur ? "opacity-25" : ""} flex h-screen95`}>
       {dialogState.infoOpen && <InfoDialog />}
       {/* {dialogState.addOpen && <AddDialog />} */}
       {/* {dialogState.editOpen && <EditDialog />} */}

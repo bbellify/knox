@@ -72,7 +72,7 @@ export const Vault = () => {
       {/* top buttons for generating, adding, opening settings */}
       <div
         className={`${
-          dialogOpen ? "w-3/5" : "w-2/3"
+          dialogOpen ? "w-3/5" : "w-[90%] md:max-w-[90%]"
         } bg-timberwolf h-full mx-1`}
       >
         {/* actions and search */}
