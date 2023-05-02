@@ -64,10 +64,17 @@ export const Vault = () => {
     setSearchValue(value);
   };
 
+  const dialogOpen =
+    dialogState.addOpen || dialogState.editOpen || dialogState.deleteOpen;
+
   return (
     <div className="flex h-full w-full">
       {/* top buttons for generating, adding, opening settings */}
-      <div className="w-1/2 bg-timberwolf h-full mx-1">
+      <div
+        className={`${
+          dialogOpen ? "w-3/5" : "w-2/3"
+        } bg-timberwolf h-full mx-1`}
+      >
         {/* actions and search */}
         <div className="flex justify-between h-12 pr-1">
           <Actions />
@@ -152,7 +159,7 @@ export const Vault = () => {
           </table>
         </div>
       </div>
-      <div className="w-1/2">
+      <div className={`${dialogOpen ? "w-1/3" : "hidden"}`}>
         {dialogState.addOpen && <AddDialog />}
         {dialogState.editOpen && <EditDialog />}
         {dialogState.deleteOpen && <DeleteDialog />}

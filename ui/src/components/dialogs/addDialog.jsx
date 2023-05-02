@@ -116,7 +116,7 @@ export const AddDialog = () => {
   };
 
   return (
-    <div className="flex flex-col h-full w-2/3">
+    <div className="flex flex-col h-full">
       <div className="bg-timberwolf h-1/2">
         <div className="flex flex-col items-center h-[100%] pt-1">
           <div className="flex w-full justify-between px-3 my-3">

@@ -131,7 +131,7 @@ export const EditDialog = () => {
   };
 
   return (
-    <div className="flex flex-col h-full w-2/3">
+    <div className="flex flex-col h-full">
       <div className="bg-timberwolf h-1/2">
         <div className="flex flex-col items-center h-[100%]">
           <div className="flex w-full justify-between items-center px-2 h-12">

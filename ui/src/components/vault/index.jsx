@@ -83,7 +83,7 @@ export const Home = () => {
         </div>
       </div>
       {/* </div> */}
-      <div className="w-4/5 min-w-[600px] flex flex-col h-full">
+      <div className="w-4/5 flex flex-col h-full">
         {dialogState.vaultOpen && <Vault />}
         {dialogState.settingsOpen && <Settings />}
       </div>
