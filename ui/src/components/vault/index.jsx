@@ -78,7 +78,7 @@ export const Home = () => {
               )
             }
           >
-            Settings
+            Settings and Tools
           </button>
         </div>
       </div>

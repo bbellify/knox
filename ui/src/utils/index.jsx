@@ -117,3 +117,7 @@ export const generatePassword = (dialogDispatch, urbitApi) => {
     // TODO: handle this error
     .catch((err) => console.log("err", err));
 };
+
+export const prepareExport = (vault) => {
+  return aesEncrypt(JSON.stringify(vault), getSecret());
+};

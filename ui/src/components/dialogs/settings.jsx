@@ -1,20 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Switch } from "@headlessui/react";
+import { saveAs } from "file-saver";
 
 import { UrbitContext } from "../../store/contexts/urbitContext";
 import { SettingsContext } from "../../store/contexts/settingsContext";
+import { VaultContext } from "../../store/contexts/vaultContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
 import settingsActions from "../../store/actions/settingsActions";
 import dialogActions from "../../store/actions/dialogActions";
+
+import { aesDecrypt, getSecret, prepareExport } from "../../utils/index";
 
 export const Settings = () => {
   const [urbitApi] = useContext(UrbitContext);
   const [settingsState, settingsDispatch] = useContext(SettingsContext);
   const [dialogState, dialogDispatch] = useContext(DialogContext);
+  const [vaultState] = useContext(VaultContext);
   const [setsForm, setSetsForm] = useState(settingsState);
-  const [loading, setLoading] = useState({});
-  const [allLoading, setAllLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [importState, setImportState] = useState(null);
+  const [showInfo, setShowInfo] = useState({ export: false, import: false });
   const { setSettings } = settingsActions;
   const { closeSettings } = dialogActions;
 
@@ -22,28 +27,19 @@ export const Settings = () => {
     setSetsForm(settingsState);
   }, [settingsState]);
 
-  const handleScry = (setting) => {
+  const handleScry = () => {
     urbitApi
       .scry({
         app: "knox",
         path: "/settings",
       })
       .then((res) => {
-        // TODO: need a better way to handle loading for all (for reset), here and in handleReset
-        setting
-          ? setLoading({ ...loading, [setting]: false })
-          : setAllLoading(false);
         settingsDispatch(setSettings(res.settings));
       })
       .catch(() => handleError());
   };
 
   const handleChange = (setting) => {
-    setLoading({
-      ...loading,
-      [setting]: true,
-    });
-
     urbitApi
       .poke({
         app: "knox",
@@ -55,18 +51,8 @@ export const Settings = () => {
           },
         },
       })
-      .then(() => handleScry(setting))
-      .catch(() => handleError(setting));
-  };
-
-  const handleError = (setting) => {
-    setting
-      ? setLoading({
-          ...loading,
-          [setting]: false,
-        })
-      : setAllLoading(false);
-    setError(true);
+      .then(() => handleScry())
+      .catch(() => setError(true));
   };
 
   const handleReset = () => {
@@ -85,72 +71,93 @@ export const Settings = () => {
       .catch(() => handleError());
   };
 
+  const handleExport = () => {
+    const blob = new Blob([prepareExport(vaultState)]);
+    saveAs(blob, "vault.knox");
+  };
+
+  const handleImport = (e) => {
+    console.log("handle import");
+    // decode the uploaded string and send to knox
+
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      const contents = e.target.result;
+      if (aesDecrypt(contents, getSecret())) {
+        setImportState(aesDecrypt(contents, getSecret()));
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  const handleSubmitImport = () => {
+    console.log("import state", importState);
+  };
+
   return (
     <div className="bg-timberwolf mx-1 h-full w-1/2">
-      <div className="">
+      <div>
         <p className="text-xl">Settings</p>
         <div className="flex my-4 justify-between">
           <p>Show welcome screen</p>
-          {loading.showWelcome || allLoading ? (
-            <div className="animate-spin mr-6">~</div>
-          ) : (
-            <Switch
-              checked={setsForm.showWelcome}
-              onChange={() => handleChange("showWelcome")}
+          <Switch
+            checked={setsForm.showWelcome}
+            onChange={() => handleChange("showWelcome")}
+            className={`${
+              setsForm.showWelcome ? "bg-blueMain" : "bg-gray-200"
+            } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
+          >
+            <span
               className={`${
-                setsForm.showWelcome ? "bg-blueMain" : "bg-gray-200"
-              } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
-            >
-              <span
-                className={`${
-                  setsForm.showWelcome ? "translate-x-6" : "translate-x-1"
-                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-              />
-            </Switch>
-          )}
+                setsForm.showWelcome ? "translate-x-6" : "translate-x-1"
+              } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+            />
+          </Switch>
         </div>
         <div className="flex mt-4 justify-between">
           <p>Click to copy hidden passwords</p>
-          {loading.copyHidden || allLoading ? (
-            <div className="animate-spin mr-6">~</div>
-          ) : (
-            <Switch
-              checked={setsForm.copyHidden}
-              onChange={() => handleChange("copyHidden")}
+
+          <Switch
+            checked={setsForm.copyHidden}
+            onChange={() => handleChange("copyHidden")}
+            className={`${
+              setsForm.copyHidden ? "bg-blueMain" : "bg-gray-200"
+            } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
+          >
+            <span
               className={`${
-                setsForm.copyHidden ? "bg-blueMain" : "bg-gray-200"
-              } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
-            >
-              <span
-                className={`${
-                  setsForm.copyHidden ? "translate-x-6" : "translate-x-1"
-                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-              />
-            </Switch>
-          )}
+                setsForm.copyHidden ? "translate-x-6" : "translate-x-1"
+              } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+            />
+          </Switch>
         </div>
         <div className="flex my-4 justify-between">
           <p>One-click delete (skip delete warning)</p>
-          {loading.skipDeleteWarn || allLoading ? (
-            <div className="animate-spin mr-6">~</div>
-          ) : (
-            <Switch
-              checked={setsForm.skipDeleteWarn}
-              onChange={() => {
-                handleChange("skipDeleteWarn");
-              }}
+          <Switch
+            checked={setsForm.skipDeleteWarn}
+            onChange={() => {
+              handleChange("skipDeleteWarn");
+            }}
+            className={`${
+              setsForm.skipDeleteWarn ? "bg-blueMain" : "bg-gray-200"
+            } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
+          >
+            <span
               className={`${
-                setsForm.skipDeleteWarn ? "bg-blueMain" : "bg-gray-200"
-              } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
-            >
-              <span
-                className={`${
-                  setsForm.skipDeleteWarn ? "translate-x-6" : "translate-x-1"
-                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-              />
-            </Switch>
-          )}
+                setsForm.skipDeleteWarn ? "translate-x-6" : "translate-x-1"
+              } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+            />
+          </Switch>
         </div>
+
+        <button
+          onClick={handleReset}
+          className="w-full text-left p-1 hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
+        >
+          Restore Default Settings
+        </button>
       </div>
 
       {error && (
@@ -162,27 +169,31 @@ export const Settings = () => {
         </button>
       )}
 
-      <button
-        onClick={handleReset}
-        className="w-full text-left p-1 hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
-      >
-        Restore Default Settings
-      </button>
+      <div>
+        <p className="text-xl">Tools</p>
+        {/* TODO add some ? icon or similar for showing info on each of these tools - state object exists above for this purpose */}
+        <button
+          onClick={handleExport}
+          className="w-full text-left p-1 hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
+        >
+          Export Vault
+        </button>
 
-      {/* Below are tools - should probably open a third screen like the add/edit flows */}
-      <button
-        // onClick={handleReset}
-        className="w-full text-left p-1 hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
-      >
-        Export Vault
-      </button>
+        <input type="file" onChange={handleImport} />
+        <button
+          onClick={handleSubmitImport}
+          className="w-full text-left p-1 hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
+        >
+          Import Vault
+        </button>
 
-      <button
-        // onClick={handleReset}
-        className="w-full text-left p-1 hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
-      >
-        Cycle passwords
-      </button>
+        <button
+          // onClick={handleReset}
+          className="w-full text-left p-1 hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
+        >
+          Cycle passwords
+        </button>
+      </div>
     </div>
   );
 };
