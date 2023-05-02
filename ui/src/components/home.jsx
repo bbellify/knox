@@ -8,7 +8,7 @@ import settingsActions from "../store/actions/settingsActions";
 import { getSecret } from "../utils";
 
 import { InfoDialog } from "./dialogs/infoDialog";
-import { Settings } from "./dialogs/settings";
+import { Settings } from "./settings";
 import { Vault } from "./vault/vault";
 
 export const Home = () => {

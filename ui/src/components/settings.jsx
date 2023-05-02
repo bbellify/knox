@@ -2,14 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { Switch } from "@headlessui/react";
 import { saveAs } from "file-saver";
 
-import { UrbitContext } from "../../store/contexts/urbitContext";
-import { SettingsContext } from "../../store/contexts/settingsContext";
-import { VaultContext } from "../../store/contexts/vaultContext";
-import { DialogContext } from "../../store/contexts/dialogContext";
-import settingsActions from "../../store/actions/settingsActions";
-import dialogActions from "../../store/actions/dialogActions";
+import { UrbitContext } from "../store/contexts/urbitContext";
+import { SettingsContext } from "../store/contexts/settingsContext";
+import { VaultContext } from "../store/contexts/vaultContext";
+import { DialogContext } from "../store/contexts/dialogContext";
+import settingsActions from "../store/actions/settingsActions";
+import dialogActions from "../store/actions/dialogActions";
 
-import { aesDecrypt, getSecret, prepareExport } from "../../utils/index";
+import { aesDecrypt, getSecret, prepareExport } from "../utils/index";
 
 export const Settings = () => {
   const [urbitApi] = useContext(UrbitContext);
