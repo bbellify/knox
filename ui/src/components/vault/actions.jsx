@@ -17,11 +17,7 @@ export const Actions = () => {
   const [vaultState] = useContext(VaultContext);
   const [dialogState, dialogDispatch] = useContext(DialogContext);
   const [settingsState] = useContext(SettingsContext);
-  const {
-    openAddDialog,
-    setGenerated: setGenDialog,
-    openSettings,
-  } = dialogActions;
+  const { openAdd, setGenerated: setGenDialog } = dialogActions;
 
   // set form password to password from dialog context when password is generated
   useEffect(() => {
@@ -110,7 +106,7 @@ export const Actions = () => {
               ? "animate-bounce"
               : ""
           }`}
-          onClick={() => dialogDispatch(openAddDialog())}
+          onClick={() => dialogDispatch(openAdd())}
         >
           <ion-icon name="add" />
         </button>
@@ -135,7 +131,7 @@ export const Actions = () => {
             {/* TODO: have a save password flow, but could be improved */}
             <button
               className="text-xl font-bold pl-2 hover:scale-125"
-              onClick={() => dialogDispatch(openAddDialog())}
+              onClick={() => dialogDispatch(openAdd())}
             >
               <ion-icon name="add" />
             </button>

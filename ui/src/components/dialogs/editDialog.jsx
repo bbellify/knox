@@ -7,17 +7,12 @@ import { DialogContext } from "../../store/contexts/dialogContext";
 import dialogActions from "../../store/actions/dialogActions";
 import { aesEncrypt, getSecret, generatePassword } from "../../utils";
 
-/*
- * TODO: Would be nice to keep editing inline (no separate dialog),
- * but this might require some extra UI considerations.. how to handle
- * success/errors - snack? etc
- */
-
+// TODO: kept for refernce for now, should remove completely
 export const EditDialog = () => {
   const [urbitApi] = useContext(UrbitContext);
   const [, vaultDispatch] = useContext(VaultContext);
   const [dialogState, dialogDispatch] = useContext(DialogContext);
-  const { closeEditDialog } = dialogActions;
+  const { closeEditing } = dialogActions;
   const { setVault } = vaultActions;
 
   const defaultFormState = {
@@ -61,7 +56,7 @@ export const EditDialog = () => {
   // clear error after 7 seconds, close dialog on success after 4 seconds
   useEffect(() => {
     if (success) {
-      const timer = setTimeout(() => dialogDispatch(closeEditDialog()), 4000);
+      const timer = setTimeout(() => dialogDispatch(closeEditing()), 4000);
       return () => clearTimeout(timer);
     }
     if (error) setTimeout(() => setError(false), 7000);
@@ -137,7 +132,7 @@ export const EditDialog = () => {
           <div className="flex w-full justify-between items-center px-2 h-12">
             <p className="text-l">Edit this entry</p>
             <button
-              onClick={() => dialogDispatch(closeEditDialog())}
+              onClick={() => dialogDispatch(closeEditing())}
               className="flex items-center mr-2 hover:scale-150 focus:outline-none focus:ring focus:ring-gray-500 rounded"
             >
               <ion-icon name="close" />

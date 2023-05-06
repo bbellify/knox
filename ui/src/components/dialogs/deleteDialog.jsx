@@ -12,7 +12,7 @@ export const DeleteDialog = () => {
   const [, vaultDispatch] = useContext(VaultContext);
   const { setVault } = vaultActions;
   const [dialogState, dialogDispatch] = useContext(DialogContext);
-  const { closeDeleteDialog } = dialogActions;
+  const { closeDeleteModal } = dialogActions;
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -66,13 +66,13 @@ export const DeleteDialog = () => {
   return (
     <Dialog
       open={dialogState.deleteOpen}
-      onClose={() => dialogDispatch(closeDeleteDialog())}
+      onClose={() => dialogDispatch(closeDeleteModal())}
     >
       <div className="fixed inset-0 flex flex-col items-center justify-center h-screen">
         <div className="border border-black border-t-4 bg-white rounded-md w-[95%] sm:w-[450px] shadow-lg pb-14">
           <div className="flex flex-col items-center h-[100%] pt-1">
             <button
-              onClick={() => dialogDispatch(closeDeleteDialog())}
+              onClick={() => dialogDispatch(closeDeleteModal())}
               className="p-1 mr-2 self-end hover:scale-150 focus:outline-none focus:ring focus:ring-gray-500 rounded"
             >
               <ion-icon name="close" />

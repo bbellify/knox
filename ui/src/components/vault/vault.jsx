@@ -13,7 +13,6 @@ import { getSecret } from "../../utils";
 import { VaultTableBody } from "./vaultTableBody";
 import { AddDialog } from "../dialogs/addDialog";
 import { DeleteDialog } from "../dialogs/deleteDialog";
-import { EditDialog } from "../dialogs/editDialog";
 import { Actions } from "./actions";
 
 export const Vault = () => {
@@ -24,7 +23,7 @@ export const Vault = () => {
   const [dialogState, dialogDispatch] = useContext(DialogContext);
   const [, settingsDispatch] = useContext(SettingsContext);
   const { setVault } = vaultActions;
-  const { openInfoDialog } = dialogActions;
+  const { openInfoModal } = dialogActions;
   const { setSettings } = settingsActions;
 
   const navigate = useNavigate();
@@ -70,11 +69,7 @@ export const Vault = () => {
   return (
     <div className="flex h-full w-full">
       {/* top buttons for generating, adding, opening settings */}
-      <div
-        className={`${
-          dialogOpen ? "w-3/5" : "w-[90%] md:max-w-[90%]"
-        } bg-timberwolf h-full mx-1`}
-      >
+      <div className="w-[90%] md:max-w-[90%] bg-timberwolf h-full mx-1">
         {/* actions and search */}
         <div className="flex justify-between h-12 pr-1">
           <Actions />
@@ -112,6 +107,7 @@ export const Vault = () => {
             !vaultState.length ? "border-t" : ""
           }`}
         >
+          {dialogState.addOpen && <AddDialog />}
           <table
             className={`w-full text-gray-400 table-fixed w-full ${
               !vaultState.length ? "h-full" : ""
@@ -158,10 +154,6 @@ export const Vault = () => {
             )}
           </table>
         </div>
-      </div>
-      <div className={`${dialogOpen ? "w-1/3" : "hidden"}`}>
-        {dialogState.addOpen && <AddDialog />}
-        {dialogState.editOpen && <EditDialog />}
         {dialogState.deleteOpen && <DeleteDialog />}
       </div>
     </div>

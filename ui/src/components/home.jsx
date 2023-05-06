@@ -15,7 +15,7 @@ export const Home = () => {
   const [urbitApi] = useContext(UrbitContext);
   const [dialogState, dialogDispatch] = useContext(DialogContext);
   const [, settingsDispatch] = useContext(SettingsContext);
-  const { openInfoDialog, openVault, closeVault, openSettings, closeSettings } =
+  const { openInfoModal, openVault, closeVault, openSettings, closeSettings } =
     dialogActions;
   const { setSettings } = settingsActions;
 
@@ -37,15 +37,11 @@ export const Home = () => {
       .catch((err) => console.log("err", err));
   }, []);
 
-  const blur = dialogState.infoOpen;
+  const blur = dialogState.infoOpen || dialogState.deleteOpen;
 
   return (
     <div className={`${blur ? "opacity-25" : ""} flex h-screen95`}>
       {dialogState.infoOpen && <InfoDialog />}
-      {/* {dialogState.addOpen && <AddDialog />} */}
-      {/* {dialogState.editOpen && <EditDialog />} */}
-      {/* {dialogState.deleteOpen && <DeleteDialog />} */}
-      {/* {dialogState.settingsOpen && <Settings />} */}
 
       <div className="flex flex-col bg-timberwolf w-1/5 md:min-w-[300px]">
         <div className="flex h-12 items-center px-1">
@@ -54,7 +50,7 @@ export const Home = () => {
             <span className="hidden md:inline ml-1">- your password vault</span>
             <button
               className="px-2 flex items-center hover:scale-125"
-              onClick={() => dialogDispatch(openInfoDialog())}
+              onClick={() => dialogDispatch(openInfoModal())}
             >
               <ion-icon name="information-circle-outline" />
             </button>

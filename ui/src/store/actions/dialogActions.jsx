@@ -16,20 +16,20 @@ export const actionTypes = {
 };
 
 export const actions = {
-  openInfoDialog: () => ({
+  openInfoModal: () => ({
     type: actionTypes.OPEN_INFO,
   }),
 
-  closeInfoDialog: () => ({
+  closeInfoModal: () => ({
     type: actionTypes.CLOSE_INFO,
   }),
 
-  openDeleteDialog: (id) => ({
+  openDeleteModal: (id) => ({
     type: actionTypes.OPEN_DELETE,
     id: id,
   }),
 
-  closeDeleteDialog: () => ({
+  closeDeleteModal: () => ({
     type: actionTypes.CLOSE_DELETE,
   }),
 
@@ -37,20 +37,20 @@ export const actions = {
     type: actionTypes.DELETE,
   }),
 
-  openAddDialog: () => ({
+  openAdd: () => ({
     type: actionTypes.OPEN_ADD,
   }),
 
-  closeAddDialog: () => ({
+  closeAdd: () => ({
     type: actionTypes.CLOSE_ADD,
   }),
 
-  openEditDialog: (entry) => ({
+  openEditing: (entry) => ({
     type: actionTypes.OPEN_EDIT,
     entry: entry,
   }),
 
-  closeEditDialog: () => ({
+  closeEditing: () => ({
     type: actionTypes.CLOSE_EDIT,
   }),
 

@@ -9,7 +9,13 @@ import { DialogContext } from "../store/contexts/dialogContext";
 import settingsActions from "../store/actions/settingsActions";
 import dialogActions from "../store/actions/dialogActions";
 
-import { aesDecrypt, getSecret, prepareExport } from "../utils/index";
+import {
+  aesDecrypt,
+  getSecret,
+  prepareExport,
+  prepareImport,
+  dummyD,
+} from "../utils";
 
 export const Settings = () => {
   const [urbitApi] = useContext(UrbitContext);
@@ -87,6 +93,7 @@ export const Settings = () => {
       const contents = e.target.result;
       if (aesDecrypt(contents, getSecret())) {
         setImportState(aesDecrypt(contents, getSecret()));
+        console.log("importState", aesDecrypt(contents, getSecret()));
       }
     };
     reader.readAsText(file);
@@ -94,6 +101,20 @@ export const Settings = () => {
 
   const handleSubmitImport = () => {
     console.log("import state", importState);
+  };
+
+  const importPoke = () => {
+    // prepareImport(dummyD);
+    urbitApi
+      .poke({
+        app: "knox",
+        mark: "knox-action",
+        json: {
+          import: prepareImport(dummyD),
+        },
+      })
+      .then(() => handleScry())
+      .catch(() => handleError());
   };
 
   return (
@@ -107,7 +128,7 @@ export const Settings = () => {
             onChange={() => handleChange("showWelcome")}
             className={`${
               setsForm.showWelcome ? "bg-blueMain" : "bg-gray-200"
-            } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
+            } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-300`}
           >
             <span
               className={`${
@@ -124,7 +145,7 @@ export const Settings = () => {
             onChange={() => handleChange("copyHidden")}
             className={`${
               setsForm.copyHidden ? "bg-blueMain" : "bg-gray-200"
-            } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
+            } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-300`}
           >
             <span
               className={`${
@@ -142,7 +163,7 @@ export const Settings = () => {
             }}
             className={`${
               setsForm.skipDeleteWarn ? "bg-blueMain" : "bg-gray-200"
-            } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500`}
+            } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-300`}
           >
             <span
               className={`${
@@ -181,7 +202,8 @@ export const Settings = () => {
 
         <input type="file" onChange={handleImport} />
         <button
-          onClick={handleSubmitImport}
+          // onClick={handleSubmitImport}
+          onClick={() => importPoke()}
           className="w-full text-left p-1 hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
         >
           Import Vault

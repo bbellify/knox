@@ -25,7 +25,7 @@ export const AddDialog = () => {
   const [copied, setCopied] = useState(false);
   const [formState, setFormState] = useState(defaultFormState);
 
-  const { closeAddDialog } = dialogActions;
+  const { closeAdd } = dialogActions;
   const { setVault } = vaultActions;
 
   // set form password to password from dialog context when password is generated
@@ -47,7 +47,7 @@ export const AddDialog = () => {
   // clear error after 7 seconds, clear form on success after 4 seconds
   useEffect(() => {
     if (success) {
-      const timer = setTimeout(() => dialogDispatch(closeAddDialog()), 4000);
+      const timer = setTimeout(() => dialogDispatch(closeAdd()), 4000);
       return () => clearTimeout(timer);
     }
     if (error) setTimeout(() => setError(false), 7000);
@@ -116,13 +116,13 @@ export const AddDialog = () => {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col">
       <div className="bg-timberwolf h-1/2">
         <div className="flex flex-col items-center h-[100%] pt-1">
           <div className="flex w-full justify-between px-3 my-3">
             <p className="text-l">Save a new entry</p>
             <button
-              onClick={() => dialogDispatch(closeAddDialog())}
+              onClick={() => dialogDispatch(closeAdd())}
               className="flex items-center mr-2 hover:scale-150"
             >
               <ion-icon name="close" />
