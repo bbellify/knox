@@ -6,12 +6,11 @@ import { VaultContext } from "../../store/contexts/vaultContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
 import { SettingsContext } from "../../store/contexts/settingsContext";
 import vaultActions from "../../store/actions/vaultActions";
-import dialogActions from "../../store/actions/dialogActions";
 import settingsActions from "../../store/actions/settingsActions";
 import { getSecret } from "../../utils";
 
 import { VaultTableBody } from "./vaultTableBody";
-import { AddDialog } from "../dialogs/addDialog";
+import { AddEntry } from "../dialogs/addEntry";
 import { DeleteDialog } from "../dialogs/deleteDialog";
 import { Actions } from "./actions";
 
@@ -20,10 +19,9 @@ export const Vault = () => {
 
   const [urbitApi] = useContext(UrbitContext);
   const [vaultState, vaultDispatch] = useContext(VaultContext);
-  const [dialogState, dialogDispatch] = useContext(DialogContext);
+  const [dialogState] = useContext(DialogContext);
   const [, settingsDispatch] = useContext(SettingsContext);
   const { setVault } = vaultActions;
-  const { openInfoModal } = dialogActions;
   const { setSettings } = settingsActions;
 
   const navigate = useNavigate();
@@ -63,9 +61,6 @@ export const Vault = () => {
     setSearchValue(value);
   };
 
-  const dialogOpen =
-    dialogState.addOpen || dialogState.editOpen || dialogState.deleteOpen;
-
   return (
     <div className="flex h-full w-full">
       {/* top buttons for generating, adding, opening settings */}
@@ -104,58 +99,72 @@ export const Vault = () => {
         {/* beginning of table */}
         <div
           className={`overflow-x-auto h-full 2xl:h-screen60 sm:p-0 ${
-            !vaultState.length ? "border-t" : ""
+            !vaultState.length && "border-t"
           }`}
         >
-          {dialogState.addOpen && <AddDialog />}
-          <table
-            className={`w-full text-gray-400 table-fixed w-full ${
-              !vaultState.length ? "h-full" : ""
-            }`}
-          >
-            {!vaultState.length ? (
-              <thead className="w-full h-full text-center sm:text-2xl md:text-3xl text-xl align-middle">
-                <tr>
-                  <td className="px-2 pt-20 sm:pt-0">
-                    Get started by clicking the{" "}
-                    <span className="inline-flex align-bottom pb-1">
-                      <ion-icon name="add" />
-                    </span>{" "}
-                    button above <br />
-                    <br />
-                    Click on the{" "}
-                    <span className="inline-flex align-bottom pb-1">
-                      <ion-icon name="dice-outline" />
-                    </span>{" "}
-                    button above to generate a password
-                  </td>
-                </tr>
-              </thead>
+          {!vaultState.length ? (
+            dialogState.addOpen ? (
+              <table
+                className={`w-full text-gray-400 table-fixed w-full ${
+                  !vaultState.length ? "h-full" : ""
+                }`}
+              >
+                {tableColumnHeaders()}
+                <AddEntry />
+              </table>
             ) : (
-              <>
-                <colgroup>
-                  <col className="w-[25%]" />
-                  <col className="w-[30%]" />
-                  <col className="w-[20%]" />
-                  <col className="w-[8%]" />
-                  <col className="w-[12%]" />
-                </colgroup>
-                <thead className="sticky top-0 z-10">
-                  <tr className="text-left bg-blueMain text-center shadow">
-                    <th className="text-font font-medium">site</th>
-                    <th className="text-font font-medium">username</th>
-                    <th className="text-font font-medium">password</th>
-                    <th className="text-font font-medium">view</th>
-                    <th className="text-font font-medium">edit</th>
-                  </tr>
-                </thead>
-                <VaultTableBody searchValue={searchValue} vault={vaultState} />
-              </>
-            )}
-          </table>
+              <div className="flex justify-center sm:text-2xl md:text-3xl text-xl h-1/2 pt-12 px-2">
+                <p className="text-center">
+                  Get started by clicking the{" "}
+                  <span className="inline-flex align-bottom pb-1">
+                    <ion-icon name="add" />
+                  </span>{" "}
+                  button above <br />
+                  <br />
+                  Click on the{" "}
+                  <span className="inline-flex align-bottom pb-1">
+                    <ion-icon name="dice-outline" />
+                  </span>{" "}
+                  button above to generate a password
+                </p>
+              </div>
+            )
+          ) : (
+            <table
+              className={`w-full text-gray-400 table-fixed w-full ${
+                !vaultState.length ? "h-full" : ""
+              }`}
+            >
+              {tableColumnHeaders()}
+              <VaultTableBody searchValue={searchValue} vault={vaultState} />
+            </table>
+          )}
         </div>
         {dialogState.deleteOpen && <DeleteDialog />}
       </div>
     </div>
+  );
+};
+
+const tableColumnHeaders = () => {
+  return (
+    <>
+      <colgroup>
+        <col className="w-[25%]" />
+        <col className="w-[30%]" />
+        <col className="w-[20%]" />
+        <col className="w-[8%]" />
+        <col className="w-[12%]" />
+      </colgroup>
+      <thead className="sticky top-0 z-10">
+        <tr className="text-left bg-blueMain text-center shadow">
+          <th className="text-font font-medium">site</th>
+          <th className="text-font font-medium">username</th>
+          <th className="text-font font-medium">password</th>
+          <th className="text-font font-medium">view</th>
+          <th className="text-font font-medium">edit</th>
+        </tr>
+      </thead>
+    </>
   );
 };

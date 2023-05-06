@@ -18,6 +18,7 @@ export const VaultTableRow = (props) => {
   const [dialogState, dialogDispatch] = useContext(DialogContext);
   const { openDeleteModal, openEditing, closeEditing } = dialogActions;
   const [passHidden, setPassHidden] = useState(true);
+  const [disabled, setDisabled] = useState(false);
   const [copied, setCopied] = useState({
     site: false,
     user: false,
@@ -35,7 +36,7 @@ export const VaultTableRow = (props) => {
   useEffect(() => {
     if (Object.values(copied).some((val) => val === true)) {
       setTimeout(() => {
-        setCopied(defaultCopied);
+        setCopied({ site: false, user: false, pass: false });
       }, 3500);
     }
   }, [copied]);
@@ -45,6 +46,17 @@ export const VaultTableRow = (props) => {
       setEditingObject(dialogState.editEntry);
     }
   }, [editing]);
+
+  // TODO: validate form - improve this
+  useEffect(() => {
+    if (
+      editingObject.website &&
+      editingObject.username &&
+      editingObject.password
+    )
+      setDisabled(false);
+    else setDisabled(true);
+  }, [editingObject]);
 
   const handleShowPass = () => {
     setPassHidden(!passHidden);
@@ -63,7 +75,6 @@ export const VaultTableRow = (props) => {
       if (e.target.value) {
         navigator.clipboard.writeText(e.target.value);
         setCopied({
-          ...copied,
           [e.target.name]: true,
         });
       }
@@ -72,7 +83,6 @@ export const VaultTableRow = (props) => {
         if (e.target.value) {
           navigator.clipboard.writeText(e.target.value);
           setCopied({
-            ...copied,
             [e.target.name]: true,
           });
         }
@@ -81,7 +91,6 @@ export const VaultTableRow = (props) => {
           if (e.target.value) {
             navigator.clipboard.writeText(e.target.value);
             setCopied({
-              ...copied,
               [e.target.name]: true,
             });
           }
@@ -226,6 +235,7 @@ export const VaultTableRow = (props) => {
           </div>
         </td>
 
+        {/* view button */}
         <td className="text-center">
           <button
             onClick={handleShowPass}
@@ -235,6 +245,7 @@ export const VaultTableRow = (props) => {
           </button>
         </td>
 
+        {/* edit buttons */}
         <td className="text-center">
           {!editing ? (
             <div className="whitespace-nowrap">
@@ -258,10 +269,16 @@ export const VaultTableRow = (props) => {
           ) : (
             <div className="whitespace-nowrap">
               <button
+                disabled={disabled}
                 onClick={handleSubmitEdit}
-                className="pr-1 md:px-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+                className={`pr-1 md:px-2 focus:outline-none focus:ring focus:ring-gray-500 rounded disabled:pointer-events-none ${
+                  !disabled && "hover:scale-125"
+                }`}
               >
-                <ion-icon name="checkmark-sharp" />
+                <ion-icon
+                  name="checkmark-sharp"
+                  id={disabled ? "check-disabled" : ""}
+                />
               </button>
               <button
                 onClick={() => dialogDispatch(closeEditing())}

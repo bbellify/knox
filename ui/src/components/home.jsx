@@ -43,7 +43,7 @@ export const Home = () => {
     <div className={`${blur ? "opacity-25" : ""} flex h-screen95`}>
       {dialogState.infoOpen && <InfoDialog />}
 
-      <div className="flex flex-col bg-timberwolf w-1/5 md:min-w-[300px]">
+      <div className="flex flex-col bg-timberwolf w-1/5 md:min-w-[300px] h-full 2xl:h-screen60 sm:p-0 ">
         <div className="flex h-12 items-center px-1">
           <p className="text-xl text-font align-middle flex font-semibold">
             knox

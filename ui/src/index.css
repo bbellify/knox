@@ -16,6 +16,10 @@ ion-icon {
     pointer-events: none;
 }
 
+#check-disabled {
+    color: #94a3b8;
+}
+
 #copy-icon {
     color: gray;
     margin-left: 3%;
@@ -31,7 +35,6 @@ ion-icon {
 }
 
 #generated-copy-icon {
-    color: #337CA0;
     margin-left: 10%;
     font-size: 1.7em
 }

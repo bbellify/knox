@@ -100,8 +100,7 @@ export const Actions = () => {
               dialogState.addOpen ||
               dialogState.deleteOpen ||
               dialogState.editOpen ||
-              dialogState.infoOpen ||
-              settingsState.settingsOpen
+              dialogState.infoOpen
             )
               ? "animate-bounce"
               : ""
@@ -111,11 +110,11 @@ export const Actions = () => {
           <ion-icon name="add" />
         </button>
       </div>
-      {showGenerated && (
+      {showGenerated && generated && !dialogState.addOpen && (
         <div className="flex w-full justify-center py-2">
           <button
             onClick={handleCopy}
-            className="border border-black shadow px-3 bg-white hover:bg-gray-200 overflow-x-auto rounded"
+            className="border border-black shadow px-12 bg-white hover:bg-gray-200 overflow-x-auto rounded"
             value={generated}
           >
             {generated}
