@@ -13,6 +13,8 @@
       [%sett (ot ~[setting-key+so setting-val+so])]
       [%reset-set (ot ~[num+ni])]
       [%gen (ot ~[enty+ni])]
+      [%import (om entry jon)]
+      :: [%import (om (ot ~[id+ni website+so username+so password+so]) jon)]
   ==
 ++  enjs-update
   =,  enjs:format
@@ -23,6 +25,7 @@
            %gen  !!
            %sett  !!
            %reset-set  !!
+           %import  !!
            %secret  (frond 'secret' s+secret-hash.upd)
            %add  
         %+  frond  'add'

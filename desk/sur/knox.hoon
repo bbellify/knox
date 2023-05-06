@@ -18,6 +18,7 @@
       [%sett =setting-key =setting-val]
       [%reset-set num=@]
       [%secret =secret-hash]
+      [%import =vault]
   ==
 :: update for json types
 +$  update
