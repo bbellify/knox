@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 import { UrbitContext } from "./store/contexts/urbitContext";
@@ -11,6 +11,7 @@ import { Home } from "./components/home";
 
 export const App = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   const [urbitApi] = useContext(UrbitContext);
   const [, settingsDispatch] = useContext(SettingsContext);
@@ -32,6 +33,7 @@ export const App = () => {
   };
 
   const handleScry = (res) => {
+    setLoading(false);
     if (res.settings) {
       settingsDispatch(setSettings(res.settings));
       const showWelcome = res.settings.find((set) => set["showWelcome"]);
@@ -42,15 +44,17 @@ export const App = () => {
 
   return (
     <main className="h-screen p-2">
-      <Routes>
-        <Route
-          path="/apps/knox/welcome"
-          exact={true}
-          element={<WelcomeDialog />}
-        />
-        <Route path="/apps/knox/login" exact={true} element={<Login />} />
-        <Route path={"/apps/knox/"} exact={true} element={<Home />} />
-      </Routes>
+      {!loading && (
+        <Routes>
+          <Route
+            path="/apps/knox/welcome"
+            exact={true}
+            element={<WelcomeDialog />}
+          />
+          <Route path="/apps/knox/login" exact={true} element={<Login />} />
+          <Route path={"/apps/knox/"} exact={true} element={<Home />} />
+        </Routes>
+      )}
     </main>
   );
 };

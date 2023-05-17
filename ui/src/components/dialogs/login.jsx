@@ -16,7 +16,7 @@ export const Login = () => {
 
   useEffect(() => {
     if (getSecret()) navigate("/apps/knox/");
-  });
+  }, []);
 
   const handleShowPassword = (e) => {
     e.preventDefault();
