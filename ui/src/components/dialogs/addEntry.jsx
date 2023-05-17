@@ -79,11 +79,11 @@ export const AddEntry = () => {
   };
 
   const handleSuccess = () => {
-    dialogDispatch(closeAdd());
     setSuccess(true);
     setDisabled(true);
     setLoading(false);
     handleScry();
+    dialogDispatch(closeAdd());
   };
 
   const handleError = () => {

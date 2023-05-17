@@ -57,8 +57,8 @@ export const Vault = () => {
           path: "/vault",
         })
         .then((res) => {
-          setLoading(false);
           vaultDispatch(setVault(res.vault));
+          setLoading(false);
         })
         // TODO: use this to set an error?
         .catch((err) => console.log("err", err));
@@ -113,13 +113,11 @@ export const Vault = () => {
         >
           {!vaultState.length && !loading ? (
             dialogState.addOpen ? (
-              <table
-                className={`w-full text-gray-400 table-fixed w-full ${
-                  !vaultState.length ? "h-full" : ""
-                }`}
-              >
+              <table className="w-full text-gray-400 table-fixed w-full">
                 {tableColumnHeaders()}
-                <AddEntry />
+                <tbody>
+                  <AddEntry />
+                </tbody>
               </table>
             ) : (
               <div className="flex justify-center sm:text-2xl md:text-3xl text-xl h-1/2 pt-12 px-2">

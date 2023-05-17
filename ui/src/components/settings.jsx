@@ -119,7 +119,7 @@ export const Settings = () => {
   return (
     <div className="bg-timberwolf mx-1 h-full w-1/2">
       <div className="mb-12">
-        <div className="flex h-12 bg-blueMain items-center px-1">
+        <div className="flex h-12 bg-blueMain items-center px-1 shadow">
           <p className="text-xl">Settings</p>
         </div>
         <div className="px-3">
@@ -195,7 +195,7 @@ export const Settings = () => {
       )}
 
       <div>
-        <div className="flex h-12 bg-blueMain items-center px-1">
+        <div className="flex h-12 bg-blueMain items-center px-1 shadow">
           <p className="text-xl">Tools</p>
         </div>
         {/* TODO add some ? icon or similar for showing info on each of these tools - state object exists above for this purpose */}

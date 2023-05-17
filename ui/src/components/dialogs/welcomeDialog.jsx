@@ -259,6 +259,7 @@ export const WelcomeDialog = () => {
                       Something went wrong saving your secret. Try again
                     </button>
                   )}
+                  {/* TODO remove this, put next to save button and smaller */}
                   {secretSuccess && (
                     <button
                       disabled

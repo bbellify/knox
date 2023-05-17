@@ -123,17 +123,18 @@ export const prepareExport = (vault) => {
 };
 
 export const prepareImport = (dummyD) => {
-  let importObj = {};
-  dummyD.forEach((enty) => {
-    importObj[enty.id] = {
-      website: enty.website,
-      username: enty.username,
-      password: enty.password,
-      updated: enty.updated,
-    };
-  });
-  console.log("importObj", importObj);
-  return importObj;
+  // let importObj = [];
+  // dummyD.forEach((enty) => {
+  //   importObj[enty.id] = {
+  //     id: enty.id,
+  //     website: enty.website,
+  //     username: enty.username,
+  //     password: enty.password,
+  //     updated: enty.updated,
+  //   };
+  // });
+  // console.log("importObj", importObj);
+  return dummyD;
 };
 
 export const dummyD = [
