@@ -13,7 +13,7 @@
       [%sett (ot ~[setting-key+so setting-val+so])]
       [%reset-set (ot ~[num+ni])]
       [%gen (ot ~[enty+ni])]
-      [%import (ar (ot ~[id+ni website+so username+so password+so updated+so]))]
+      [%import (ar (ot ~[id+ni website+so username+so password+so updated+di]))]
   ==
 ++  enjs-update
   =,  enjs:format

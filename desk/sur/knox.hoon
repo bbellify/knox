@@ -6,7 +6,7 @@
 +$  id          @ud  :: TODO: change this to dif type
 +$  secret-hash  @t
 +$  entry  [=website =username =password =updated]
-+$  import  [=id =website =username =password updated=@t]
++$  import  [=id =website =username =password =updated]
 +$  imports  (list import)
 +$  enty  @ud
 +$  setting-key  @tas
