@@ -20,9 +20,10 @@ export const Vault = () => {
   const [urbitApi] = useContext(UrbitContext);
   const [vaultState, vaultDispatch] = useContext(VaultContext);
   const [dialogState] = useContext(DialogContext);
-  const [, settingsDispatch] = useContext(SettingsContext);
+  const [settingsState, settingsDispatch] = useContext(SettingsContext);
   const { setVault } = vaultActions;
   const { setSettings } = settingsActions;
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -32,28 +33,36 @@ export const Vault = () => {
 
   // get settings and set to context
   useEffect(() => {
-    urbitApi
-      .scry({
-        app: "knox",
-        path: "/settings",
-      })
-      .then((res) => {
-        settingsDispatch(setSettings(res.settings));
-      })
-      // TODO: handle this error?
-      .catch((err) => console.log("err", err));
+    if (!Object.entries(settingsState)) {
+      urbitApi
+        .scry({
+          app: "knox",
+          path: "/settings",
+        })
+        .then((res) => {
+          settingsDispatch(setSettings(res.settings));
+        })
+        // TODO: handle this error?
+        .catch((err) => console.log("err", err));
+    }
   }, []);
 
   // get vault and set to context
   useEffect(() => {
-    urbitApi
-      .scry({
-        app: "knox",
-        path: "/vault",
-      })
-      .then((res) => vaultDispatch(setVault(res.vault)))
-      // TODO: use this to set an error?
-      .catch((err) => console.log("err", err));
+    if (!vaultState.length) {
+      setLoading(true);
+      urbitApi
+        .scry({
+          app: "knox",
+          path: "/vault",
+        })
+        .then((res) => {
+          setLoading(false);
+          vaultDispatch(setVault(res.vault));
+        })
+        // TODO: use this to set an error?
+        .catch((err) => console.log("err", err));
+    }
   }, []);
 
   const handleSearch = (e) => {
@@ -102,7 +111,7 @@ export const Vault = () => {
             !vaultState.length && "border-t"
           }`}
         >
-          {!vaultState.length ? (
+          {!vaultState.length && !loading ? (
             dialogState.addOpen ? (
               <table
                 className={`w-full text-gray-400 table-fixed w-full ${

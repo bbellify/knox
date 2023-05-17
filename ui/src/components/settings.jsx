@@ -62,7 +62,6 @@ export const Settings = () => {
   };
 
   const handleReset = () => {
-    setAllLoading(true);
     urbitApi
       .poke({
         app: "knox",
@@ -119,66 +118,71 @@ export const Settings = () => {
 
   return (
     <div className="bg-timberwolf mx-1 h-full w-1/2">
-      <div>
-        <p className="text-xl">Settings</p>
-        <div className="flex my-4 justify-between">
-          <p>Show welcome screen</p>
-          <Switch
-            checked={setsForm.showWelcome}
-            onChange={() => handleChange("showWelcome")}
-            className={`${
-              setsForm.showWelcome ? "bg-blueMain" : "bg-gray-200"
-            } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-300`}
-          >
-            <span
-              className={`${
-                setsForm.showWelcome ? "translate-x-6" : "translate-x-1"
-              } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-            />
-          </Switch>
+      <div className="mb-12">
+        <div className="flex h-12 bg-blueMain items-center px-1">
+          <p className="text-xl">Settings</p>
         </div>
-        <div className="flex mt-4 justify-between">
-          <p>Click to copy hidden passwords</p>
+        <div className="px-3">
+          <div className="flex my-4 justify-between">
+            <p>Show welcome screen</p>
+            <Switch
+              checked={setsForm.showWelcome}
+              onChange={() => handleChange("showWelcome")}
+              className={`${
+                setsForm.showWelcome ? "bg-blueMain" : "bg-gray-200"
+              } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-300`}
+            >
+              <span
+                className={`${
+                  setsForm.showWelcome ? "translate-x-6" : "translate-x-1"
+                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+              />
+            </Switch>
+          </div>
+          <div className="flex mt-4 justify-between">
+            <p>Click to copy hidden passwords</p>
 
-          <Switch
-            checked={setsForm.copyHidden}
-            onChange={() => handleChange("copyHidden")}
-            className={`${
-              setsForm.copyHidden ? "bg-blueMain" : "bg-gray-200"
-            } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-300`}
-          >
-            <span
+            <Switch
+              checked={setsForm.copyHidden}
+              onChange={() => handleChange("copyHidden")}
               className={`${
-                setsForm.copyHidden ? "translate-x-6" : "translate-x-1"
-              } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-            />
-          </Switch>
-        </div>
-        <div className="flex my-4 justify-between">
-          <p>One-click delete (skip delete warning)</p>
-          <Switch
-            checked={setsForm.skipDeleteWarn}
-            onChange={() => {
-              handleChange("skipDeleteWarn");
-            }}
-            className={`${
-              setsForm.skipDeleteWarn ? "bg-blueMain" : "bg-gray-200"
-            } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-300`}
-          >
-            <span
+                setsForm.copyHidden ? "bg-blueMain" : "bg-gray-200"
+              } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-300`}
+            >
+              <span
+                className={`${
+                  setsForm.copyHidden ? "translate-x-6" : "translate-x-1"
+                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+              />
+            </Switch>
+          </div>
+          <div className="flex mt-4 justify-between">
+            <p>One-click delete (skip delete warning)</p>
+            <Switch
+              checked={setsForm.skipDeleteWarn}
+              onChange={() => {
+                handleChange("skipDeleteWarn");
+              }}
               className={`${
-                setsForm.skipDeleteWarn ? "translate-x-6" : "translate-x-1"
-              } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-            />
-          </Switch>
+                setsForm.skipDeleteWarn ? "bg-blueMain" : "bg-gray-200"
+              } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-300`}
+            >
+              <span
+                className={`${
+                  setsForm.skipDeleteWarn ? "translate-x-6" : "translate-x-1"
+                } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+              />
+            </Switch>
+          </div>
+          <div className="flex mt-4 justify-between">
+            <button
+              onClick={handleReset}
+              className="w-full text-left hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
+            >
+              Restore Default Settings
+            </button>
+          </div>
         </div>
-
-        <button
-          onClick={handleReset}
-          className="w-full text-left p-1 hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
-        >
-          Restore Default Settings
-        </button>
       </div>
 
       {error && (
@@ -191,7 +195,9 @@ export const Settings = () => {
       )}
 
       <div>
-        <p className="text-xl">Tools</p>
+        <div className="flex h-12 bg-blueMain items-center px-1">
+          <p className="text-xl">Tools</p>
+        </div>
         {/* TODO add some ? icon or similar for showing info on each of these tools - state object exists above for this purpose */}
         <button
           onClick={handleExport}

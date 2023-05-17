@@ -44,6 +44,8 @@ export const VaultTableRow = (props) => {
   useEffect(() => {
     if (editing) {
       setEditingObject(dialogState.editEntry);
+    } else {
+      setPassHidden(true);
     }
   }, [editing]);
 
@@ -214,6 +216,7 @@ export const VaultTableRow = (props) => {
           <div className="flex justify-center items-center">
             {editing ? (
               <input
+                type={passHidden ? "password" : null}
                 name="password"
                 value={editingObject.password}
                 onChange={handleEditChange}
