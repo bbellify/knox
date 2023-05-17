@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { UrbitContext } from "../store/contexts/urbitContext";
 import { DialogContext } from "../store/contexts/dialogContext";
@@ -18,6 +19,7 @@ export const Home = () => {
   const { openInfoModal, openVault, closeVault, openSettings, closeSettings } =
     dialogActions;
   const { setSettings } = settingsActions;
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!getSecret()) navigate("/apps/knox/login");
@@ -35,6 +37,10 @@ export const Home = () => {
       })
       // TODO: handle this error?
       .catch((err) => console.log("err", err));
+  }, []);
+
+  useEffect(() => {
+    dialogDispatch(openVault());
   }, []);
 
   const blur = dialogState.infoOpen || dialogState.deleteOpen;

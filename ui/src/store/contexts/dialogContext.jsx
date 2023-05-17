@@ -5,7 +5,7 @@ export const DialogContext = createContext({});
 const { Provider } = DialogContext;
 
 export const defaultState = {
-  vaultOpen: true,
+  vaultOpen: false,
   settingsOpen: false,
   infoOpen: false,
   deleteOpen: false,
