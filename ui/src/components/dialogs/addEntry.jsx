@@ -126,10 +126,11 @@ export const AddEntry = () => {
       <td className="p-2">
         <div className="flex justify-center items-center">
           <input
+            autoFocus
             name="website"
             value={formState.website}
             onChange={handleChange}
-            className="py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500 rounded"
+            className="text-font py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500 rounded"
           />
         </div>
       </td>
@@ -141,7 +142,7 @@ export const AddEntry = () => {
             name="username"
             value={formState.username}
             onChange={handleChange}
-            className="py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500 rounded"
+            className="text-font py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500 rounded"
           />
         </div>
       </td>
@@ -154,7 +155,7 @@ export const AddEntry = () => {
             type={passHidden ? "password" : null}
             value={formState.password}
             onChange={handleChange}
-            className="py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500 rounded"
+            className="text-font py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500 rounded"
           />
         </div>
       </td>

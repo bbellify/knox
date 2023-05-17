@@ -164,10 +164,11 @@ export const VaultTableRow = (props) => {
           <div className="flex justify-center items-center">
             {editing ? (
               <input
+                autoFocus
                 name="website"
                 value={editingObject.website}
                 onChange={handleEditChange}
-                className="py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500 rounded"
+                className="text-font py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500 rounded"
               />
             ) : (
               <>
@@ -193,7 +194,7 @@ export const VaultTableRow = (props) => {
                 name="username"
                 value={editingObject.username}
                 onChange={handleEditChange}
-                className="py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500 rounded"
+                className="text-font py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500 rounded"
               />
             ) : (
               <>
@@ -220,7 +221,7 @@ export const VaultTableRow = (props) => {
                 name="password"
                 value={editingObject.password}
                 onChange={handleEditChange}
-                className="py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500 rounded"
+                className="text-font py-2 sm:px-4 hover:bg-gray-200 max-w-full overflow-x-auto focus:outline-none focus:ring focus:ring-gray-500 rounded"
               />
             ) : (
               <>
