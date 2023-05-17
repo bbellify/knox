@@ -6,6 +6,8 @@
 +$  id          @ud  :: TODO: change this to dif type
 +$  secret-hash  @t
 +$  entry  [=website =username =password =updated]
++$  import  [=id =website =username =password updated=@t]
++$  imports  (list import)
 +$  enty  @ud
 +$  setting-key  @tas
 +$  setting-val  @t
@@ -18,7 +20,7 @@
       [%sett =setting-key =setting-val]
       [%reset-set num=@]
       [%secret =secret-hash]
-      :: [%import =vault]
+      [%import =imports]
   ==
 :: update for json types
 +$  update

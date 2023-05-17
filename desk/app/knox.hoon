@@ -52,8 +52,8 @@
     `this(settings (~(put by settings) setting-key.act [setting-val.act]))
       %reset-set
     `this(settings `(map setting-key setting-val)`(malt ~[[`setting-key`'showWelcome' `setting-val`'true'] [`setting-key`'copyHidden' `setting-val`'true'] [`setting-key`'skipDeleteWarn' `setting-val`'false']]))
-      :: %import
-      :: ~>  vault.act  !!
+      %import
+      ~&  imports.act  `this(vault vault)
     :: `this(vault vault.act)
     :: below is an example of sending an update with :_
       %gen

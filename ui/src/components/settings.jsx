@@ -99,11 +99,12 @@ export const Settings = () => {
   };
 
   const handleSubmitImport = () => {
-    console.log("import state", importState);
+    importPoke();
   };
 
   const importPoke = () => {
     // prepareImport(dummyD);
+    console.log("import", prepareImport(dummyD));
     urbitApi
       .poke({
         app: "knox",

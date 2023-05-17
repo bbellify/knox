@@ -13,9 +13,7 @@
       [%sett (ot ~[setting-key+so setting-val+so])]
       [%reset-set (ot ~[num+ni])]
       [%gen (ot ~[enty+ni])]
-      :: [%import !!]
-      :: [%import (om entry jon)]
-      :: [%import (om (ot ~[id+ni website+so username+so password+so]) jon)]
+      [%import (ar (ot ~[id+ni website+so username+so password+so updated+so]))]
   ==
 ++  enjs-update
   =,  enjs:format
