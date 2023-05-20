@@ -7,6 +7,7 @@ import { SettingsContext } from "../store/contexts/settingsContext";
 import { VaultContext } from "../store/contexts/vaultContext";
 import { DialogContext } from "../store/contexts/dialogContext";
 import settingsActions from "../store/actions/settingsActions";
+import vaultActions from "../store/actions/vaultActions";
 import dialogActions from "../store/actions/dialogActions";
 
 import {
@@ -21,28 +22,39 @@ export const Settings = () => {
   const [urbitApi] = useContext(UrbitContext);
   const [settingsState, settingsDispatch] = useContext(SettingsContext);
   const [dialogState, dialogDispatch] = useContext(DialogContext);
-  const [vaultState] = useContext(VaultContext);
+  const [vaultState, vaultDispatch] = useContext(VaultContext);
   const [setsForm, setSetsForm] = useState(settingsState);
   const [error, setError] = useState(false);
   const [importState, setImportState] = useState(null);
   const [showInfo, setShowInfo] = useState({ export: false, import: false });
   const { setSettings } = settingsActions;
+  const { setVault } = vaultActions;
   const { closeSettings } = dialogActions;
 
   useEffect(() => {
     setSetsForm(settingsState);
   }, [settingsState]);
 
-  const handleScry = () => {
+  const handleScry = (path) => {
     urbitApi
       .scry({
         app: "knox",
-        path: "/settings",
+        path: path,
       })
       .then((res) => {
-        settingsDispatch(setSettings(res.settings));
+        switch (path) {
+          case "/vault":
+            vaultDispatch(setVault(res.vault));
+            break;
+          case "/settings":
+            settingsDispatch(setSettings(res.settings));
+            break;
+          default:
+            return;
+        }
       })
-      .catch(() => handleError());
+      // .catch(() => handleError());
+      .catch((err) => console.log("err", err));
   };
 
   const handleChange = (setting) => {
@@ -57,7 +69,7 @@ export const Settings = () => {
           },
         },
       })
-      .then(() => handleScry())
+      .then(() => handleScry("/settings"))
       .catch(() => setError(true));
   };
 
@@ -72,7 +84,7 @@ export const Settings = () => {
           },
         },
       })
-      .then(() => handleScry())
+      .then(() => handleScry("/settings"))
       .catch(() => handleError());
   };
 
@@ -81,10 +93,8 @@ export const Settings = () => {
     saveAs(blob, "vault.knox");
   };
 
+  // decode the uploaded string and send to knox
   const handleImport = (e) => {
-    console.log("handle import");
-    // decode the uploaded string and send to knox
-
     const file = e.target.files[0];
     const reader = new FileReader();
 
@@ -92,7 +102,6 @@ export const Settings = () => {
       const contents = e.target.result;
       if (aesDecrypt(contents, getSecret())) {
         setImportState(aesDecrypt(contents, getSecret()));
-        console.log("importState", aesDecrypt(contents, getSecret()));
       }
     };
     reader.readAsText(file);
@@ -103,17 +112,17 @@ export const Settings = () => {
   };
 
   const importPoke = () => {
-    // prepareImport(dummyD);
-    console.log("import", prepareImport(dummyD));
+    // TODO set error/message something here if !importState
+    if (!importState) return;
     urbitApi
       .poke({
         app: "knox",
         mark: "knox-action",
         json: {
-          import: prepareImport(dummyD),
+          import: prepareImport(importState),
         },
       })
-      .then(() => handleScry())
+      .then(() => handleScry("/vault"))
       .catch(() => handleError());
   };
 

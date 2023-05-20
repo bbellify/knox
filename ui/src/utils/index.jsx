@@ -122,19 +122,22 @@ export const prepareExport = (vault) => {
   return aesEncrypt(JSON.stringify(vault), getSecret());
 };
 
-export const prepareImport = (dummyD) => {
-  // let importObj = [];
-  // dummyD.forEach((enty) => {
-  //   importObj[enty.id] = {
-  //     id: enty.id,
-  //     website: enty.website,
-  //     username: enty.username,
-  //     password: enty.password,
-  //     updated: enty.updated,
-  //   };
-  // });
-  // console.log("importObj", importObj);
-  return dummyD;
+// for preparing an import .knox file
+export const prepareImport = (imports) => {
+  const secret = getSecret();
+  if (!secret || !imports) return;
+  const importArray = JSON.parse(imports);
+  const newArr = [];
+  importArray.forEach((entry) => {
+    newArr.push({
+      id: entry.id,
+      website: aesEncrypt(entry["website"], secret),
+      username: aesEncrypt(entry["username"], secret),
+      password: aesEncrypt(entry["password"], secret),
+      updated: new Date(entry.updated).getTime(),
+    });
+  });
+  return newArr;
 };
 
 export const dummyD = [
