@@ -76,16 +76,13 @@
   $(outp (~(rad og enty) (pow 2 64)))
 ::
 ++  import
-  |=  input=[imports vault]
+  |=  imports=imports
+  ^-  vault
   =/  counter  0
   =/  newvault  *vault
   |-
-    =/  current  (snag counter -.input)
-    ~&  counter
-    ~&  >>  current
-    ~&  >>>  (snag counter -.input)
-    ?:  =(counter (dec (lent -.input)))
-      ~&  >  newvault
-      `vault`newvault
-    $(counter +(counter), newvault (~(put by newvault) `id`counter `entry`['hi' 'hi' 'hi' `@da`7]))
+    =/  current  (snag counter imports)
+    ?:  =(+(counter) (lent imports))
+      newvault
+    $(counter +(counter), newvault (~(put by newvault) `id`id.current `entry`[`website`website.current `username`username.current `password`password.current `updated`updated.current]))
 --

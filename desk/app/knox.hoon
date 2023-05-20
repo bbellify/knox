@@ -57,8 +57,7 @@
     `this(settings `(map setting-key setting-val)`(malt ~[[`setting-key`'showWelcome' `setting-val`'true'] [`setting-key`'copyHidden' `setting-val`'true'] [`setting-key`'skipDeleteWarn' `setting-val`'false']]))
       ::
       %import
-      ~&  imports.act  `this(vault (import:knox [imports.act vault]))
-    :: `this(vault vault.act)
+    `this(vault (import:knox imports.act))
     :: below is an example of sending an update with :_
       %gen
     :_
