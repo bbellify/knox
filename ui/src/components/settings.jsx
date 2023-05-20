@@ -10,13 +10,7 @@ import settingsActions from "../store/actions/settingsActions";
 import vaultActions from "../store/actions/vaultActions";
 import dialogActions from "../store/actions/dialogActions";
 
-import {
-  aesDecrypt,
-  getSecret,
-  prepareExport,
-  prepareImport,
-  dummyD,
-} from "../utils";
+import { aesDecrypt, getSecret, prepareExport, prepareImport } from "../utils";
 
 export const Settings = () => {
   const [urbitApi] = useContext(UrbitContext);

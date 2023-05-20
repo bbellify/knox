@@ -15,6 +15,7 @@
       [%gen (ot ~[enty+ni])]
       [%import (ar (ot ~[id+ni website+so username+so password+so updated+di]))]
   ==
+::
 ++  enjs-update
   =,  enjs:format
   |=  upd=update
@@ -65,11 +66,26 @@
           ['updated' (time updated.entry)]
       ==
   --
-  ++  get-numb
-    |=  enty=@
-    =/  outp  (~(rad og enty) (pow 2 64))
-    |-
-    ?:  (gth outp 99.999.999)
-      `@ud`outp
-    $(outp (~(rad og enty) (pow 2 64)))
+::
+++  get-numb
+  |=  enty=@
+  =/  outp  (~(rad og enty) (pow 2 64))
+  |-
+  ?:  (gth outp 99.999.999)
+    `@ud`outp
+  $(outp (~(rad og enty) (pow 2 64)))
+::
+++  import
+  |=  input=[imports vault]
+  =/  counter  0
+  =/  newvault  *vault
+  |-
+    =/  current  (snag counter -.input)
+    ~&  counter
+    ~&  >>  current
+    ~&  >>>  (snag counter -.input)
+    ?:  =(counter (dec (lent -.input)))
+      ~&  >  newvault
+      `vault`newvault
+    $(counter +(counter), newvault (~(put by newvault) `id`counter `entry`['hi' 'hi' 'hi' `@da`7]))
 --

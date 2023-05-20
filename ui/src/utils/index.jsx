@@ -125,8 +125,11 @@ export const prepareExport = (vault) => {
 // for preparing an import .knox file
 export const prepareImport = (imports) => {
   const secret = getSecret();
-  if (!secret || !imports) return;
-  const importArray = JSON.parse(imports);
+  let importArray;
+  if (imports) {
+    importArray = JSON.parse(imports);
+  }
+  if (!secret || !imports || !importArray.length) return;
   const newArr = [];
   importArray.forEach((entry) => {
     newArr.push({
@@ -140,6 +143,7 @@ export const prepareImport = (imports) => {
   return newArr;
 };
 
+// TODO delete this
 export const dummyD = [
   {
     id: 3186586499,
