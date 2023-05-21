@@ -39,10 +39,9 @@ export const Home = () => {
       .catch((err) => console.log("err", err));
   }, []);
 
-  // TODO turn this back on
-  // useEffect(() => {
-  //   dialogDispatch(openVault());
-  // }, []);
+  useEffect(() => {
+    dialogDispatch(openVault());
+  }, []);
 
   const blur = dialogState.infoOpen || dialogState.deleteOpen;
 

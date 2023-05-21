@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Switch } from "@headlessui/react";
+import { Switch, Disclosure } from "@headlessui/react";
 import { saveAs } from "file-saver";
 
 import { UrbitContext } from "../store/contexts/urbitContext";
@@ -122,9 +122,11 @@ export const Settings = () => {
 
   return (
     <div className="bg-timberwolf mx-1 h-full w-1/2">
+      {/* settings */}
       <div className="mb-12">
         <div className="flex h-12 bg-blueMain items-center px-1 shadow">
           <p className="text-xl">Settings</p>
+          <ion-icon name="options-outline" id="settings-icon" />
         </div>
         <div className="px-3">
           <div className="flex my-4 justify-between">
@@ -134,7 +136,7 @@ export const Settings = () => {
               onChange={() => handleChange("showWelcome")}
               className={`${
                 setsForm.showWelcome ? "bg-blueMain" : "bg-gray-200"
-              } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-300`}
+              } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400`}
             >
               <span
                 className={`${
@@ -151,7 +153,7 @@ export const Settings = () => {
               onChange={() => handleChange("copyHidden")}
               className={`${
                 setsForm.copyHidden ? "bg-blueMain" : "bg-gray-200"
-              } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-300`}
+              } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400`}
             >
               <span
                 className={`${
@@ -169,7 +171,7 @@ export const Settings = () => {
               }}
               className={`${
                 setsForm.skipDeleteWarn ? "bg-blueMain" : "bg-gray-200"
-              } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-300`}
+              } relative inline-flex h-6 w-11 items-center rounded-full mx-2 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400`}
             >
               <span
                 className={`${
@@ -181,7 +183,7 @@ export const Settings = () => {
           <div className="flex mt-4 justify-between">
             <button
               onClick={handleReset}
-              className="w-full text-left hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
+              className="w-full p-2 px-3 text-left hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400"
             >
               Restore Default Settings
             </button>
@@ -198,33 +200,67 @@ export const Settings = () => {
         </button>
       )}
 
+      {/* tools */}
       <div>
         <div className="flex h-12 bg-blueMain items-center px-1 shadow">
           <p className="text-xl">Tools</p>
+          <ion-icon name="build-outline" id="tools-icon" />
         </div>
-        {/* TODO add some ? icon or similar for showing info on each of these tools - state object exists above for this purpose */}
-        <button
-          onClick={handleExport}
-          className="w-full text-left p-1 hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
-        >
-          Export Vault
-        </button>
+        <div className="px-3 py-3">
+          {/* TODO add some ? icon or similar for showing info on each of these tools - state object exists above for this purpose */}
+          <Disclosure>
+            <Disclosure.Button className="w-full text-left p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400">
+              Change secret
+            </Disclosure.Button>
+            <Disclosure.Panel>
+              <div className="flex flex-col py-2">
+                <input
+                  placeholder="old secret"
+                  className="my-1 w-2/3 p-2 px-3"
+                />
+                <input
+                  placeholder="new secret"
+                  className="my-1 w-2/3 p-2 px-3"
+                />
+                <div className="flex">
+                  <input
+                    placeholder="confirm new secret"
+                    className="my-1 w-2/3 p-2 px-3"
+                  />
+                  <div className="w-1/3 p-2 flex justify-center">
+                    <button className="w-full p-2 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400">
+                      save
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </Disclosure.Panel>
+          </Disclosure>
+          <div className="flex my-4 justify-between">
+            <button className="w-full text-left p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400">
+              Cycle passwords
+            </button>
+          </div>
+          <div className="flex my-4 justify-between">
+            <button
+              onClick={handleExport}
+              className="w-full text-left p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400"
+            >
+              Export vault
+            </button>
+          </div>
 
-        <input type="file" onChange={handleImport} />
-        <button
-          // onClick={handleSubmitImport}
-          onClick={() => importPoke()}
-          className="w-full text-left p-1 hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
-        >
-          Import Vault
-        </button>
-
-        <button
-          // onClick={handleReset}
-          className="w-full text-left p-1 hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-500"
-        >
-          Cycle passwords
-        </button>
+          <div className="flex flex-col my-4 justify-between">
+            <button
+              disabled={importState ? false : true}
+              onClick={() => importPoke()}
+              className="text-left p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 disabled:text-gray-400 disabled:hover:bg-transparent disabled:pointer-events-none border border-gray-400"
+            >
+              Import vault
+            </button>
+            <input type="file" onChange={handleImport} className="mt-3" />
+          </div>
+        </div>
       </div>
     </div>
   );

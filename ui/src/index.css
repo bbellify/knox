@@ -41,6 +41,14 @@ ion-icon {
 
 #settings-icon {
     font-size: 1.2rem;
+    transform: translateY(1px);
+    margin: 0 1%;
+}
+
+#tools-icon {
+    font-size: 1.2rem;
+    transform: translateY(1px);
+    margin: 0 1%;
 }
 
 .shakeX {
