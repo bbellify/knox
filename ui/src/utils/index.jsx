@@ -48,7 +48,6 @@ String.prototype.pick = function (enty, min, max) {
   }
 
   for (let i = 0; i < n; i++) {
-    // chars += this.charAt(Math.floor(Math.random() * this.length));
     chars += this.charAt(
       Math.floor(parseFloat(`0.${enty.shuffle()}`) * this.length)
     );
@@ -101,8 +100,8 @@ export const generatePassword = (dialogDispatch, urbitApi) => {
         path: "/enty",
       })
       .then((res) => makeItAndSetIt(res.enty))
-      // TODO: handle this error?
-      .catch((err) => console.log("err", err));
+      // TODO: handle error
+      .catch((err) => console.log("error", err));
   };
 
   urbitApi

@@ -42,8 +42,8 @@ export const Vault = () => {
         .then((res) => {
           settingsDispatch(setSettings(res.settings));
         })
-        // TODO: handle this error?
-        .catch((err) => console.log("err", err));
+        // TODO: handle error
+        .catch((err) => console.log("error", err));
     }
   }, []);
 
@@ -60,8 +60,8 @@ export const Vault = () => {
           vaultDispatch(setVault(res.vault));
           setLoading(false);
         })
-        // TODO: use this to set an error?
-        .catch((err) => console.log("err", err));
+        // TODO: handle error
+        .catch((err) => console.log("error", err));
     }
   }, []);
 

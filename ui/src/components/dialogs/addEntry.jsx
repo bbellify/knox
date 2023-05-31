@@ -5,7 +5,7 @@ import vaultActions from "../../store/actions/vaultActions";
 import { UrbitContext } from "../../store/contexts/urbitContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
 import dialogActions from "../../store/actions/dialogActions";
-import { aesEncrypt, generatePassword, getSecret } from "../../utils";
+import { aesEncrypt, getSecret } from "../../utils";
 
 const defaultFormState = {
   website: "",
@@ -88,8 +88,8 @@ export const AddEntry = () => {
       <tr
         className={
           error
-            ? "border-t-2 border-l-2 border-r-2 border-error"
-            : "bg-whiteSmoke border-b border-gray-300 bg-timberwolf hover:bg-whiteSmoke"
+            ? "mt-1 border-t-2 border-l-2 border-r-2 border-error bg-whiteSmoke"
+            : "bg-whiteSmoke border-2 border-gray-500"
         }
       >
         {/* website */}
@@ -165,7 +165,7 @@ export const AddEntry = () => {
         </td>
       </tr>
       {error && (
-        <tr className="border-l-2 border-r-2 border-b-2 border-error">
+        <tr className="border-l-2 border-r-2 border-b-2 border-error bg-whiteSmoke">
           <td></td>
           <td></td>
           <td></td>

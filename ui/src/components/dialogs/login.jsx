@@ -46,8 +46,8 @@ export const Login = () => {
           }, 3000);
         }
       })
-      // TODO: use this to set an error?
-      .catch((err) => console.log("err", err));
+      // TODO: handle error
+      .catch((err) => console.log("error", err));
   };
 
   return (

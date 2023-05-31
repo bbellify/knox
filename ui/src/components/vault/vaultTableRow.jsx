@@ -118,12 +118,10 @@ export const VaultTableRow = (props) => {
   };
 
   const handleSubmitEdit = () => {
-    // set loading?
     urbitApi
       .poke({
         app: "knox",
-        mark: "knox-actio",
-        // mark: "knox-action",
+        mark: "knox-action",
         json: {
           edit: {
             website: aesEncrypt(editingObject.website, getSecret()),
@@ -154,13 +152,13 @@ export const VaultTableRow = (props) => {
   return (
     <>
       <tr
-        className={`${
+        className={
           error
-            ? "border-t-2 border-l-2 border-r-2 border-error"
+            ? "border-t-2 border-l-2 border-r-2 border-error bg-whiteSmoke"
             : editing
-            ? "bg-whiteSmoke"
-            : "border-b border-gray-300"
-        } bg-timberwolf hover:bg-whiteSmoke`}
+            ? "bg-whiteSmoke border-2 border-gray-500"
+            : "border-b border-gray-300 bg-timberwolf hover:bg-whiteSmoke"
+        }
       >
         {/* website */}
         <td className="p-2">
@@ -301,7 +299,7 @@ export const VaultTableRow = (props) => {
         </td>
       </tr>
       {error && (
-        <tr className="border-l-2 border-r-2 border-b-2 border-error">
+        <tr className="border-l-2 border-r-2 border-b-2 border-error bg-whiteSmoke">
           <td></td>
           <td></td>
           <td></td>

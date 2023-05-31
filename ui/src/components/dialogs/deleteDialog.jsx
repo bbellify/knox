@@ -59,8 +59,8 @@ export const DeleteDialog = () => {
         path: "/vault",
       })
       .then((res) => vaultDispatch(setVault(res.vault)))
-      // TODO: handle this error?
-      .catch((err) => console.log("err", err));
+      // TODO: handle error
+      .catch((err) => console.log("error", err));
   };
 
   return (

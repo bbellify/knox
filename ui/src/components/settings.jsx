@@ -5,25 +5,21 @@ import { saveAs } from "file-saver";
 import { UrbitContext } from "../store/contexts/urbitContext";
 import { SettingsContext } from "../store/contexts/settingsContext";
 import { VaultContext } from "../store/contexts/vaultContext";
-import { DialogContext } from "../store/contexts/dialogContext";
 import settingsActions from "../store/actions/settingsActions";
 import vaultActions from "../store/actions/vaultActions";
-import dialogActions from "../store/actions/dialogActions";
 
 import { aesDecrypt, getSecret, prepareExport, prepareImport } from "../utils";
 
 export const Settings = () => {
   const [urbitApi] = useContext(UrbitContext);
   const [settingsState, settingsDispatch] = useContext(SettingsContext);
-  const [dialogState, dialogDispatch] = useContext(DialogContext);
   const [vaultState, vaultDispatch] = useContext(VaultContext);
   const [setsForm, setSetsForm] = useState(settingsState);
-  const [error, setError] = useState(false);
+  const [setsStatus, setSetsStatus] = useState(null);
   const [importState, setImportState] = useState(null);
-  const [showInfo, setShowInfo] = useState({ export: false, import: false });
+  const [importStatus, setImportStatus] = useState(null);
   const { setSettings } = settingsActions;
   const { setVault } = vaultActions;
-  const { closeSettings } = dialogActions;
 
   useEffect(() => {
     setSetsForm(settingsState);
@@ -47,8 +43,8 @@ export const Settings = () => {
             return;
         }
       })
-      // .catch(() => handleError());
-      .catch((err) => console.log("err", err));
+      // TODO: handle error
+      .catch((err) => console.log("error", err));
   };
 
   const handleChange = (setting) => {
@@ -63,8 +59,11 @@ export const Settings = () => {
           },
         },
       })
-      .then(() => handleScry("/settings"))
-      .catch(() => setError(true));
+      .then(() => {
+        setSetsStatus(null);
+        handleScry("/settings");
+      })
+      .catch(() => setSetsStatus("error"));
   };
 
   const handleReset = () => {
@@ -78,8 +77,11 @@ export const Settings = () => {
           },
         },
       })
-      .then(() => handleScry("/settings"))
-      .catch(() => handleError());
+      .then(() => {
+        setSetsStatus("success");
+        handleScry("/settings");
+      })
+      .catch(() => setSetsStatus("error"));
   };
 
   const handleExport = () => {
@@ -92,7 +94,7 @@ export const Settings = () => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
-    reader.onload = function (e) {
+    reader.onload = (e) => {
       const contents = e.target.result;
       if (aesDecrypt(contents, getSecret())) {
         setImportState(aesDecrypt(contents, getSecret()));
@@ -101,13 +103,11 @@ export const Settings = () => {
     reader.readAsText(file);
   };
 
-  const handleSubmitImport = () => {
-    importPoke();
-  };
-
   const importPoke = () => {
-    // TODO set error/message something here if !importState
+    // TODO: set error/message something here if !importState
     if (!importState) return;
+    setImportStatus("loading");
+
     urbitApi
       .poke({
         app: "knox",
@@ -116,14 +116,20 @@ export const Settings = () => {
           import: prepareImport(importState),
         },
       })
-      .then(() => handleScry("/vault"))
-      .catch(() => handleError());
+      .then(() => {
+        setImportStatus("success");
+        handleScry("/vault");
+      })
+      // TODO: handle error
+      .catch(() => setImportStatus("error"));
   };
 
   return (
     <div className="bg-timberwolf mx-1 h-full w-1/2">
       {/* settings */}
-      <div className="mb-12">
+      <div
+        className={setsStatus === "error" ? "border-2 border-error" : "mb-6"}
+      >
         <div className="flex h-12 bg-blueMain items-center px-1 shadow">
           <p className="text-xl">Settings</p>
           <ion-icon name="options-outline" id="settings-icon" />
@@ -185,20 +191,27 @@ export const Settings = () => {
               onClick={handleReset}
               className="w-full p-2 px-3 text-left hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400"
             >
-              Restore Default Settings
+              <div className="flex justify-between items-center">
+                <p className="inline">Restore Default Settings</p>
+                {setsStatus === "success" && (
+                  <ion-icon name="checkmark-sharp" />
+                )}
+              </div>
             </button>
           </div>
         </div>
+        {setsStatus === "error" && (
+          <div className="mt-4 mb-6 flex justify-center">
+            <p className="text-font">Something went wrong. Try again.</p>
+            <button
+              onClick={() => setSetsStatus(null)}
+              className="flex text-font items-center ml-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+            >
+              <ion-icon name="close" />
+            </button>
+          </div>
+        )}
       </div>
-
-      {error && (
-        <button
-          disabled
-          className="my-1 w-[75%] border border-black p-1 rounded bg-red-400 pointer-events-none"
-        >
-          Something went wrong. Try again.
-        </button>
-      )}
 
       {/* tools */}
       <div>
@@ -207,8 +220,6 @@ export const Settings = () => {
           <ion-icon name="build-outline" id="tools-icon" />
         </div>
         <div className="px-3 py-3">
-          {/* TODO add some ? icon or similar for showing info on each of these tools - state object exists above for this purpose */}
-
           {/* cycle passwords and change secret hidden for now */}
           <div className="hidden">
             <Disclosure>
@@ -249,7 +260,7 @@ export const Settings = () => {
             {({ open }) => (
               <>
                 <Disclosure.Button className="w-full text-left p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <p>Export vault</p>
                     {open ? (
                       <ion-icon name="remove-outline"></ion-icon>
@@ -261,15 +272,14 @@ export const Settings = () => {
                 <Disclosure.Panel>
                   <div className="flex my-4 justify-between">
                     <p>
-                      This will save an excrypted file called vault.knox that
-                      you can use to restore Knox to a certain state. Encrypts
-                      with current secret.
+                      This will save a backup of your vault, excrypted with your
+                      current secret, in a file called vault.knox.
                     </p>
                     <button
                       onClick={handleExport}
-                      className="w-full text-left p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400"
+                      className="w-full text-center p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400"
                     >
-                      Export vault
+                      Export
                     </button>
                   </div>
                 </Disclosure.Panel>
@@ -281,7 +291,7 @@ export const Settings = () => {
             {({ open }) => (
               <>
                 <Disclosure.Button className="my-4 w-full text-left p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
                     <p>Import vault</p>
                     {open ? (
                       <ion-icon name="remove-outline"></ion-icon>
@@ -294,23 +304,33 @@ export const Settings = () => {
                 <Disclosure.Panel>
                   <div className="flex justify-between">
                     <p>
-                      Here you can import a vault.knox file you created. Note
-                      here about how secret should work.. this about this also
+                      Load a backup of your vault created with export tool.
+                      Currently will only work if secret used to encrypt
+                      originally is still your current secret. Importing will{" "}
+                      <strong>replace</strong> your current vault.
                     </p>
                   </div>
                   <div className="flex flex-col my-4 justify-between">
+                    <input
+                      type="file"
+                      id="import-input"
+                      onChange={handleImport}
+                    />
                     <button
                       disabled={importState ? false : true}
                       onClick={() => importPoke()}
-                      className="text-left p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 disabled:text-gray-400 disabled:hover:bg-transparent disabled:pointer-events-none border border-gray-400"
+                      className="mt-3 text-left p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 disabled:text-gray-400 disabled:hover:bg-transparent disabled:pointer-events-none border border-gray-400"
                     >
-                      Import vault
+                      <div className="flex justify-between items-center">
+                        <p className="inline">Import</p>
+                        {importStatus === "loading" && (
+                          <p className="animate-spin">~</p>
+                        )}
+                        {importStatus === "success" && (
+                          <ion-icon name="checkmark-sharp" />
+                        )}
+                      </div>
                     </button>
-                    <input
-                      type="file"
-                      onChange={handleImport}
-                      className="mt-3"
-                    />
                   </div>
                 </Disclosure.Panel>
               </>

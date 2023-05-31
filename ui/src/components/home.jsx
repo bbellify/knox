@@ -35,8 +35,8 @@ export const Home = () => {
       .then((res) => {
         settingsDispatch(setSettings(res.settings));
       })
-      // TODO: handle this error?
-      .catch((err) => console.log("err", err));
+      // TODO: handle error
+      .catch((err) => console.log("error", err));
   }, []);
 
   useEffect(() => {

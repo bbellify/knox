@@ -127,7 +127,6 @@ export const Actions = () => {
                 className="pl-2"
               />
             )}
-            {/* TODO: have a save password flow, but could be improved */}
             <button
               className="text-xl font-bold pl-2 hover:scale-125"
               onClick={() => dialogDispatch(openAdd())}
