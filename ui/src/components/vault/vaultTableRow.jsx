@@ -19,6 +19,7 @@ export const VaultTableRow = (props) => {
   const { openDeleteModal, openEditing, closeEditing } = dialogActions;
   const [passHidden, setPassHidden] = useState(true);
   const [disabled, setDisabled] = useState(false);
+  const [error, setError] = useState(false);
   const [copied, setCopied] = useState({
     site: false,
     user: false,
@@ -113,8 +114,7 @@ export const VaultTableRow = (props) => {
         },
       })
       .then(() => handleScry())
-      // TODO: handle this error?
-      .catch((err) => handleError(err));
+      .catch(() => setError(true));
   };
 
   const handleSubmitEdit = () => {
@@ -122,7 +122,8 @@ export const VaultTableRow = (props) => {
     urbitApi
       .poke({
         app: "knox",
-        mark: "knox-action",
+        mark: "knox-actio",
+        // mark: "knox-action",
         json: {
           edit: {
             website: aesEncrypt(editingObject.website, getSecret()),
@@ -132,8 +133,8 @@ export const VaultTableRow = (props) => {
           },
         },
       })
-      .then(() => handleSuccess());
-    // .catch((err) => handleError(err));
+      .then(() => handleSuccess())
+      .catch(() => setError(true));
   };
 
   const handleSuccess = () => {
@@ -147,16 +148,18 @@ export const VaultTableRow = (props) => {
         app: "knox",
         path: "/vault",
       })
-      .then((res) => vaultDispatch(setVault(res.vault)))
-      // TODO: handle this error?
-      .catch((err) => console.log("err", err));
+      .then((res) => vaultDispatch(setVault(res.vault)));
   };
 
   return (
     <>
       <tr
         className={`${
-          editing ? "bg-whiteSmoke" : "border-b border-gray-300"
+          error
+            ? "border-t-2 border-l-2 border-r-2 border-error"
+            : editing
+            ? "bg-whiteSmoke"
+            : "border-b border-gray-300"
         } bg-timberwolf hover:bg-whiteSmoke`}
       >
         {/* website */}
@@ -285,7 +288,10 @@ export const VaultTableRow = (props) => {
                 />
               </button>
               <button
-                onClick={() => dialogDispatch(closeEditing())}
+                onClick={() => {
+                  if (error) setError(false);
+                  dialogDispatch(closeEditing());
+                }}
                 className="pl-1 md:px-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
               >
                 <ion-icon name="close" />
@@ -294,6 +300,25 @@ export const VaultTableRow = (props) => {
           )}
         </td>
       </tr>
+      {error && (
+        <tr className="border-l-2 border-r-2 border-b-2 border-error">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td className="flex flex-row-reverse pr-2">
+            <div className="whitespace-nowrap py-2 px-1 flex">
+              <p className="text-font">Something went wrong. Try again.</p>
+              <button
+                onClick={() => setError(false)}
+                className="flex text-font items-center ml-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+              >
+                <ion-icon name="close" />
+              </button>
+            </div>
+          </td>
+        </tr>
+      )}
     </>
   );
 };
