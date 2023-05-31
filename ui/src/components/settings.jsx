@@ -208,58 +208,114 @@ export const Settings = () => {
         </div>
         <div className="px-3 py-3">
           {/* TODO add some ? icon or similar for showing info on each of these tools - state object exists above for this purpose */}
-          <Disclosure>
-            <Disclosure.Button className="w-full text-left p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400">
-              Change secret
-            </Disclosure.Button>
-            <Disclosure.Panel>
-              <div className="flex flex-col py-2">
-                <input
-                  placeholder="old secret"
-                  className="my-1 w-2/3 p-2 px-3"
-                />
-                <input
-                  placeholder="new secret"
-                  className="my-1 w-2/3 p-2 px-3"
-                />
-                <div className="flex">
+
+          {/* cycle passwords and change secret hidden for now */}
+          <div className="hidden">
+            <Disclosure>
+              <Disclosure.Button className="w-full text-left p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400">
+                Change secret
+              </Disclosure.Button>
+              <Disclosure.Panel>
+                <div className="flex flex-col py-2">
                   <input
-                    placeholder="confirm new secret"
+                    placeholder="old secret"
                     className="my-1 w-2/3 p-2 px-3"
                   />
-                  <div className="w-1/3 p-2 flex justify-center">
-                    <button className="w-full p-2 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400">
-                      save
-                    </button>
+                  <input
+                    placeholder="new secret"
+                    className="my-1 w-2/3 p-2 px-3"
+                  />
+                  <div className="flex">
+                    <input
+                      placeholder="confirm new secret"
+                      className="my-1 w-2/3 p-2 px-3"
+                    />
+                    <div className="w-1/3 p-2 flex justify-center">
+                      <button className="w-full p-2 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400">
+                        save
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Disclosure.Panel>
+              </Disclosure.Panel>
+            </Disclosure>
+            <div className="flex my-4 justify-between">
+              <button className="w-full text-left p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400">
+                Cycle passwords
+              </button>
+            </div>
+          </div>
+          <Disclosure>
+            {({ open }) => (
+              <>
+                <Disclosure.Button className="w-full text-left p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400">
+                  <div className="flex justify-between">
+                    <p>Export vault</p>
+                    {open ? (
+                      <ion-icon name="remove-outline"></ion-icon>
+                    ) : (
+                      <ion-icon name="add-outline" />
+                    )}
+                  </div>
+                </Disclosure.Button>
+                <Disclosure.Panel>
+                  <div className="flex my-4 justify-between">
+                    <p>
+                      This will save an excrypted file called vault.knox that
+                      you can use to restore Knox to a certain state. Encrypts
+                      with current secret.
+                    </p>
+                    <button
+                      onClick={handleExport}
+                      className="w-full text-left p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400"
+                    >
+                      Export vault
+                    </button>
+                  </div>
+                </Disclosure.Panel>
+              </>
+            )}
           </Disclosure>
-          <div className="flex my-4 justify-between">
-            <button className="w-full text-left p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400">
-              Cycle passwords
-            </button>
-          </div>
-          <div className="flex my-4 justify-between">
-            <button
-              onClick={handleExport}
-              className="w-full text-left p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400"
-            >
-              Export vault
-            </button>
-          </div>
 
-          <div className="flex flex-col my-4 justify-between">
-            <button
-              disabled={importState ? false : true}
-              onClick={() => importPoke()}
-              className="text-left p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 disabled:text-gray-400 disabled:hover:bg-transparent disabled:pointer-events-none border border-gray-400"
-            >
-              Import vault
-            </button>
-            <input type="file" onChange={handleImport} className="mt-3" />
-          </div>
+          <Disclosure>
+            {({ open }) => (
+              <>
+                <Disclosure.Button className="my-4 w-full text-left p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 border border-gray-400">
+                  <div className="flex justify-between">
+                    <p>Import vault</p>
+                    {open ? (
+                      <ion-icon name="remove-outline"></ion-icon>
+                    ) : (
+                      <ion-icon name="add-outline" />
+                    )}
+                  </div>
+                </Disclosure.Button>
+
+                <Disclosure.Panel>
+                  <div className="flex justify-between">
+                    <p>
+                      Here you can import a vault.knox file you created. Note
+                      here about how secret should work.. this about this also
+                    </p>
+                  </div>
+                  <div className="flex flex-col my-4 justify-between">
+                    <button
+                      disabled={importState ? false : true}
+                      onClick={() => importPoke()}
+                      className="text-left p-2 px-3 hover:bg-gray-300 focus:outline-none focus:ring focus:ring-gray-500 disabled:text-gray-400 disabled:hover:bg-transparent disabled:pointer-events-none border border-gray-400"
+                    >
+                      Import vault
+                    </button>
+                    <input
+                      type="file"
+                      onChange={handleImport}
+                      className="mt-3"
+                    />
+                  </div>
+                </Disclosure.Panel>
+              </>
+            )}
+          </Disclosure>
         </div>
       </div>
     </div>
