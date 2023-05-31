@@ -5,7 +5,6 @@ export const settingsReducer = (state, action) => {
 
   switch (action.type) {
     case actionTypes.SET_SETTINGS: {
-      // TODO: finish this setting to entries business
       let setsObj = {};
       action.settings.forEach((set) => {
         let val = Object.values(set)[0];

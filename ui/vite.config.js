@@ -6,7 +6,6 @@ import { urbitPlugin } from "@urbit/vite-plugin-urbit";
 export default ({ mode }) => {
   Object.assign(process.env, loadEnv(mode, process.cwd()));
   const SHIP_URL = process.env.VITE_SHIP_URL;
-  // TODO: why is localhost not working?
 
   console.log(SHIP_URL);
 

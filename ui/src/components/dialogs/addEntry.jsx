@@ -64,8 +64,6 @@ export const AddEntry = () => {
         path: "/vault",
       })
       .then((res) => vaultDispatch(setVault(res.vault)));
-    // TODO: handle this error?
-    // .catch((err) => console.log("err", err));
   };
 
   const handleAdd = () => {

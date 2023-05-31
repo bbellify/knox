@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 html {
-    /* TODO: figure out this background color */
     background-color: #222F44;
 }
 
