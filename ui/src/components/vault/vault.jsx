@@ -75,29 +75,15 @@ export const Vault = () => {
       {/* top buttons for generating, adding, opening settings */}
       <div className="w-[90%] md:max-w-[90%] bg-timberwolf h-full mx-1">
         {/* actions and search */}
-        <div className="flex justify-between h-12 pr-1">
+        <div className="flex justify-between h-12">
           <Actions />
-          <div className="flex items-center">
-            <div className="relative">
-              <div className="flex absolute inset-y-0 left-0 items-center pl-2 pointer-events-none">
-                <svg
-                  className="w-5 h-5 text-font"
-                  aria-hidden="true"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </div>
+          <div className="flex p-1">
+            <div className="flex items-center w-auto sm:w-48 rounded-lg bg-blueMain pl-3">
+              <ion-icon name="search-sharp" id="mag-glass" />
               {/* search input */}
               <input
                 type="text"
-                className="py-2 pl-8 pr-2 w-24 text-sm rounded-lg bg-blueMain placeholder-font text-font focus:outline-none focus:ring focus:ring-gray-500"
+                className="pl-3 w-full text-sm rounded-lg bg-blueMain placeholder-font text-font focus:outline-none focus:none"
                 placeholder="search"
                 onChange={handleSearch}
                 value={searchValue}

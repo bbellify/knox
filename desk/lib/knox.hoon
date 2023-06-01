@@ -83,6 +83,6 @@
   |-
     =/  current  (snag counter imports)
     ?:  =(+(counter) (lent imports))
-      newvault
+      (~(put by newvault) `id`id.current `entry`[`website`website.current `username`username.current `password`password.current `updated`updated.current])
     $(counter +(counter), newvault (~(put by newvault) `id`id.current `entry`[`website`website.current `username`username.current `password`password.current `updated`updated.current]))
 --
