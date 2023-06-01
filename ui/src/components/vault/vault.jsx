@@ -78,7 +78,7 @@ export const Vault = () => {
         <div className="flex justify-between h-12">
           <Actions />
           <div className="flex p-1">
-            <div className="flex items-center w-auto sm:w-48 rounded-lg bg-blueMain pl-3">
+            <div className="flex items-center w-auto sm:w-44 rounded-lg bg-blueMain pl-3">
               <ion-icon name="search-sharp" id="mag-glass" />
               {/* search input */}
               <input
