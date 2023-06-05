@@ -112,13 +112,13 @@ export const Vault = () => {
                   <span className="inline-flex align-bottom pb-1">
                     <ion-icon name="add" />
                   </span>{" "}
-                  button above <br />
+                  button above. <br />
                   <br />
                   Click on the{" "}
                   <span className="inline-flex align-bottom pb-1">
                     <ion-icon name="dice-outline" />
                   </span>{" "}
-                  button above to generate a password
+                  button above to generate a password.
                 </p>
               </div>
             )

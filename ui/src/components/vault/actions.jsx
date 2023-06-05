@@ -94,7 +94,7 @@ export const Actions = () => {
         <div className="flex w-full justify-center py-2">
           <button
             onClick={handleCopy}
-            className="border border-black shadow px-12 bg-white hover:bg-gray-200 overflow-x-auto rounded w-1/3"
+            className="border border-black shadow px-12 bg-white hover:bg-gray-200 overflow-x-auto rounded w-1/3 text-sm"
             value={generated}
           >
             {generated}

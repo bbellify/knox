@@ -24,6 +24,17 @@ export const WelcomeDialog = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    urbitApi
+      .scry({
+        app: "knox",
+        path: "/secret",
+      })
+      .then((res) => {
+        if (res.secret) setSecretSuccess(true);
+      });
+  }, []);
+
+  useEffect(() => {
     if (secret === secret2) return setSecretValidation(true);
     else return setSecretValidation(false);
   }, [secret, secret2]);
@@ -205,7 +216,9 @@ export const WelcomeDialog = () => {
                 Set your secret here:
                 <div className="mt-1 mb-4">
                   <input
-                    className="border border-black p-1 w-[60%] focus:outline-none focus:ring focus:ring-gray-500"
+                    className={`border border-black p-1 w-[60%] mt-2 focus:outline-none focus:ring focus:ring-gray-500 ${
+                      !secretValidation ? "border border-red-400" : null
+                    }`}
                     placeholder="secret"
                     onChange={handleSecret}
                     value={secret}
@@ -220,7 +233,9 @@ export const WelcomeDialog = () => {
                     </button>
                   </div>
                   <input
-                    className="border border-black p-1 w-[60%] mt-2 focus:outline-none focus:ring focus:ring-gray-500"
+                    className={`border border-black p-1 w-[60%] mt-2 focus:outline-none focus:ring focus:ring-gray-500 ${
+                      !secretValidation ? "border border-red-400" : null
+                    }`}
                     placeholder="confirm your secret"
                     onChange={handleSecret2}
                     value={secret2}
@@ -242,30 +257,18 @@ export const WelcomeDialog = () => {
                     >
                       save
                     </button>
+                    {secretSuccess && (
+                      <div className="ml-2 inline">
+                        <ion-icon name="checkmark-sharp" />
+                      </div>
+                    )}
                   </div>
-                  {!secretValidation && (
-                    <button
-                      disabled
-                      className="mt-3 px-2 border border-black p-1 rounded bg-red-400 text-left block"
-                    >
-                      secrets don't match
-                    </button>
-                  )}
                   {secretError && (
                     <button
                       disabled
                       className="mt-3 px-2 border border-black p-1 rounded bg-red-400 text-left"
                     >
                       Something went wrong saving your secret. Try again
-                    </button>
-                  )}
-                  {/* TODO remove this, put next to save button and smaller */}
-                  {secretSuccess && (
-                    <button
-                      disabled
-                      className="mt-2 border border-black p-1 rounded bg-green-400 pointer-events-none block px-4"
-                    >
-                      secret saved
                     </button>
                   )}
                 </div>
@@ -331,7 +334,8 @@ export const WelcomeDialog = () => {
                   back
                 </button>
                 <button
-                  className="ml-2 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+                  disabled={selectedIndex === 2 ? !secretSuccess : null}
+                  className="ml-2 focus:outline-none focus:ring focus:ring-gray-500 rounded disabled:text-gray-300"
                   onClick={handleNext}
                 >
                   next
