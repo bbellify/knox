@@ -19,6 +19,7 @@ module.exports = {
         whiteSmoke: "#F5F6F4",
         raisin: "#212738",
         error: "#F27D7F",
+        blackMain: "#222f44",
       },
     },
   },

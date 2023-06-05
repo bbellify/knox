@@ -228,7 +228,7 @@ export const VaultTableRow = (props) => {
               <>
                 <button
                   onClick={handleCopy}
-                  className="py-2 px-2 hover:bg-gray-200 z-0 max-w-full overflow-x-auto whitespace-nowrap rounded"
+                  className="py-2 px-2 hover:bg-gray-200 z-0 max-w-full overflow-x-auto whitespace-nowrap focus:outline-none focus:ring focus:ring-gray-500 rounded"
                   value={entry.password}
                   name="pass"
                 >
@@ -244,9 +244,13 @@ export const VaultTableRow = (props) => {
         <td className="text-center">
           <button
             onClick={handleShowPass}
-            className="hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+            className="focus:outline-none focus:ring focus:ring-gray-500 rounded"
           >
-            {passHidden ? <ion-icon name="eye" /> : <ion-icon name="eye-off" />}
+            {passHidden ? (
+              <ion-icon name="eye" class="icons" />
+            ) : (
+              <ion-icon name="eye-off" class="icons" />
+            )}
           </button>
         </td>
 
@@ -256,9 +260,9 @@ export const VaultTableRow = (props) => {
             <div className="whitespace-nowrap">
               <button
                 onClick={() => dialogDispatch(openEditing(entry))}
-                className="pr-1 md:px-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+                className="pr-1 md:px-2 focus:outline-none focus:ring focus:ring-gray-500 rounded"
               >
-                <ion-icon name="pencil" />
+                <ion-icon name="pencil" class="icons" />
               </button>
               <button
                 onClick={
@@ -266,9 +270,9 @@ export const VaultTableRow = (props) => {
                     ? () => handleDelete(entry.id)
                     : () => dialogDispatch(openDeleteModal(entry.id))
                 }
-                className="pl-1 md:px-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+                className="pl-1 md:px-2 focus:outline-none focus:ring focus:ring-gray-500 rounded"
               >
-                <ion-icon name="trash" />
+                <ion-icon name="trash" class="icons" />
               </button>
             </div>
           ) : (
@@ -276,9 +280,7 @@ export const VaultTableRow = (props) => {
               <button
                 disabled={disabled}
                 onClick={handleSubmitEdit}
-                className={`pr-1 md:px-2 focus:outline-none focus:ring focus:ring-gray-500 rounded disabled:pointer-events-none ${
-                  !disabled && "hover:scale-125"
-                }`}
+                className="pr-1 md:px-2 focus:outline-none focus:ring focus:ring-gray-500 rounded disabled:pointer-events-none"
               >
                 <ion-icon
                   name="checkmark-sharp"
@@ -290,9 +292,9 @@ export const VaultTableRow = (props) => {
                   if (error) setError(false);
                   dialogDispatch(closeEditing());
                 }}
-                className="pl-1 md:px-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+                className="pl-1 md:px-2 focus:outline-none focus:ring focus:ring-gray-500 rounded"
               >
-                <ion-icon name="close" />
+                <ion-icon name="close" class="icons" />
               </button>
             </div>
           )}
@@ -309,9 +311,9 @@ export const VaultTableRow = (props) => {
               <p className="text-font">Something went wrong. Try again.</p>
               <button
                 onClick={() => setError(false)}
-                className="flex text-font items-center ml-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+                className="flex text-font items-center ml-2 focus:outline-none focus:ring focus:ring-gray-500 rounded"
               >
-                <ion-icon name="close" />
+                <ion-icon name="close" class="icons" />
               </button>
             </div>
           </td>

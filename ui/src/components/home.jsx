@@ -52,13 +52,13 @@ export const Home = () => {
       <div className="flex flex-col bg-timberwolf w-1/5 md:min-w-[300px] h-full 3xl:h-screen60 sm:p-0">
         <div className="flex h-12 items-center px-1">
           <p className="text-xl text-font align-middle flex font-semibold">
-            knox
+            Knox
             <span className="hidden md:inline ml-1">- your password vault</span>
             <button
-              className="px-2 flex items-center hover:scale-125"
+              className="px-2 flex items-center"
               onClick={() => dialogDispatch(openInfoModal())}
             >
-              <ion-icon name="information-circle-outline" />
+              <ion-icon name="information-circle-outline" class="icons" />
             </button>
           </p>
         </div>

@@ -73,9 +73,9 @@ export const DeleteDialog = () => {
           <div className="flex flex-col items-center h-[100%] pt-1">
             <button
               onClick={() => dialogDispatch(closeDeleteModal())}
-              className="p-1 mr-2 self-end hover:scale-150 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+              className="p-1 mr-2 self-end focus:outline-none focus:ring focus:ring-gray-500 rounded"
             >
-              <ion-icon name="close" />
+              <ion-icon name="close" class="icons" />
             </button>
             <Dialog.Title className="text-xl mb-6 text-center">
               Are you sure you want to delete? <br />

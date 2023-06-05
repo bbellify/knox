@@ -134,9 +134,13 @@ export const AddEntry = () => {
         <td className="text-center">
           <button
             onClick={handleShowPass}
-            className="hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+            className="focus:outline-none focus:ring focus:ring-gray-500 rounded"
           >
-            {passHidden ? <ion-icon name="eye" /> : <ion-icon name="eye-off" />}
+            {passHidden ? (
+              <ion-icon name="eye" class="icons" />
+            ) : (
+              <ion-icon name="eye-off" class="icons" />
+            )}
           </button>
         </td>
 
@@ -146,9 +150,7 @@ export const AddEntry = () => {
             <button
               onClick={handleAdd}
               disabled={disabled}
-              className={`pr-1 md:px-2 focus:outline-none focus:ring focus:ring-gray-500 rounded disabled:pointer-events-none ${
-                !disabled && "hover:scale-125"
-              }`}
+              className="pr-1 md:px-2 focus:outline-none focus:ring focus:ring-gray-500 rounded disabled:pointer-events-none"
             >
               <ion-icon
                 name="checkmark-sharp"
@@ -157,9 +159,9 @@ export const AddEntry = () => {
             </button>
             <button
               onClick={() => dialogDispatch(closeAdd())}
-              className="pl-1 md:px-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+              className="pl-1 md:px-2 focus:outline-none focus:ring focus:ring-gray-500 rounded"
             >
-              <ion-icon name="close" />
+              <ion-icon name="close" class="icons" />
             </button>
           </div>
         </td>
@@ -175,9 +177,9 @@ export const AddEntry = () => {
               <p className="text-font">Something went wrong. Try again.</p>
               <button
                 onClick={() => setError(false)}
-                className="flex text-font items-center ml-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+                className="flex text-font items-center ml-2 focus:outline-none focus:ring focus:ring-gray-500 rounded"
               >
-                <ion-icon name="close" />
+                <ion-icon name="close" class="icons" />
               </button>
             </div>
           </td>

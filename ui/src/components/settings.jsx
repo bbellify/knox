@@ -205,9 +205,9 @@ export const Settings = () => {
             <p className="text-font">Something went wrong. Try again.</p>
             <button
               onClick={() => setSetsStatus(null)}
-              className="flex text-font items-center ml-2 hover:scale-125 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+              className="flex text-font items-center ml-2 focus:outline-none focus:ring focus:ring-gray-500 rounded"
             >
-              <ion-icon name="close" />
+              <ion-icon name="close" class="icons" />
             </button>
           </div>
         )}
@@ -263,7 +263,7 @@ export const Settings = () => {
                   <div className="flex justify-between items-center">
                     <p>Export vault</p>
                     {open ? (
-                      <ion-icon name="remove-outline"></ion-icon>
+                      <ion-icon name="remove-outline" />
                     ) : (
                       <ion-icon name="add-outline" />
                     )}
@@ -294,7 +294,7 @@ export const Settings = () => {
                   <div className="flex justify-between items-center">
                     <p>Import vault</p>
                     {open ? (
-                      <ion-icon name="remove-outline"></ion-icon>
+                      <ion-icon name="remove-outline" />
                     ) : (
                       <ion-icon name="add-outline" />
                     )}

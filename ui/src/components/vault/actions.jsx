@@ -10,7 +10,6 @@ import { generatePassword } from "../../utils";
 export const Actions = () => {
   const [generated, setGenerated] = useState("");
   const [showGenerated, setShowGenerated] = useState(false);
-  const [generateShake, setGenerateShake] = useState(false);
   const [generatedCopied, setGeneratedCopied] = useState(false);
 
   const [urbitApi] = useContext(UrbitContext);
@@ -33,10 +32,6 @@ export const Actions = () => {
 
   const handleDice = () => {
     if (!showGenerated) setShowGenerated(true);
-    setGenerateShake(true);
-    setTimeout(() => {
-      setGenerateShake(false);
-    }, 300);
     generatePassword(dialogDispatch, urbitApi);
   };
 
@@ -85,29 +80,14 @@ export const Actions = () => {
     <div className="flex w-full">
       {/* action buttons */}
       <div className="flex">
-        <button
-          className={`text-xl font-bold px-2 hover:scale-125 ${
-            generateShake ? "shakeX" : null
-          }`}
-          onClick={handleDice}
-        >
-          <ion-icon name="dice-outline" />
+        <button className="text-xl font-bold px-2" onClick={handleDice}>
+          <ion-icon name="dice-outline" class="icons" />
         </button>
         <button
-          className={`text-xl font-bold px-2 hover:scale-125 ${
-            !vaultState.length &
-            !(
-              dialogState.addOpen ||
-              dialogState.deleteOpen ||
-              dialogState.editOpen ||
-              dialogState.infoOpen
-            )
-              ? "animate-bounce"
-              : ""
-          }`}
+          className="text-xl font-bold px-2"
           onClick={() => dialogDispatch(openAdd())}
         >
-          <ion-icon name="add" />
+          <ion-icon name="add" class="icons" />
         </button>
       </div>
       {showGenerated && generated && !dialogState.addOpen && (
@@ -128,16 +108,13 @@ export const Actions = () => {
               />
             )}
             <button
-              className="text-xl font-bold pl-2 hover:scale-125"
+              className="text-xl font-bold pl-2"
               onClick={() => dialogDispatch(openAdd())}
             >
-              <ion-icon name="add" />
+              <ion-icon name="add" class="icons" />
             </button>
-            <button
-              onClick={handleClose}
-              className="text-xl pl-2 hover:scale-125"
-            >
-              <ion-icon name="close" />
+            <button onClick={handleClose} className="text-xl pl-2">
+              <ion-icon name="close" class="icons" />
             </button>
           </div>
         </div>

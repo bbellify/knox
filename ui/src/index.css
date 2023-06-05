@@ -12,7 +12,14 @@ main {
 
 ion-icon {
     color: #222F44;
-    pointer-events: none;
+}
+
+.icons {
+    color: #3E547A;
+}
+
+.icons:hover {
+    color: #222F44;
 }
 
 #check-disabled {
@@ -50,23 +57,7 @@ ion-icon {
     margin: 0 1%;
 }
 
-.shakeX {
-    animation: shakeX 300ms;
-}
-
 #mag-glass {
     font-size: 1.5rem;
+    color: '#222f44';
 }
-
-@keyframes shakeX {
-    25% {
-      transform: translateX(4px);
-    }
-    50% {
-      transform: translateX(-4px);
-    }
-    75% {
-      transform: translateX(4px)
-    }
-}
-

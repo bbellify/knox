@@ -78,13 +78,13 @@ export const Vault = () => {
         <div className="flex justify-between h-12">
           <Actions />
           <div className="flex p-1">
-            <div className="flex items-center w-auto sm:w-44 rounded-lg bg-blueMain pl-3">
+            <div className="flex items-center w-auto sm:w-44 rounded-lg pl-3 border-blackMain border bg-whiteSmoke">
               <ion-icon name="search-sharp" id="mag-glass" />
               {/* search input */}
               <input
                 type="text"
-                className="pl-3 w-full text-sm rounded-lg bg-blueMain placeholder-font text-font focus:outline-none focus:none"
-                placeholder="search"
+                className="pl-3 w-full text-sm rounded-lg placeholder-font font-blackMain focus:outline-none focus:none bg-whiteSmoke"
+                placeholder="Search"
                 onChange={handleSearch}
                 value={searchValue}
               />
@@ -151,11 +151,11 @@ const tableColumnHeaders = () => {
       </colgroup>
       <thead className="sticky top-0 z-10">
         <tr className="text-left bg-blueMain text-center shadow">
-          <th className="text-font font-medium">site</th>
-          <th className="text-font font-medium">username</th>
-          <th className="text-font font-medium">password</th>
-          <th className="text-font font-medium">view</th>
-          <th className="text-font font-medium">edit</th>
+          <th className="text-font font-medium">Site</th>
+          <th className="text-font font-medium">Username</th>
+          <th className="text-font font-medium">Password</th>
+          <th className="text-font font-medium">View</th>
+          <th className="text-font font-medium">Edit</th>
         </tr>
       </thead>
     </>
