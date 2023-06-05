@@ -154,6 +154,7 @@ export const AddEntry = () => {
             >
               <ion-icon
                 name="checkmark-sharp"
+                class="icons"
                 id={disabled ? "check-disabled" : ""}
               />
             </button>

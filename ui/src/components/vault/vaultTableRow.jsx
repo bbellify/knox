@@ -284,7 +284,8 @@ export const VaultTableRow = (props) => {
               >
                 <ion-icon
                   name="checkmark-sharp"
-                  id={disabled ? "check-disabled" : ""}
+                  class="icons"
+                  id={disabled ? "check-disabled" : null}
                 />
               </button>
               <button
