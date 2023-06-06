@@ -80,11 +80,14 @@ export const Actions = () => {
     <div className="flex w-full">
       {/* action buttons */}
       <div className="flex">
-        <button className="text-xl font-bold px-2" onClick={handleDice}>
+        <button
+          className="text-xl font-bold px-2 focus:outline-none focus:ring focus:ring-gray-500 rounded"
+          onClick={handleDice}
+        >
           <ion-icon name="dice-outline" class="icons" />
         </button>
         <button
-          className="text-xl font-bold px-2"
+          className="text-xl font-bold px-2 focus:outline-none focus:ring focus:ring-gray-500 rounded"
           onClick={() => dialogDispatch(openAdd())}
         >
           <ion-icon name="add" class="icons" />
@@ -94,7 +97,7 @@ export const Actions = () => {
         <div className="flex w-full justify-center py-2">
           <button
             onClick={handleCopy}
-            className="border border-black shadow px-12 bg-white hover:bg-gray-200 overflow-x-auto rounded w-1/3 text-sm"
+            className="border border-black shadow px-12 bg-white hover:bg-gray-200 overflow-x-auto rounded w-1/3 text-sm focus:outline-none focus:ring focus:ring-gray-500"
             value={generated}
           >
             {generated}
@@ -108,12 +111,15 @@ export const Actions = () => {
               />
             )}
             <button
-              className="text-xl font-bold pl-2"
+              className="flex text-xl font-bold ml-2 focus:outline-none focus:ring focus:ring-gray-500 rounded position-center"
               onClick={() => dialogDispatch(openAdd())}
             >
               <ion-icon name="add" class="icons" />
             </button>
-            <button onClick={handleClose} className="text-xl pl-2">
+            <button
+              onClick={handleClose}
+              className="flex text-xl font-bold ml-2 focus:outline-none focus:ring focus:ring-gray-500 rounded position-center"
+            >
               <ion-icon name="close" class="icons" />
             </button>
           </div>

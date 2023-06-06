@@ -55,7 +55,7 @@ export const Home = () => {
             Knox
             <span className="hidden md:inline ml-1">- your password vault</span>
             <button
-              className="px-2 flex items-center"
+              className="px-2 flex items-center focus:outline-none focus:ring focus:ring-gray-500 rounded"
               onClick={() => dialogDispatch(openInfoModal())}
             >
               <ion-icon name="information-circle-outline" class="icons" />
@@ -64,7 +64,7 @@ export const Home = () => {
         </div>
         <div className="flex flex-col py-1 border-t border-black ">
           <button
-            className="text-left p-1 hover:bg-whiteSmoke"
+            className="text-left p-1 hover:bg-whiteSmoke focus:outline-none focus:ring focus:ring-gray-500 rounded"
             onClick={() =>
               dialogDispatch(dialogState.vaultOpen ? closeVault() : openVault())
             }
@@ -72,7 +72,7 @@ export const Home = () => {
             Website Accounts
           </button>
           <button
-            className="text-left p-1 hover:bg-whiteSmoke"
+            className="text-left p-1 hover:bg-whiteSmoke focus:outline-none focus:ring focus:ring-gray-500 rounded"
             onClick={() =>
               dialogDispatch(
                 dialogState.settingsOpen ? closeSettings() : openSettings()

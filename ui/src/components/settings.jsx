@@ -314,6 +314,7 @@ export const Settings = () => {
                     <input
                       type="file"
                       id="import-input"
+                      className="focus:outline-none focus:ring focus:ring-gray-500 rounded"
                       onChange={handleImport}
                     />
                     <button
