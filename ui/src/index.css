@@ -3,61 +3,67 @@
 @tailwind utilities;
 
 html {
-    background-color: #222F44;
+  background-color: #222f44;
 }
 
 main {
-    background-color: #222F44;
+  background-color: #222f44;
 }
 
 ion-icon {
-    color: #222F44;
+  color: #222f44;
+}
+ion-icon:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .icons {
-    color: #3E547A;
+  color: #3e547a;
 }
 
 .icons:hover {
-    color: #222F44;
+  color: #222f44;
 }
 
 #check-disabled {
-    color: #94a3b8;
+  color: #94a3b8;
 }
 
 #copy-icon {
-    color: gray;
-    margin-left: 3%;
-    padding: 0 1%;
-    /* TODO: size is hard coded, should revisit, same as below */
-    font-size: 1.3em;
+  color: gray;
+  margin-left: 3%;
+  padding: 0 1%;
+  /* TODO: size is hard coded, should revisit, same as below */
+  font-size: 1.3em;
 }
 
 #dialog-copy {
-    margin-left: 1%;
-    padding: 0 1%;
-    font-size: 1.3em;
+  margin-left: 1%;
+  padding: 0 1%;
+  font-size: 1.3em;
 }
 
 #generated-copy-icon {
-    margin-left: 10%;
-    font-size: 1.7em
+  margin-left: 10%;
+  font-size: 1.7em;
 }
 
 #settings-icon {
-    font-size: 1.2rem;
-    transform: translateY(1px);
-    margin: 0 1%;
+  font-size: 1.2rem;
+  transform: translateY(1px);
+  margin: 0 1%;
 }
 
 #tools-icon {
-    font-size: 1.2rem;
-    transform: translateY(1px);
-    margin: 0 1%;
+  font-size: 1.2rem;
+  transform: translateY(1px);
+  margin: 0 1%;
 }
 
 #mag-glass {
-    font-size: 1.5rem;
-    color: '#222f44';
+  font-size: 1.5rem;
+  color: "#222f44";
 }
