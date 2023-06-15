@@ -125,7 +125,7 @@ export const Settings = () => {
   };
 
   return (
-    <div className="bg-timberwolf mx-1 h-full w-1/2">
+    <div className="bg-timberwolf mx-1 h-full w-1/2 min-w-[400px]">
       {/* settings */}
       <div
         className={setsStatus === "error" ? "border-2 border-error" : "mb-6"}

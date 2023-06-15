@@ -73,7 +73,7 @@ export const Vault = () => {
   return (
     <div className="flex h-full w-full">
       {/* top buttons for generating, adding, opening settings */}
-      <div className="w-[90%] md:max-w-[90%] bg-timberwolf h-full mx-1">
+      <div className="min-w-[600px] w-[90%] md:max-w-[90%] bg-timberwolf h-full mx-1">
         {/* actions and search */}
         <div className="flex justify-between h-12">
           <Actions />

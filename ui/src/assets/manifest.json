@@ -3,7 +3,7 @@
   "short_name": "knox",
   "icons": [
     {
-      "src": "/apps/grid/android-chrome-512x512.png",
+      "src": "knox.png",
       "sizes": "512x512",
       "type": "image/png"
     }
