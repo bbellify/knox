@@ -99,7 +99,7 @@ export const Vault = () => {
         >
           {!vaultState.length && !loading ? (
             dialogState.addOpen ? (
-              <table className="w-full text-gray-400 table-fixed w-full">
+              <table className="w-full text-gray-400 table-fixed">
                 {tableColumnHeaders()}
                 <tbody>
                   <AddEntry />
@@ -124,7 +124,7 @@ export const Vault = () => {
             )
           ) : (
             <table
-              className={`w-full text-gray-400 table-fixed w-full ${
+              className={`w-full text-gray-400 table-fixed ${
                 !vaultState.length ? "h-full" : ""
               }`}
             >
@@ -150,7 +150,7 @@ const tableColumnHeaders = () => {
         <col className="w-[12%]" />
       </colgroup>
       <thead className="sticky top-0 z-10">
-        <tr className="text-left bg-blueMain text-center shadow">
+        <tr className="bg-blueMain text-center shadow">
           <th className="text-font font-medium">Site</th>
           <th className="text-font font-medium">Username</th>
           <th className="text-font font-medium">Password</th>
