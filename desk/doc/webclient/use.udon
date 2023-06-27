@@ -7,4 +7,6 @@ Passwords can be generated in the add or edit flows.
 
 Entries can be edited or deleted using the buttons on the far right of the entry.
 
+Default settings allow clicking to copy hidden password.
+
 Default settings prevent an entry from being deleted immediately when the delete button is clicked.

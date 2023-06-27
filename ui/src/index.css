@@ -28,6 +28,10 @@ ion-icon:before {
   color: #222f44;
 }
 
+.ellipse {
+  pointer-events: none;
+}
+
 #check-disabled {
   color: #94a3b8;
 }
