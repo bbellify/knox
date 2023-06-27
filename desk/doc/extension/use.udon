@@ -1,0 +1,4 @@
+;>
+The web extension, with instructions for installation, can be found [here](http://github.com/bbellify/knox-extension).
+
+As of v0.1.0, the primary feature of the extension is offering log in credentials for website accounts you have saved in Knox.

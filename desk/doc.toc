@@ -1,5 +1,7 @@
 /overview/udon        Overview
-/changelog/udon       Changelog
-/user                 User
-  /webclient/udon     Web Client
-  /extension/udon     Extension
+/webclient            Web Client
+  /changelog/udon     Changelog
+  /use/udon           Use
+/extension            Extension
+  /changelog/udon     Changelog
+  /use/udon           Use

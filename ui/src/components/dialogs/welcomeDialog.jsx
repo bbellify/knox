@@ -164,19 +164,9 @@ export const WelcomeDialog = () => {
                 Welcome to <span className="font-bold">Knox</span>, a vault for
                 your web2 passwords. <br />
                 <br />
-                Remember,{" "}
-                <a
-                  href="https://twitter.com/pcmonk/status/1563634078779592709"
-                  target="_blank"
-                  className="underline focus:outline-none focus:ring focus:ring-gray-500"
-                >
-                  your urbit is not really secure yet.
-                </a>{" "}
                 <br />
-                <br />
-                Due to this, Knox 0.1.0 includes design decisions that will
-                change, like client-side password generation, as due diligence
-                in the broader urbit ecosystem is completed (see{" "}
+                Knox is still beta software. As security improvements to Urbit
+                are made (see{" "}
                 <a
                   href="https://roadmap.urbit.org/project/userspace-permissioning"
                   target="_blank"
@@ -184,7 +174,7 @@ export const WelcomeDialog = () => {
                 >
                   userspace permissioning
                 </a>
-                , for example).
+                , for example), Knox will probably change.
                 <br />
                 <br />
                 <span className="font-bold">
@@ -210,7 +200,7 @@ export const WelcomeDialog = () => {
                 <br />
                 <br />
                 The ability to change your secret, along with more advanced uses
-                like cycling all your saved passwords, is coming post alpha.
+                like cycling all your saved passwords, is coming post v0.1.0.
                 <br />
                 <br />
                 Set your secret here:
