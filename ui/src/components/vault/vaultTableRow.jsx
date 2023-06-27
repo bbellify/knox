@@ -74,15 +74,10 @@ export const VaultTableRow = (props) => {
 
   // TODO: this doesn't work on iOS, revisit
   const handleCopy = (e) => {
-    if (e.target.name !== "pass") {
-      if (e.target.value) {
-        navigator.clipboard.writeText(e.target.value);
-        setCopied({
-          [e.target.name]: true,
-        });
-      }
+    if (!window.isSecureContext) {
+      alert("Click to copy only works over secure (https) connections");
     } else {
-      if (settingsState.copyHidden) {
+      if (e.target.name !== "pass") {
         if (e.target.value) {
           navigator.clipboard.writeText(e.target.value);
           setCopied({
@@ -90,12 +85,21 @@ export const VaultTableRow = (props) => {
           });
         }
       } else {
-        if (!passHidden) {
+        if (settingsState.copyHidden) {
           if (e.target.value) {
             navigator.clipboard.writeText(e.target.value);
             setCopied({
               [e.target.name]: true,
             });
+          }
+        } else {
+          if (!passHidden) {
+            if (e.target.value) {
+              navigator.clipboard.writeText(e.target.value);
+              setCopied({
+                [e.target.name]: true,
+              });
+            }
           }
         }
       }
