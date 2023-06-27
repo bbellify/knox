@@ -5,7 +5,7 @@ import { VaultContext } from "../../store/contexts/vaultContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
 import { SettingsContext } from "../../store/contexts/settingsContext";
 import dialogActions from "../../store/actions/dialogActions";
-import { generatePassword } from "../../utils";
+import { generatePassword, copyToClipboard } from "../../utils";
 
 export const Actions = () => {
   const [generated, setGenerated] = useState("");
@@ -25,7 +25,7 @@ export const Actions = () => {
 
   const handleCopy = (e) => {
     if (e.target.value) {
-      navigator.clipboard.writeText(e.target.value);
+      copyToClipboard(e.target.value);
       setGeneratedCopied(true);
     }
   };
@@ -97,7 +97,7 @@ export const Actions = () => {
         <div className="flex w-full justify-center py-2">
           <button
             onClick={handleCopy}
-            className="border border-black shadow px-12 bg-white hover:bg-gray-200 overflow-x-auto rounded w-1/3 text-sm focus:outline-none focus:ring focus:ring-gray-500"
+            className="border border-black px-2 shadow bg-white hover:bg-gray-200 overflow-x-auto rounded w-1/3 text-sm focus:outline-none focus:ring focus:ring-gray-500"
             value={generated}
           >
             {generated}

@@ -7,7 +7,7 @@ import { SettingsContext } from "../../store/contexts/settingsContext";
 import { DialogContext } from "../../store/contexts/dialogContext";
 import dialogActions from "../../store/actions/dialogActions";
 import { password } from "./password";
-import { aesEncrypt, getSecret } from "../../utils";
+import { aesEncrypt, getSecret, copyToClipboard } from "../../utils";
 
 export const VaultTableRow = (props) => {
   const { entry } = props;
@@ -74,32 +74,28 @@ export const VaultTableRow = (props) => {
 
   // TODO: this doesn't work on iOS, revisit
   const handleCopy = (e) => {
-    if (!window.isSecureContext) {
-      alert("Click to copy only works over secure (https) connections");
+    if (e.target.name !== "pass") {
+      if (e.target.value) {
+        copyToClipboard(e.target.value);
+        setCopied({
+          [e.target.name]: true,
+        });
+      }
     } else {
-      if (e.target.name !== "pass") {
+      if (settingsState.copyHidden) {
         if (e.target.value) {
-          navigator.clipboard.writeText(e.target.value);
+          copyToClipboard(e.target.value);
           setCopied({
             [e.target.name]: true,
           });
         }
       } else {
-        if (settingsState.copyHidden) {
+        if (!passHidden) {
           if (e.target.value) {
-            navigator.clipboard.writeText(e.target.value);
+            copyToClipboard(e.target.value);
             setCopied({
               [e.target.name]: true,
             });
-          }
-        } else {
-          if (!passHidden) {
-            if (e.target.value) {
-              navigator.clipboard.writeText(e.target.value);
-              setCopied({
-                [e.target.name]: true,
-              });
-            }
           }
         }
       }

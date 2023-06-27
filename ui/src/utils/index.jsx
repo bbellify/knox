@@ -141,3 +141,12 @@ export const prepareImport = (imports) => {
   });
   return newArr;
 };
+
+export const copyToClipboard = (value) => {
+  const tempTextArea = document.createElement("textarea");
+  tempTextArea.textContent = value;
+  document.body.appendChild(tempTextArea);
+  tempTextArea.select();
+  document.execCommand("copy");
+  document.body.removeChild(tempTextArea);
+};

@@ -6,5 +6,5 @@
     website+'https://github.com/bbellify/knox'
     license+'MIT'
     image+'https://mbs.sfo3.digitaloceanspaces.com/knox/knox-img.png'
-    glob-http+['https://mbs.sfo3.digitaloceanspaces.com/knox/glob-0v4.e2aii.ft837.086q8.oa4ek.pntca.glob' 0v4.e2aii.ft837.086q8.oa4ek.pntca]
+    glob-http+['https://mbs.sfo3.digitaloceanspaces.com/knox/glob-0v2.j5rfv.8giid.9tri0.9go0f.trgfr.glob' 0v2.j5rfv.8giid.9tri0.9go0f.trgfr]
 ==
